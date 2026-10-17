@@ -388,7 +388,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
     });
   }
   function showAddr(tab) {
-    addr.innerHTML = "https://" + host + "/<b>tools/" + tab.getAttribute("data-slug") + "</b>";
+    addr.innerHTML = host + "/<b>tools/" + tab.getAttribute("data-slug") + "</b>";
   }
   function go(tab, push) {
     if (tab === current) return;
