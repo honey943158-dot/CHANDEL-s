@@ -132,6 +132,68 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
   .panel.enter{animation-name:fade}
   .sk{animation-duration:2.4s}
 }
+
+/* =====================================================================
+   ADDED: Firebase sign-in (navigation button, user box, popup, toast)
+   ===================================================================== */
+nav{align-items:center;flex-wrap:wrap}
+.auth-area{display:flex;align-items:center;margin-left:.4rem}
+.auth-btn{margin-top:0;padding:.45rem 1.1rem;font-size:.92rem;white-space:nowrap}
+.auth-user{display:flex;align-items:center;gap:.6rem}
+.auth-user[hidden]{display:none}
+.auth-avatar{width:32px;height:32px;flex:none;border-radius:50%;background:var(--saffron);color:#1a1205;font-weight:700;display:grid;place-items:center}
+.auth-id{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.auth-name{font-size:.9rem;font-weight:600;color:var(--text);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth-mail{font-size:.75rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth-mail:empty{display:none}
+
+body.auth-lock{overflow:hidden}
+.auth-overlay{position:fixed;inset:0;z-index:200;display:flex;padding:1rem;overflow-y:auto;background:rgba(6,7,20,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.auth-overlay[hidden]{display:none}
+.auth-box{position:relative;width:min(420px,100%);margin:auto;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--saffron);border-radius:16px;padding:1.8rem 1.6rem 1.5rem;box-shadow:0 24px 60px rgba(0,0,0,.5);animation:authIn .3s ease both}
+.auth-box:focus{outline:none}
+@keyframes authIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.auth-x{position:absolute;top:.7rem;right:.8rem;width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer}
+.auth-x:hover{color:var(--text);background:var(--raised)}
+.auth-box h3{font-family:var(--serif);font-size:1.6rem;margin-bottom:.2rem;padding-right:2rem}
+.auth-desc{color:var(--muted);font-size:.92rem;margin-bottom:1.2rem}
+.auth-seg{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.25rem;margin-bottom:1.1rem}
+.auth-seg button{background:transparent;border:0;border-radius:8px;color:var(--muted);font:inherit;font-weight:600;padding:.5rem;cursor:pointer}
+.auth-seg button:hover{color:var(--text)}
+.auth-seg button[aria-pressed="true"]{background:var(--raised);color:var(--saffron)}
+.auth-seg button:disabled{cursor:not-allowed;opacity:.6}
+.auth-field{margin-bottom:.9rem}
+.auth-pass{position:relative}
+.auth-pass input{padding-right:4.6rem}
+.auth-eye{position:absolute;top:50%;right:.35rem;transform:translateY(-50%);background:transparent;border:0;border-radius:6px;color:var(--muted);font:inherit;font-size:.82rem;font-weight:600;padding:.3rem .55rem;cursor:pointer}
+.auth-eye:hover{color:var(--text)}
+.auth-hint{font-size:.8rem;color:var(--muted);margin-top:.3rem}
+.auth-hint[hidden]{display:none}
+.auth-msg{min-height:1.3rem;font-size:.9rem;margin:.2rem 0 .8rem}
+.auth-msg:not(:empty){padding:.55rem .75rem;border-radius:8px;background:var(--raised);border-left:3px solid currentColor}
+.auth-msg[data-type="error"]{color:var(--danger)}
+.auth-msg[data-type="success"]{color:var(--green)}
+.auth-msg[data-type="info"]{color:var(--muted)}
+.auth-box .auth-submit,.auth-box .auth-google{width:100%;margin-top:0;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.75rem 1.2rem}
+.auth-box .btn:disabled{opacity:.65;cursor:not-allowed}
+.auth-spin{display:none;width:16px;height:16px;border-radius:50%;border:2px solid rgba(26,18,5,.3);border-top-color:#1a1205;animation:spin .7s linear infinite}
+.auth-submit.is-busy .auth-spin{display:inline-block}
+.auth-or{display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.82rem;margin:1rem 0}
+.auth-or::before,.auth-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-note{margin-top:1rem;font-size:.78rem;color:var(--muted);text-align:center}
+
+.auth-toast{position:fixed;left:50%;bottom:1.4rem;z-index:210;max-width:calc(100% - 2rem);transform:translate(-50%,20px);background:var(--raised);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:10px;padding:.7rem 1.1rem;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.auth-toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:760px){
+  .auth-area{margin-left:0}
+  .auth-mail{display:none}
+  .auth-name{max-width:110px}
+}
+@media(prefers-reduced-motion:reduce){
+  .auth-box{animation:none}
+  .auth-toast{transition:none}
+}
 </style>
 </head>
 <body>
@@ -144,6 +206,19 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
     <nav aria-label="Main">
       <a href="#tools">Tools</a>
       <a href="#about">About</a>
+
+      <!-- ADDED: sign in / user area -->
+      <div class="auth-area" id="authArea">
+        <button class="btn main auth-btn" id="authOpen" type="button" aria-haspopup="dialog">Sign in</button>
+        <div class="auth-user" id="authUser" hidden>
+          <span class="auth-avatar" id="authAvatar" aria-hidden="true"></span>
+          <span class="auth-id">
+            <span class="auth-name" id="authName"></span>
+            <span class="auth-mail" id="authMail"></span>
+          </span>
+          <button class="btn auth-btn" id="authLogout" type="button">Logout</button>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -152,7 +227,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
   <div class="wrap hero">
     <div>
       <h1>Nishant Chandel</h1>
-      <p>Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, and more. Everything runs in your browser, so nothing you type is ever sent anywhere.</p>
+      <p>Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
       <a class="cta" href="#tools">Open the tools</a>
     </div>
     <div class="clock" aria-live="off">
@@ -302,12 +377,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
       <div>
         <h2>About this site</h2>
         <p>Hi, I’m Nishant Chandel. I built this site to put the small calculators people look for every day in one clean, dark page that loads instantly, even on a slow connection.</p>
-        <p>There are no ads, no sign-ups and no trackers. All the maths happens inside your browser.</p>
+        <p>There are no ads and no trackers. Signing in is optional and handled by Google Firebase. All the maths happens inside your browser.</p>
       </div>
       <ul>
         <li><b>Made for India</b><span>Amounts in ₹ with lakh and crore grouping, GST split into CGST and SGST, and time in IST.</span></li>
-        <li><b>Private</b><span>Nothing you enter leaves your device.</span></li>
-        <li><b>Works offline</b><span>One file, no outside libraries, fonts or images.</span></li>
+        <li><b>Private</b><span>Nothing you enter in the tools leaves your device.</span></li>
+        <li><b>Works offline</b><span>One file, no outside fonts or images. Only the optional sign-in loads Google’s Firebase library.</span></li>
       </ul>
     </div>
   </section>
@@ -319,6 +394,59 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
     <span>Results are for guidance only.</span>
   </div>
 </footer>
+
+<!-- ADDED: sign in / create account popup -->
+<div class="auth-overlay" id="authOverlay" hidden>
+  <div class="auth-box" id="authDialog" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authDesc" tabindex="-1">
+    <button class="auth-x" id="authClose" type="button" aria-label="Close sign in window">×</button>
+    <h3 id="authTitle">Sign in</h3>
+    <p class="auth-desc" id="authDesc">Welcome back. Sign in to your account.</p>
+
+    <div class="auth-seg" role="group" aria-label="Choose an option">
+      <button type="button" id="authModeIn" aria-pressed="true">Sign in</button>
+      <button type="button" id="authModeUp" aria-pressed="false">Create account</button>
+    </div>
+
+    <form id="authForm" novalidate>
+      <div class="auth-field">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com">
+      </div>
+      <div class="auth-field">
+        <label for="authPass">Password</label>
+        <div class="auth-pass">
+          <input id="authPass" name="password" type="password" autocomplete="current-password" aria-describedby="authHint" placeholder="Your password">
+          <button class="auth-eye" id="authEye" type="button" aria-pressed="false" aria-label="Show password">Show</button>
+        </div>
+        <p class="auth-hint" id="authHint" hidden>Use at least 6 characters.</p>
+      </div>
+
+      <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
+
+      <button class="btn main auth-submit" id="authSubmit" type="submit">
+        <span class="auth-spin" aria-hidden="true"></span>
+        <span id="authSubmitText">Sign in</span>
+      </button>
+    </form>
+
+    <div class="auth-or" aria-hidden="true">or</div>
+
+    <button class="btn auth-google" id="authGoogle" type="button">
+      <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      <span>Continue with Google</span>
+    </button>
+
+    <p class="auth-note">Sign-in is handled by Google Firebase. This site never sees your password.</p>
+  </div>
+</div>
+
+<!-- ADDED: small message shown after logout -->
+<div class="auth-toast" id="authToast" role="status" aria-live="polite"></div>
 
 <script>
 (function () {
@@ -596,6 +724,261 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
     $("cR").textContent = secs < 60 ? secs + " sec" : Math.ceil(secs / 60) + " min";
   });
 })();
+</script>
+
+<!-- =====================================================================
+     ADDED: Firebase Authentication (modular SDK, loaded as an ES module)
+     ===================================================================== -->
+<script type="module">
+/* Firebase SDK version: change it here and both files below follow. */
+const FIREBASE_VERSION = "13.0.0";
+const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/" + FIREBASE_VERSION + "/";
+
+/* YOUR Firebase configuration (exactly as given from your Firebase Console) */
+const firebaseConfig = {
+  apiKey: "AIzaSyDuA8SA6MepdMgjfAocQ2d_YvZMvivVr_8",
+  authDomain: "chandel-s-a525e.firebaseapp.com",
+  projectId: "chandel-s-a525e",
+  storageBucket: "chandel-s-a525e.firebasestorage.app",
+  messagingSenderId: "153624607604",
+  appId: "1:153624607604:web:ae73c710d20f6e3a580a21",
+  measurementId: "G-BFLE5SQQ60"
+};
+
+const byId = (id) => document.getElementById(id);
+const ui = {
+  open: byId("authOpen"), user: byId("authUser"), avatar: byId("authAvatar"),
+  name: byId("authName"), mail: byId("authMail"), logout: byId("authLogout"),
+  overlay: byId("authOverlay"), dialog: byId("authDialog"), close: byId("authClose"),
+  title: byId("authTitle"), desc: byId("authDesc"),
+  modeIn: byId("authModeIn"), modeUp: byId("authModeUp"),
+  form: byId("authForm"), email: byId("authEmail"), pass: byId("authPass"),
+  eye: byId("authEye"), hint: byId("authHint"), msg: byId("authMsg"),
+  submit: byId("authSubmit"), submitText: byId("authSubmitText"),
+  google: byId("authGoogle"), toast: byId("authToast")
+};
+
+let sdk = null;        // firebase-auth module
+let auth = null;       // Auth instance
+let loading = null;    // promise, so Firebase loads and starts only once
+let mode = "signin";   // "signin" or "signup"
+let busy = false;
+let lastFocus = null;
+let closeTimer = null;
+let toastTimer = null;
+
+/* ---------- Load Firebase (once) ---------- */
+function loadFirebase() {
+  if (loading) return loading;
+  loading = (async () => {
+    const [appMod, authMod] = await Promise.all([
+      import(FIREBASE_BASE + "firebase-app.js"),
+      import(FIREBASE_BASE + "firebase-auth.js")
+    ]);
+    const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp(firebaseConfig);
+    auth = authMod.getAuth(app);
+    sdk = authMod;
+    authMod.onAuthStateChanged(auth, renderUser);
+    return true;
+  })();
+  loading.catch(() => { loading = null; }); // allow a retry if loading failed
+  return loading;
+}
+
+/* ---------- Navigation: signed in / signed out ---------- */
+function renderUser(user) {
+  if (user) {
+    const name = user.displayName || user.email || "Account";
+    ui.avatar.textContent = name.trim().charAt(0).toUpperCase();
+    ui.name.textContent = name;
+    ui.mail.textContent = (user.displayName && user.email) ? user.email : "";
+    ui.open.hidden = true;
+    ui.user.hidden = false;
+  } else {
+    ui.avatar.textContent = "";
+    ui.name.textContent = "";
+    ui.mail.textContent = "";
+    ui.user.hidden = true;
+    ui.open.hidden = false;
+  }
+}
+
+/* ---------- Friendly error messages ---------- */
+function friendly(err) {
+  const code = err && err.code;
+  if (!code) return "Could not load the sign-in service. Check your internet connection and try again.";
+  const map = {
+    "auth/invalid-email": "That email address does not look right.",
+    "auth/missing-email": "Enter your email address.",
+    "auth/missing-password": "Enter your password.",
+    "auth/invalid-credential": "Wrong email or password.",
+    "auth/wrong-password": "Wrong email or password.",
+    "auth/user-not-found": "Wrong email or password.",
+    "auth/email-already-in-use": "An account with this email already exists. Try signing in instead.",
+    "auth/weak-password": "Password is too weak. Use at least 6 characters.",
+    "auth/user-disabled": "This account has been disabled.",
+    "auth/too-many-requests": "Too many attempts. Please wait a few minutes and try again.",
+    "auth/network-request-failed": "Network problem. Check your internet connection and try again.",
+    "auth/popup-blocked": "Your browser blocked the Google window. Allow pop-ups for this site and try again.",
+    "auth/unauthorized-domain": "This website address is not allowed in Firebase yet. Add it under Authentication, Settings, Authorized domains.",
+    "auth/operation-not-allowed": "This sign-in method is not turned on in Firebase.",
+    "auth/account-exists-with-different-credential": "This email is already used with a different sign-in method."
+  };
+  return map[code] || "Something went wrong (" + code + "). Please try again.";
+}
+
+/* ---------- Messages, loading state ---------- */
+function showMsg(type, text) {
+  ui.msg.dataset.type = type;
+  ui.msg.textContent = text;
+}
+function clearMsg() {
+  ui.msg.textContent = "";
+  ui.msg.removeAttribute("data-type");
+}
+function setBusy(on, label) {
+  busy = on;
+  ui.dialog.setAttribute("aria-busy", on ? "true" : "false");
+  ui.submit.classList.toggle("is-busy", on);
+  [ui.submit, ui.google, ui.modeIn, ui.modeUp, ui.eye, ui.email, ui.pass].forEach((n) => { n.disabled = on; });
+  ui.submitText.textContent = on ? label : (mode === "signin" ? "Sign in" : "Create account");
+  if (on) ui.dialog.focus();
+}
+function toast(text) {
+  ui.toast.textContent = text;
+  ui.toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => ui.toast.classList.remove("show"), 3200);
+}
+
+/* ---------- Modal: open, close, mode ---------- */
+function setMode(m) {
+  mode = m;
+  const up = m === "signup";
+  ui.modeIn.setAttribute("aria-pressed", String(!up));
+  ui.modeUp.setAttribute("aria-pressed", String(up));
+  ui.title.textContent = up ? "Create account" : "Sign in";
+  ui.desc.textContent = up ? "Make a free account with your email and a password." : "Welcome back. Sign in to your account.";
+  ui.submitText.textContent = up ? "Create account" : "Sign in";
+  ui.pass.autocomplete = up ? "new-password" : "current-password";
+  ui.pass.placeholder = up ? "At least 6 characters" : "Your password";
+  ui.hint.hidden = !up;
+  clearMsg();
+}
+function setPasswordVisible(show) {
+  ui.pass.type = show ? "text" : "password";
+  ui.eye.textContent = show ? "Hide" : "Show";
+  ui.eye.setAttribute("aria-pressed", String(show));
+  ui.eye.setAttribute("aria-label", show ? "Hide password" : "Show password");
+}
+function openModal(m) {
+  clearTimeout(closeTimer);
+  lastFocus = document.activeElement;
+  setMode(m || "signin");
+  setPasswordVisible(false);
+  ui.overlay.hidden = false;
+  document.body.classList.add("auth-lock");
+  ui.email.focus();
+  loadFirebase().catch(() => {});
+}
+function closeModal() {
+  clearTimeout(closeTimer);
+  ui.overlay.hidden = true;
+  document.body.classList.remove("auth-lock");
+  ui.pass.value = "";
+  setPasswordVisible(false);
+  clearMsg();
+  const back = (lastFocus && lastFocus.offsetParent !== null) ? lastFocus : (ui.user.hidden ? ui.open : ui.logout);
+  if (back && back.focus) back.focus();
+}
+
+/* Keyboard: Escape closes, Tab stays inside the popup */
+function focusables() {
+  return Array.from(ui.dialog.querySelectorAll("button, input, [href]"))
+    .filter((n) => !n.disabled && n.offsetParent !== null);
+}
+ui.overlay.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { e.preventDefault(); closeModal(); return; }
+  if (e.key !== "Tab") return;
+  const f = focusables();
+  if (!f.length) { e.preventDefault(); ui.dialog.focus(); return; }
+  const first = f[0], last = f[f.length - 1], now = document.activeElement;
+  if (e.shiftKey && (now === first || now === ui.dialog)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && now === last) { e.preventDefault(); first.focus(); }
+});
+ui.overlay.addEventListener("mousedown", (e) => { if (e.target === ui.overlay) closeModal(); });
+
+ui.open.addEventListener("click", () => openModal("signin"));
+ui.close.addEventListener("click", closeModal);
+ui.modeIn.addEventListener("click", () => setMode("signin"));
+ui.modeUp.addEventListener("click", () => setMode("signup"));
+ui.eye.addEventListener("click", () => setPasswordVisible(ui.pass.type === "password"));
+
+/* ---------- Email / password ---------- */
+ui.form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (busy) return;
+  const email = ui.email.value.trim();
+  const pass = ui.pass.value;
+  if (!email) { showMsg("error", "Enter your email address."); ui.email.focus(); return; }
+  if (!pass) { showMsg("error", "Enter your password."); ui.pass.focus(); return; }
+  if (mode === "signup" && pass.length < 6) { showMsg("error", "Password must be at least 6 characters."); ui.pass.focus(); return; }
+
+  clearMsg();
+  setBusy(true, mode === "signin" ? "Signing in…" : "Creating account…");
+  let ok = false, focusTarget = ui.email;
+  try {
+    await loadFirebase();
+    if (mode === "signin") await sdk.signInWithEmailAndPassword(auth, email, pass);
+    else await sdk.createUserWithEmailAndPassword(auth, email, pass);
+    ok = true;
+    showMsg("success", mode === "signin" ? "Signed in successfully." : "Account created. Welcome!");
+  } catch (err) {
+    showMsg("error", friendly(err));
+    const c = err && err.code;
+    if (c === "auth/invalid-credential" || c === "auth/wrong-password" || c === "auth/weak-password" || c === "auth/missing-password") focusTarget = ui.pass;
+  } finally {
+    setBusy(false);
+  }
+  if (ok) { closeTimer = setTimeout(closeModal, 900); }
+  else { focusTarget.focus(); }
+});
+
+/* ---------- Google ---------- */
+ui.google.addEventListener("click", async () => {
+  if (busy) return;
+  clearMsg();
+  setBusy(true, "Please wait…");
+  let ok = false;
+  try {
+    await loadFirebase();
+    await sdk.signInWithPopup(auth, new sdk.GoogleAuthProvider());
+    ok = true;
+    showMsg("success", "Signed in with Google.");
+  } catch (err) {
+    const c = err && err.code;
+    if (c === "auth/popup-closed-by-user" || c === "auth/cancelled-popup-request") showMsg("info", "Google sign-in was cancelled.");
+    else showMsg("error", friendly(err));
+  } finally {
+    setBusy(false);
+  }
+  if (ok) { closeTimer = setTimeout(closeModal, 900); }
+  else { ui.google.focus(); }
+});
+
+/* ---------- Logout ---------- */
+ui.logout.addEventListener("click", async () => {
+  try {
+    await loadFirebase();
+    await sdk.signOut(auth);
+    toast("You have been signed out.");
+  } catch (err) {
+    toast("Could not sign out. Please try again.");
+  }
+});
+
+/* Start Firebase on page load so a saved login is restored automatically */
+loadFirebase().catch(() => {});
 </script>
 </body>
 </html>
