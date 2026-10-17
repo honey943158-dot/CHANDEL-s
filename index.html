@@ -194,6 +194,23 @@ body.auth-lock{overflow:hidden}
   .auth-box{animation:none}
   .auth-toast{transition:none}
 }
+
+/* =====================================================================
+   ADDED: fake multi-page effect (Home / Tools / About)
+   ===================================================================== */
+main{min-height:62vh}
+[data-page][hidden]{display:none}
+.page:focus{outline:none}
+.page.leave{opacity:0;transform:translateY(-12px);transition:opacity .25s ease,transform .25s ease}
+.page.enter{animation:pageIn .55s ease both}
+@keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.page-load .skeleton{margin-top:0}
+nav a[data-go]{padding-bottom:.15rem;border-bottom:2px solid transparent}
+nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
+@media(prefers-reduced-motion:reduce){
+  .page.leave{transform:none}
+  .page.enter{animation-name:fade}
+}
 </style>
 </head>
 <body>
@@ -202,10 +219,10 @@ body.auth-lock{overflow:hidden}
 
 <header>
   <div class="wrap">
-    <a class="brand" href="#top">Nishant Chandel</a>
+    <a class="brand" href="#top" data-go="home">Nishant Chandel</a>
     <nav aria-label="Main">
-      <a href="#tools">Tools</a>
-      <a href="#about">About</a>
+      <a href="#tools" data-go="tools">Tools</a>
+      <a href="#about" data-go="about">About</a>
 
       <!-- ADDED: sign in / user area -->
       <div class="auth-area" id="authArea">
@@ -224,11 +241,26 @@ body.auth-lock{overflow:hidden}
 </header>
 
 <main id="top">
-  <div class="wrap hero">
+
+  <!-- ADDED: loading screen shown while a page "opens" -->
+  <section class="page-load" id="pageLoad" hidden role="status" aria-live="polite">
+    <div class="wrap">
+      <div class="skeleton">
+        <div class="loading-note"><i class="spin"></i><span id="pageNote">Loading…</span></div>
+        <span class="sk t"></span>
+        <span class="sk p"></span>
+        <div class="sk-row"><span class="sk i"></span><span class="sk i"></span><span class="sk i"></span></div>
+        <div class="sk-row"><span class="sk s"></span><span class="sk s"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE: Home -->
+  <div class="wrap hero page" data-page="home">
     <div>
       <h1>Nishant Chandel</h1>
       <p>Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
-      <a class="cta" href="#tools">Open the tools</a>
+      <a class="cta" href="#tools" data-go="tools">Open the tools</a>
     </div>
     <div class="clock" aria-live="off">
       <small>India Standard Time</small>
@@ -238,7 +270,8 @@ body.auth-lock{overflow:hidden}
     </div>
   </div>
 
-  <section id="tools">
+  <!-- PAGE: Tools -->
+  <section id="tools" class="page" data-page="tools" hidden>
     <div class="wrap">
       <h2>Everyday tools</h2>
       <p class="sub">Pick a tool. Results update when you press the button.</p>
@@ -258,7 +291,7 @@ body.auth-lock{overflow:hidden}
         <button class="tab" role="tab" id="t-count" aria-controls="p-count" aria-selected="false" data-slug="word-counter" data-title="Word counter">Word counter</button>
       </div>
 
-      <!-- Loading box shown during the page switch -->
+      <!-- Loading box shown during the tool switch -->
       <div class="skeleton" id="skeleton" role="status" hidden>
         <div class="loading-note"><i class="spin"></i><span id="loadNote">Loading…</span></div>
         <span class="sk t"></span>
@@ -372,7 +405,8 @@ body.auth-lock{overflow:hidden}
     </div>
   </section>
 
-  <section id="about">
+  <!-- PAGE: About -->
+  <section id="about" class="page" data-page="about" hidden>
     <div class="wrap about">
       <div>
         <h2>About this site</h2>
@@ -562,21 +596,141 @@ body.auth-lock{overflow:hidden}
     });
   });
 
-  /* Back / Forward buttons (normal links like #tools and #about are ignored) */
-  window.addEventListener("popstate", function () {
-    var t = tabFromSlug(location.hash.slice(1));
-    if (t) go(t, false);
-  });
-
   /* Open the right tool if the page is opened with a link like #gst-calculator */
   (function init() {
     var first = tabFromSlug(location.hash.slice(1)) || tabs[0];
     if (first !== tabs[0]) {
       current = first; markTab(first); hideAll();
       $(first.getAttribute("aria-controls")).hidden = false;
-      document.title = first.getAttribute("data-title") + " · Nishant Chandel";
     }
     showAddr(first);
+  })();
+
+  /* ---------- Pages: Home / Tools / About (fake page-opening effect) ---------- */
+  var pageEls = {
+    home: document.querySelector('[data-page="home"]'),
+    tools: document.querySelector('[data-page="tools"]'),
+    about: document.querySelector('[data-page="about"]')
+  };
+  var pageNames = { home: "Home", tools: "Tools", about: "About" };
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll("nav a[data-go]"));
+  var pageLoad = $("pageLoad"), pageNote = $("pageNote");
+  var currentPage = "home", pageToken = 0;
+
+  function pageFromHash(h) {
+    if (tabFromSlug(h)) return "tools";
+    if (h === "tools") return "tools";
+    if (h === "about") return "about";
+    return "home";
+  }
+  function hashFor(page, tool) {
+    if (page === "tools") {
+      var t = tool || current;
+      return t === tabs[0] ? "tools" : t.getAttribute("data-slug");
+    }
+    return page;
+  }
+  function pageTitle(page) {
+    if (page === "tools") return current.getAttribute("data-title") + " · Nishant Chandel";
+    if (page === "about") return "About · Nishant Chandel";
+    return "Nishant Chandel · Useful Tools for India";
+  }
+  function markNav(page) {
+    navLinks.forEach(function (a) {
+      if (a.getAttribute("data-go") === page) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+  }
+  function hidePages() {
+    Object.keys(pageEls).forEach(function (k) {
+      pageEls[k].hidden = true;
+      pageEls[k].classList.remove("leave", "enter");
+    });
+  }
+  function visiblePage() {
+    var keys = Object.keys(pageEls);
+    for (var i = 0; i < keys.length; i++) if (!pageEls[keys[i]].hidden) return pageEls[keys[i]];
+    return null;
+  }
+  /* Finish any tool switch that is still running, so the tool box is in a clean state */
+  function settleTool() {
+    token++;
+    skel.hidden = true;
+    hideAll();
+    $(current.getAttribute("aria-controls")).hidden = false;
+    dot.className = "dot"; state.textContent = ""; note.textContent = "";
+  }
+
+  function openPage(page, push, tool) {
+    if (page === currentPage && !pageLoad.hidden === false) {
+      /* already on this page */
+      if (tool && tool !== current) go(tool, push);
+      else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      return;
+    }
+    var my = ++pageToken;
+    currentPage = page;
+    token++;                                  /* cancel a tool switch that may be running */
+    markNav(page);
+    if (push) { try { history.pushState({ page: page }, "", "#" + hashFor(page, tool)); } catch (e) {} }
+    document.title = "Loading… · Nishant Chandel";
+    pageNote.textContent = "Opening " + pageNames[page] + "…";
+    startBar();
+
+    var vis = visiblePage();
+    if (vis) vis.classList.add("leave");
+
+    setTimeout(function () {
+      if (my !== pageToken) return;
+      hidePages();
+      if (page === "tools" && tool && tool !== current) { current = tool; markTab(tool); showAddr(tool); }
+      settleTool();
+      pageLoad.hidden = false;
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+      setTimeout(function () {
+        if (my !== pageToken) return;
+        pageLoad.hidden = true;
+        var el = pageEls[page];
+        el.hidden = false;
+        el.classList.add("enter");
+        el.setAttribute("tabindex", "-1");
+        try { el.focus({ preventScroll: true }); } catch (e) {}
+        finishBar();
+        document.title = pageTitle(page);
+      }, 700 + Math.random() * 500);
+    }, 250);
+  }
+
+  /* Clicks on links with data-go: logo, Tools, About, "Open the tools" */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("[data-go]") : null;
+    if (!a) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   /* let "open in new tab" work */
+    e.preventDefault();
+    openPage(a.getAttribute("data-go"), true);
+  });
+
+  /* Back / Forward buttons */
+  window.addEventListener("popstate", function () {
+    var h = location.hash.slice(1), page = pageFromHash(h), t = tabFromSlug(h);
+    if (page === "tools" && !t && h === "tools") t = tabs[0];
+    openPage(page, false, t);
+  });
+
+  /* The sign-in button asks for the same loading bar (see the Firebase script below) */
+  document.addEventListener("site:progress", function (e) {
+    if (e.detail === "start") startBar(); else finishBar();
+  });
+
+  /* First load: show the page that matches the link, with no animation */
+  (function initPage() {
+    var page = pageFromHash(location.hash.slice(1));
+    hidePages();
+    pageEls[page].hidden = false;
+    currentPage = page;
+    markNav(page);
+    document.title = pageTitle(page);
   })();
 
   /* EMI */
@@ -763,6 +917,7 @@ let auth = null;       // Auth instance
 let loading = null;    // promise, so Firebase loads and starts only once
 let mode = "signin";   // "signin" or "signup"
 let busy = false;
+let opening = false;   // true while the Sign in button is doing its short loading effect
 let lastFocus = null;
 let closeTimer = null;
 let toastTimer = null;
@@ -908,7 +1063,17 @@ ui.overlay.addEventListener("keydown", (e) => {
 });
 ui.overlay.addEventListener("mousedown", (e) => { if (e.target === ui.overlay) closeModal(); });
 
-ui.open.addEventListener("click", () => openModal("signin"));
+/* Sign in button: short loading bar first (same effect as the pages), then the popup opens */
+ui.open.addEventListener("click", () => {
+  if (opening) return;
+  opening = true;
+  document.dispatchEvent(new CustomEvent("site:progress", { detail: "start" }));
+  setTimeout(() => {
+    opening = false;
+    document.dispatchEvent(new CustomEvent("site:progress", { detail: "finish" }));
+    openModal("signin");
+  }, 450);
+});
 ui.close.addEventListener("click", closeModal);
 ui.modeIn.addEventListener("click", () => setMode("signin"));
 ui.modeUp.addEventListener("click", () => setMode("signup"));
