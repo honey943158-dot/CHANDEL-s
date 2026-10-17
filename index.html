@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Nishant Chandel – free everyday tools for India: EMI, GST, age, rupees in words, password generator and word counter.">
+<title>Nishant Chandel · Useful Tools for India</title>
+<style>
+:root{
+  --bg:#0f1226; --surface:#171b38; --raised:#1f2447; --line:#2d3461;
+  --text:#ecebf6; --muted:#9a9cc0; --saffron:#ff9933; --green:#3fd48f; --danger:#ff6b6b;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;min-height:100vh}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--saffron);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1040px,100% - 2rem);margin-inline:auto}
+
+/* top loading bar (page switch effect) */
+#loadbar{position:fixed;top:0;left:0;height:4px;width:0;opacity:0;z-index:100;background:linear-gradient(90deg,var(--saffron),#ffd08a);box-shadow:0 0 12px var(--saffron);pointer-events:none}
+
+/* header */
+header{padding:1.1rem 0;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-size:1.15rem;font-weight:700;text-decoration:none}
+nav{display:flex;gap:1.4rem;font-size:.95rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+
+/* hero */
+.hero{padding:clamp(2.5rem,8vw,6rem) 0 3rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:end}
+.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,8vw,5.4rem);line-height:1.02;letter-spacing:-.02em;font-weight:700}
+.hero p{margin-top:1.3rem;color:var(--muted);max-width:46ch;font-size:1.1rem}
+.cta{display:inline-block;margin-top:1.8rem;background:var(--saffron);color:#1a1205;font-weight:700;padding:.8rem 1.4rem;border-radius:8px;text-decoration:none}
+.cta:hover{filter:brightness(1.08)}
+.clock{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:12px;padding:1.4rem 1.5rem}
+.clock small{color:var(--muted);display:block}
+#time{font-family:var(--serif);font-size:clamp(2.2rem,6vw,3.3rem);font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1.1;margin:.3rem 0}
+#date{color:var(--text)}
+.stripe{height:4px;margin-top:1rem;border-radius:2px;background:linear-gradient(90deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
+
+/* tools */
+section{padding:3rem 0}
+h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4rem}
+.sub{color:var(--muted);margin-bottom:1.6rem}
+
+/* fake address bar */
+.addr{display:flex;align-items:center;gap:.6rem;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;margin-bottom:1rem;font-size:.88rem;color:var(--muted);overflow:hidden}
+.addr .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--green)}
+.addr .dot.busy{background:var(--saffron);animation:pulse .6s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:1;transform:scale(1)}to{opacity:.3;transform:scale(1.5)}}
+#addrText{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#addrText b{color:var(--text);font-weight:600}
+#addrState{flex:none;color:var(--saffron);font-weight:600;min-width:4.5rem;text-align:right}
+
+.tabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.6rem;scrollbar-width:thin}
+.tab{flex:none;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;font:inherit;cursor:pointer}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{background:var(--saffron);border-color:var(--saffron);color:#1a1205;font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.6rem;margin-top:.8rem}
+.panel[hidden]{display:none}
+.panel.leave{opacity:0;transform:translateX(-24px);transition:opacity .25s ease,transform .25s ease}
+.panel.enter{animation:enter .5s ease both}
+@keyframes enter{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel h3{font-size:1.15rem;margin-bottom:.3rem}
+.panel>p{color:var(--muted);margin-bottom:1.2rem}
+
+/* loading box shown during the page switch */
+.skeleton{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.6rem;margin-top:.8rem;min-height:360px}
+.skeleton[hidden]{display:none}
+.loading-note{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem;color:var(--muted)}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--saffron);animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sk{display:block;border-radius:8px;background:linear-gradient(90deg,var(--raised) 25%,#2a3160 50%,var(--raised) 75%);background-size:200% 100%;animation:shimmer 1.1s linear infinite}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+.sk.t{height:22px;width:40%;margin-bottom:.8rem}
+.sk.p{height:14px;width:65%;margin-bottom:1.6rem}
+.sk-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.4rem}
+.sk.i{height:44px}
+.sk.b{height:42px;width:170px;margin-bottom:1.6rem}
+.sk.s{height:70px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:.3rem}
+input,select,textarea{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.65rem .8rem;font:inherit}
+input:focus,select:focus,textarea:focus{border-color:var(--saffron);outline:none}
+input[type=range]{padding:0;accent-color:var(--saffron)}
+input[type=checkbox]{width:auto;accent-color:var(--saffron);margin-right:.4rem}
+textarea{min-height:170px;resize:vertical}
+.btn{margin-top:1.1rem;background:var(--raised);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.65rem 1.2rem;font:inherit;font-weight:600;cursor:pointer}
+.btn:hover{border-color:var(--saffron)}
+.btn.main{background:var(--saffron);border-color:var(--saffron);color:#1a1205}
+.result{margin-top:1.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem}
+.stat{background:var(--raised);border-radius:10px;padding:.9rem 1rem}
+.stat span{display:block;font-size:.82rem;color:var(--muted)}
+.stat b{font-family:var(--serif);font-size:1.45rem;font-weight:700;word-break:break-word}
+.stat.hl b{color:var(--saffron)}
+.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:1rem;background:var(--raised)}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:1.2rem;font-size:.85rem;color:var(--muted);margin-top:.5rem}
+.words{margin-top:1.2rem;background:var(--raised);border-radius:10px;padding:1rem;min-height:3.2rem;font-family:var(--serif);font-size:1.2rem}
+.pw{margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.pw output{flex:1 1 260px;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:.7rem .9rem;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+.pw .btn{margin-top:0}
+.opts{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1rem}
+.opts label{display:flex;align-items:center;margin:0;color:var(--text);cursor:pointer}
+.meter{height:6px;border-radius:3px;background:var(--raised);margin-top:1rem;overflow:hidden}
+.meter i{display:block;height:100%;width:0;transition:width .3s,background .3s}
+.err{color:var(--danger);margin-top:1rem;min-height:1.2rem;font-size:.92rem}
+
+/* about */
+.about{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
+.about p{color:var(--muted);margin-bottom:1rem}
+.about ul{list-style:none}
+.about li{padding:.7rem 0;border-bottom:1px solid var(--line)}
+.about li b{display:block}
+.about li span{color:var(--muted);font-size:.92rem}
+footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+
+@media(max-width:760px){.hero,.about{grid-template-columns:1fr}nav{gap:1rem}}
+
+/* Reduced motion: remove sliding only. Loading bar, spinner and loading box stay visible. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .panel.leave{transform:none}
+  .panel.enter{animation-name:fade}
+  .sk{animation-duration:2.4s}
+}
+</style>
+</head>
+<body>
+
+<div id="loadbar" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Nishant Chandel</a>
+    <nav aria-label="Main">
+      <a href="#tools">Tools</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <h1>Nishant Chandel</h1>
+      <p>Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, and more. Everything runs in your browser, so nothing you type is ever sent anywhere.</p>
+      <a class="cta" href="#tools">Open the tools</a>
+    </div>
+    <div class="clock" aria-live="off">
+      <small>India Standard Time</small>
+      <div id="time">--:--:--</div>
+      <div id="date">Loading date…</div>
+      <div class="stripe"></div>
+    </div>
+  </div>
+
+  <section id="tools">
+    <div class="wrap">
+      <h2>Everyday tools</h2>
+      <p class="sub">Pick a tool. Results update when you press the button.</p>
+
+      <div class="addr" aria-hidden="true">
+        <span class="dot" id="addrDot"></span>
+        <span id="addrText"></span>
+        <span id="addrState"></span>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Tools">
+        <button class="tab" role="tab" id="t-emi" aria-controls="p-emi" aria-selected="true" data-slug="emi-calculator" data-title="EMI calculator">EMI calculator</button>
+        <button class="tab" role="tab" id="t-gst" aria-controls="p-gst" aria-selected="false" data-slug="gst-calculator" data-title="GST calculator">GST calculator</button>
+        <button class="tab" role="tab" id="t-age" aria-controls="p-age" aria-selected="false" data-slug="age-calculator" data-title="Age calculator">Age calculator</button>
+        <button class="tab" role="tab" id="t-words" aria-controls="p-words" aria-selected="false" data-slug="rupees-in-words" data-title="Rupees in words">Rupees in words</button>
+        <button class="tab" role="tab" id="t-pw" aria-controls="p-pw" aria-selected="false" data-slug="password-maker" data-title="Password maker">Password maker</button>
+        <button class="tab" role="tab" id="t-count" aria-controls="p-count" aria-selected="false" data-slug="word-counter" data-title="Word counter">Word counter</button>
+      </div>
+
+      <!-- Loading box shown during the page switch -->
+      <div class="skeleton" id="skeleton" role="status" hidden>
+        <div class="loading-note"><i class="spin"></i><span id="loadNote">Loading…</span></div>
+        <span class="sk t"></span>
+        <span class="sk p"></span>
+        <div class="sk-row"><span class="sk i"></span><span class="sk i"></span><span class="sk i"></span></div>
+        <span class="sk b"></span>
+        <div class="sk-row"><span class="sk s"></span><span class="sk s"></span><span class="sk s"></span></div>
+      </div>
+
+      <!-- EMI -->
+      <div class="panel" id="p-emi" role="tabpanel" aria-labelledby="t-emi">
+        <h3>Loan EMI calculator</h3>
+        <p>Works for home, car and personal loans.</p>
+        <div class="grid">
+          <div><label for="emiP">Loan amount (₹)</label><input id="emiP" type="number" min="1" value="1000000"></div>
+          <div><label for="emiR">Interest rate (% per year)</label><input id="emiR" type="number" min="0" step="0.05" value="8.5"></div>
+          <div><label for="emiY">Tenure (years)</label><input id="emiY" type="number" min="0.1" step="0.5" value="10"></div>
+        </div>
+        <button class="btn main" id="emiGo">Calculate EMI</button>
+        <div class="err" id="emiErr" role="alert"></div>
+        <div class="result" id="emiOut" hidden>
+          <div class="stat hl"><span>Monthly EMI</span><b id="emiV">–</b></div>
+          <div class="stat"><span>Total interest</span><b id="emiI">–</b></div>
+          <div class="stat"><span>Total payable</span><b id="emiT">–</b></div>
+        </div>
+        <div id="emiBarBox" hidden>
+          <div class="bar" aria-hidden="true"><i id="barP" style="background:var(--green)"></i><i id="barI" style="background:var(--saffron)"></i></div>
+          <div class="legend"><span>Principal <b id="lgP"></b></span><span>Interest <b id="lgI"></b></span></div>
+        </div>
+      </div>
+
+      <!-- GST -->
+      <div class="panel" id="p-gst" role="tabpanel" aria-labelledby="t-gst" hidden>
+        <h3>GST calculator</h3>
+        <p>Add GST to a price, or take it out of a GST-inclusive price.</p>
+        <div class="grid">
+          <div><label for="gstA">Amount (₹)</label><input id="gstA" type="number" min="0" value="1000"></div>
+          <div><label for="gstR">GST rate</label>
+            <select id="gstR"><option value="0.25">0.25%</option><option value="3">3%</option><option value="5">5%</option><option value="12">12%</option><option value="18" selected>18%</option><option value="28">28%</option></select></div>
+          <div><label for="gstM">What do you want?</label>
+            <select id="gstM"><option value="add">Add GST to amount</option><option value="remove">Remove GST from amount</option></select></div>
+        </div>
+        <button class="btn main" id="gstGo">Calculate GST</button>
+        <div class="err" id="gstErr" role="alert"></div>
+        <div class="result" id="gstOut" hidden>
+          <div class="stat"><span>Price without GST</span><b id="gstN">–</b></div>
+          <div class="stat"><span>CGST</span><b id="gstC">–</b></div>
+          <div class="stat"><span>SGST</span><b id="gstS">–</b></div>
+          <div class="stat hl"><span>Price with GST</span><b id="gstT">–</b></div>
+        </div>
+      </div>
+
+      <!-- Age -->
+      <div class="panel" id="p-age" role="tabpanel" aria-labelledby="t-age" hidden>
+        <h3>Age calculator</h3>
+        <p>Find your exact age and the days left to your next birthday.</p>
+        <div class="grid"><div><label for="dob">Date of birth</label><input id="dob" type="date"></div></div>
+        <button class="btn main" id="ageGo">Calculate age</button>
+        <div class="err" id="ageErr" role="alert"></div>
+        <div class="result" id="ageOut" hidden>
+          <div class="stat hl"><span>Your age</span><b id="ageV">–</b></div>
+          <div class="stat"><span>Total days lived</span><b id="ageD">–</b></div>
+          <div class="stat"><span>Next birthday in</span><b id="ageN">–</b></div>
+        </div>
+      </div>
+
+      <!-- Rupees in words -->
+      <div class="panel" id="p-words" role="tabpanel" aria-labelledby="t-words" hidden>
+        <h3>Rupees in words</h3>
+        <p>Useful for cheques and invoices. Uses lakh and crore.</p>
+        <div class="grid"><div><label for="rw">Amount (₹)</label><input id="rw" type="number" min="0" step="0.01" value="1234567.50"></div></div>
+        <button class="btn main" id="rwGo">Convert to words</button>
+        <div class="err" id="rwErr" role="alert"></div>
+        <div class="words" id="rwOut" aria-live="polite"></div>
+      </div>
+
+      <!-- Password -->
+      <div class="panel" id="p-pw" role="tabpanel" aria-labelledby="t-pw" hidden>
+        <h3>Strong password maker</h3>
+        <p>Made on your device with your browser’s secure random generator.</p>
+        <label for="pwLen">Length: <b id="pwLenV">16</b></label>
+        <input id="pwLen" type="range" min="8" max="64" value="16">
+        <div class="opts">
+          <label><input type="checkbox" id="oU" checked>Capital letters</label>
+          <label><input type="checkbox" id="oL" checked>Small letters</label>
+          <label><input type="checkbox" id="oN" checked>Numbers</label>
+          <label><input type="checkbox" id="oS" checked>Symbols</label>
+        </div>
+        <div class="pw">
+          <output id="pwOut" aria-live="polite">Press “Make password”</output>
+          <button class="btn" id="pwCopy" type="button">Copy</button>
+        </div>
+        <div class="meter" aria-hidden="true"><i id="pwMeter"></i></div>
+        <button class="btn main" id="pwGo">Make password</button>
+        <div class="err" id="pwErr" role="alert"></div>
+      </div>
+
+      <!-- Word counter -->
+      <div class="panel" id="p-count" role="tabpanel" aria-labelledby="t-count" hidden>
+        <h3>Word counter</h3>
+        <p>Paste or type your text. Counts update as you type.</p>
+        <label for="txt">Your text</label>
+        <textarea id="txt" placeholder="Start typing here…"></textarea>
+        <div class="result">
+          <div class="stat hl"><span>Words</span><b id="cW">0</b></div>
+          <div class="stat"><span>Characters</span><b id="cC">0</b></div>
+          <div class="stat"><span>Sentences</span><b id="cS">0</b></div>
+          <div class="stat"><span>Reading time</span><b id="cR">0 sec</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <h2>About this site</h2>
+        <p>Hi, I’m Nishant Chandel. I built this site to put the small calculators people look for every day in one clean, dark page that loads instantly, even on a slow connection.</p>
+        <p>There are no ads, no sign-ups and no trackers. All the maths happens inside your browser.</p>
+      </div>
+      <ul>
+        <li><b>Made for India</b><span>Amounts in ₹ with lakh and crore grouping, GST split into CGST and SGST, and time in IST.</span></li>
+        <li><b>Private</b><span>Nothing you enter leaves your device.</span></li>
+        <li><b>Works offline</b><span>One file, no outside libraries, fonts or images.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Nishant Chandel. Made in India.</span>
+    <span>Results are for guidance only.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var inr = function (n, d) {
+    return "₹" + Number(n).toLocaleString("en-IN", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
+  };
+
+  /* Footer year */
+  $("yr").textContent = new Date().getFullYear();
+
+  /* Live IST clock */
+  var tf, df;
+  try {
+    tf = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
+    df = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  } catch (e) { tf = null; }
+  function tick() {
+    var now = new Date();
+    $("time").textContent = tf ? tf.format(now).toUpperCase() : now.toLocaleTimeString();
+    $("date").textContent = df ? df.format(now) : now.toDateString();
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- Tabs with fake page-switch transition ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
+  var skel = $("skeleton"), bar = $("loadbar"), addr = $("addrText");
+  var dot = $("addrDot"), state = $("addrState"), note = $("loadNote");
+  var host = location.hostname || "your-site";
+  var current = tabs[0], token = 0, barTimers = [];
+
+  function clearBar() { barTimers.forEach(clearTimeout); barTimers = []; }
+  function startBar() {
+    clearBar();
+    bar.style.transition = "none";
+    bar.style.opacity = "1";
+    bar.style.width = "0";
+    void bar.offsetWidth;
+    bar.style.transition = "width .6s ease-out, opacity .3s ease";
+    bar.style.width = "30%";
+    barTimers.push(setTimeout(function () { bar.style.width = "60%"; }, 500));
+    barTimers.push(setTimeout(function () { bar.style.width = "85%"; }, 1000));
+  }
+  function finishBar() {
+    clearBar();
+    bar.style.transition = "width .25s ease-out, opacity .3s ease .25s";
+    bar.style.width = "100%";
+    barTimers.push(setTimeout(function () { bar.style.opacity = "0"; }, 300));
+  }
+  function setBusy(on, tab) {
+    var name = tab.getAttribute("data-title");
+    dot.className = on ? "dot busy" : "dot";
+    state.textContent = on ? "Loading…" : "";
+    note.textContent = on ? "Loading " + name + "…" : "";
+    document.title = on ? "Loading… · Nishant Chandel" : name + " · Nishant Chandel";
+  }
+  function hideAll() {
+    panels.forEach(function (p) { p.hidden = true; p.classList.remove("leave", "enter"); });
+  }
+  function markTab(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+    });
+  }
+  function showAddr(tab) {
+    addr.innerHTML = "https://" + host + "/<b>tools/" + tab.getAttribute("data-slug") + "</b>";
+  }
+  function go(tab, push) {
+    if (tab === current) return;
+    current = tab;
+    var my = ++token;
+    var panel = $(tab.getAttribute("aria-controls"));
+    markTab(tab);
+    showAddr(tab);
+    if (push) { try { history.pushState({ slug: tab.getAttribute("data-slug") }, "", "#" + tab.getAttribute("data-slug")); } catch (e) {} }
+    setBusy(true, tab);
+    startBar();
+
+    var visible = panels.filter(function (p) { return !p.hidden; })[0];
+    if (visible) visible.classList.add("leave");
+
+    setTimeout(function () {
+      if (my !== token) return;
+      hideAll();
+      skel.hidden = false;
+      setTimeout(function () {
+        if (my !== token) return;
+        skel.hidden = true;
+        panel.hidden = false;
+        panel.classList.add("enter");
+        finishBar();
+        setBusy(false, tab);
+      }, 700 + Math.random() * 500);
+    }, 250);
+  }
+  function tabFromSlug(slug) {
+    for (var i = 0; i < tabs.length; i++) if (tabs[i].getAttribute("data-slug") === slug) return tabs[i];
+    return null;
+  }
+
+  tabs.forEach(function (t, i) {
+    t.tabIndex = i === 0 ? 0 : -1;
+    t.addEventListener("click", function () { go(t, true); });
+    t.addEventListener("keydown", function (e) {
+      var k = e.key, j = -1;
+      if (k === "ArrowRight") j = (i + 1) % tabs.length;
+      if (k === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      if (j > -1) { e.preventDefault(); go(tabs[j], true); tabs[j].focus(); }
+    });
+  });
+
+  /* Back / Forward buttons (normal links like #tools and #about are ignored) */
+  window.addEventListener("popstate", function () {
+    var t = tabFromSlug(location.hash.slice(1));
+    if (t) go(t, false);
+  });
+
+  /* Open the right tool if the page is opened with a link like #gst-calculator */
+  (function init() {
+    var first = tabFromSlug(location.hash.slice(1)) || tabs[0];
+    if (first !== tabs[0]) {
+      current = first; markTab(first); hideAll();
+      $(first.getAttribute("aria-controls")).hidden = false;
+      document.title = first.getAttribute("data-title") + " · Nishant Chandel";
+    }
+    showAddr(first);
+  })();
+
+  /* EMI */
+  $("emiGo").addEventListener("click", function () {
+    var P = parseFloat($("emiP").value), R = parseFloat($("emiR").value), Y = parseFloat($("emiY").value);
+    var err = $("emiErr");
+    if (!(P > 0) || !(R >= 0) || !(Y > 0)) {
+      err.textContent = "Enter a loan amount, interest rate and tenure greater than zero.";
+      $("emiOut").hidden = true; $("emiBarBox").hidden = true; return;
+    }
+    err.textContent = "";
+    var n = Math.round(Y * 12), r = R / 12 / 100, emi;
+    if (n < 1) n = 1;
+    emi = r === 0 ? P / n : P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    var total = emi * n, interest = total - P;
+    $("emiV").textContent = inr(emi);
+    $("emiI").textContent = inr(interest);
+    $("emiT").textContent = inr(total);
+    var pp = (P / total) * 100;
+    $("barP").style.width = pp + "%";
+    $("barI").style.width = (100 - pp) + "%";
+    $("lgP").textContent = Math.round(pp) + "%";
+    $("lgI").textContent = Math.round(100 - pp) + "%";
+    $("emiOut").hidden = false; $("emiBarBox").hidden = false;
+  });
+
+  /* GST */
+  $("gstGo").addEventListener("click", function () {
+    var a = parseFloat($("gstA").value), r = parseFloat($("gstR").value), m = $("gstM").value;
+    if (!(a >= 0)) { $("gstErr").textContent = "Enter an amount of zero or more."; $("gstOut").hidden = true; return; }
+    $("gstErr").textContent = "";
+    var net, gst;
+    if (m === "add") { net = a; gst = a * r / 100; }
+    else { net = a / (1 + r / 100); gst = a - net; }
+    $("gstN").textContent = inr(net, 2);
+    $("gstC").textContent = inr(gst / 2, 2);
+    $("gstS").textContent = inr(gst / 2, 2);
+    $("gstT").textContent = inr(net + gst, 2);
+    $("gstOut").hidden = false;
+  });
+
+  /* Age */
+  $("dob").max = new Date().toISOString().slice(0, 10);
+  $("ageGo").addEventListener("click", function () {
+    var v = $("dob").value;
+    if (!v) { $("ageErr").textContent = "Choose your date of birth."; $("ageOut").hidden = true; return; }
+    var p = v.split("-"), b = new Date(+p[0], +p[1] - 1, +p[2]);
+    var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (b > today) { $("ageErr").textContent = "Date of birth cannot be in the future."; $("ageOut").hidden = true; return; }
+    $("ageErr").textContent = "";
+    var y = today.getFullYear() - b.getFullYear(), m = today.getMonth() - b.getMonth(), d = today.getDate() - b.getDate();
+    if (d < 0) { m--; d += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
+    if (m < 0) { y--; m += 12; }
+    var next = new Date(today.getFullYear(), b.getMonth(), b.getDate());
+    if (next < today) next = new Date(today.getFullYear() + 1, b.getMonth(), b.getDate());
+    var left = Math.round((next - today) / 864e5);
+    $("ageV").textContent = y + "y " + m + "m " + d + "d";
+    $("ageD").textContent = Math.round((today - b) / 864e5).toLocaleString("en-IN");
+    $("ageN").textContent = left === 0 ? "Today! 🎂" : left + " days";
+    $("ageOut").hidden = false;
+  });
+
+  /* Rupees in words (Indian system) */
+  var ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+  var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  function two(n) { return n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : ""); }
+  function three(n) {
+    var h = Math.floor(n / 100), r = n % 100, s = "";
+    if (h) s = ones[h] + " Hundred";
+    if (r) s += (s ? " " : "") + two(r);
+    return s;
+  }
+  function words(n) {
+    if (n === 0) return "Zero";
+    var parts = [], cr = Math.floor(n / 1e7), la = Math.floor(n / 1e5) % 100, th = Math.floor(n / 1e3) % 100, rest = n % 1e3;
+    if (cr) parts.push(words(cr) + " Crore");
+    if (la) parts.push(two(la) + " Lakh");
+    if (th) parts.push(two(th) + " Thousand");
+    if (rest) parts.push(three(rest));
+    return parts.join(" ");
+  }
+  $("rwGo").addEventListener("click", function () {
+    var v = parseFloat($("rw").value);
+    if (!(v >= 0) || v >= 1e12) {
+      $("rwErr").textContent = "Enter an amount from 0 up to 99,99,99,99,999.99.";
+      $("rwOut").textContent = ""; return;
+    }
+    $("rwErr").textContent = "";
+    var total = Math.round(v * 100), rs = Math.floor(total / 100), ps = total % 100;
+    var out = "Rupees " + words(rs);
+    if (ps) out += " and " + two(ps) + " Paise";
+    $("rwOut").textContent = out + " Only";
+  });
+
+  /* Password */
+  var sets = { oU: "ABCDEFGHIJKLMNOPQRSTUVWXYZ", oL: "abcdefghijklmnopqrstuvwxyz", oN: "0123456789", oS: "!@#$%^&*()-_=+[]{};:,.?" };
+  function rnd(max) {
+    var c = window.crypto || window.msCrypto;
+    if (!c || !c.getRandomValues) return -1;
+    var a = new Uint32Array(1), lim = Math.floor(4294967296 / max) * max;
+    do { c.getRandomValues(a); } while (a[0] >= lim);
+    return a[0] % max;
+  }
+  $("pwLen").addEventListener("input", function () { $("pwLenV").textContent = this.value; });
+  $("pwGo").addEventListener("click", function () {
+    var pool = "", picked = [], len = parseInt($("pwLen").value, 10), k;
+    for (k in sets) if ($(k).checked) { pool += sets[k]; picked.push(sets[k]); }
+    if (!pool) { $("pwErr").textContent = "Select at least one character type."; return; }
+    if (rnd(2) < 0) { $("pwErr").textContent = "Secure random numbers are not available in this browser."; return; }
+    $("pwErr").textContent = "";
+    var out = [], i;
+    for (i = 0; i < picked.length && i < len; i++) out.push(picked[i][rnd(picked[i].length)]);
+    while (out.length < len) out.push(pool[rnd(pool.length)]);
+    for (i = out.length - 1; i > 0; i--) { var j = rnd(i + 1), t = out[i]; out[i] = out[j]; out[j] = t; }
+    $("pwOut").textContent = out.join("");
+    var bits = len * Math.log(pool.length) / Math.LN2, m = $("pwMeter");
+    m.style.width = Math.min(100, bits / 1.28) + "%";
+    m.style.background = bits < 50 ? "var(--danger)" : bits < 80 ? "var(--saffron)" : "var(--green)";
+  });
+  $("pwCopy").addEventListener("click", function () {
+    var txt = $("pwOut").textContent, btn = this;
+    if (!txt || txt.indexOf("Press") === 0) return;
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { $("pwErr").textContent = "Copy failed. Select the password and copy it manually."; }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+  });
+
+  /* Word counter */
+  $("txt").addEventListener("input", function () {
+    var t = this.value, trimmed = t.trim();
+    var w = trimmed ? trimmed.split(/\s+/).length : 0;
+    var s = trimmed ? (trimmed.match(/[^.!?।]+[.!?।]+|[^.!?।]+$/g) || []).length : 0;
+    var secs = Math.round(w / 200 * 60);
+    $("cW").textContent = w.toLocaleString("en-IN");
+    $("cC").textContent = t.length.toLocaleString("en-IN");
+    $("cS").textContent = s;
+    $("cR").textContent = secs < 60 ? secs + " sec" : Math.ceil(secs / 60) + " min";
+  });
+})();
+</script>
+</body>
+</html>
