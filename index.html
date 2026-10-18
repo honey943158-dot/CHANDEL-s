@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Nishant Chandel – free everyday tools for India: EMI, GST, age, rupees in words, typing test, password generator and word counter.">
+<meta name="description" content="Nishant Chandel – free everyday tools for India: GST, age, rupees in words, typing test, snake game, festival countdown, password generator and word counter.">
 <title>Nishant Chandel · Useful Tools for India</title>
 <style>
 :root{
@@ -48,7 +48,7 @@ nav a{color:var(--muted);text-decoration:none}
 nav a:hover{color:var(--text)}
 
 /* hero */
-.hero{padding:clamp(2.5rem,8vw,5.5rem) 0 3rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:center}
+.hero{padding:clamp(2.5rem,8vw,5.5rem) 0 2rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:center}
 .hero h1{font-family:var(--serif);font-size:clamp(2.7rem,8.5vw,5.6rem);line-height:1.02;letter-spacing:-.02em;font-weight:700;background:linear-gradient(95deg,var(--saffron) 5%,#ffffff 50%,var(--green) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-bottom:.1em}
 .hero-line{margin-top:1rem;font-size:clamp(1.15rem,3vw,1.5rem);font-family:var(--serif);color:var(--text);min-height:2.2rem}
 .hero-line b{color:var(--saffron);font-weight:700}
@@ -64,6 +64,15 @@ nav a:hover{color:var(--text)}
 #time{font-family:var(--serif);font-size:clamp(2.2rem,6vw,3.3rem);font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1.1;margin:.3rem 0}
 #date{color:var(--text)}
 .stripe{height:4px;margin-top:1rem;border-radius:2px;background:linear-gradient(90deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
+
+/* next festival banner on home */
+.fest-home{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;text-decoration:none;background:linear-gradient(110deg,rgba(255,153,51,.18),rgba(124,108,240,.14));border:1px solid rgba(255,153,51,.5);border-radius:16px;padding:1rem 1.3rem;margin-bottom:2.4rem;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:transform .2s ease,box-shadow .2s ease}
+.fest-home:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.fest-home .fi{font-size:2rem;line-height:1}
+.fest-home .ft{flex:1 1 220px;min-width:0}
+.fest-home small{display:block;color:var(--muted)}
+.fest-home b{font-family:var(--serif);font-size:1.3rem}
+.fest-home .fc{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--saffron);font-variant-numeric:tabular-nums}
 
 /* home tool cards */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1rem}
@@ -132,9 +141,6 @@ textarea{min-height:170px;resize:vertical}
 .stat b{font-family:var(--serif);font-size:1.45rem;font-weight:700;word-break:break-word}
 .stat.hl{border-color:rgba(255,153,51,.5)}
 .stat.hl b{color:var(--saffron)}
-.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:1rem;background:var(--raised)}
-.bar i{display:block;height:100%}
-.legend{display:flex;gap:1.2rem;font-size:.85rem;color:var(--muted);margin-top:.5rem}
 .words{margin-top:1.2rem;background:rgba(8,10,28,.45);border:1px solid var(--line);border-radius:12px;padding:1rem;min-height:3.2rem;font-family:var(--serif);font-size:1.2rem}
 .pw{margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
 .pw output{flex:1 1 260px;background:rgba(8,10,28,.7);border:1px dashed var(--line);border-radius:10px;padding:.7rem .9rem;font-family:var(--mono);word-break:break-all}
@@ -144,6 +150,7 @@ textarea{min-height:170px;resize:vertical}
 .meter{height:6px;border-radius:3px;background:var(--raised);margin-top:1rem;overflow:hidden}
 .meter i{display:block;height:100%;width:0;transition:width .3s,background .3s}
 .err{color:var(--danger);margin-top:1rem;min-height:1.2rem;font-size:.92rem}
+.note{color:var(--muted);font-size:.82rem;margin-top:1rem}
 
 /* typing test */
 .ty-top{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1rem}
@@ -172,6 +179,40 @@ textarea{min-height:170px;resize:vertical}
 .ty-end[hidden]{display:none}
 .ty-end b{font-family:var(--serif);font-size:1.25rem;display:block;margin-bottom:.2rem}
 
+/* snake game */
+.sn-wrap{position:relative;width:min(100%,440px);margin:1.2rem auto 0}
+#snCv{display:block;width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:14px;background:#0a0c1f;touch-action:none;box-shadow:0 0 40px rgba(63,212,143,.12)}
+.sn-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:1rem;pointer-events:none;border-radius:14px;background:rgba(8,10,28,.62)}
+.sn-msg[hidden]{display:none}
+.sn-msg span{background:rgba(10,12,31,.9);border:1px solid var(--saffron);border-radius:12px;padding:.7rem 1.2rem;font-weight:600}
+.sn-btns{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.sn-btns .btn{margin-top:1rem}
+.sn-pad{display:grid;grid-template-columns:repeat(3,58px);grid-auto-rows:52px;gap:.4rem;justify-content:center;margin-top:1.1rem}
+.sn-pad button{background:var(--raised);color:var(--text);border:1px solid var(--line);border-radius:12px;font-size:1.2rem;cursor:pointer;touch-action:manipulation}
+.sn-pad button:active{border-color:var(--saffron);background:#2a3160}
+.sn-pad .u{grid-column:2}
+@media(hover:hover) and (pointer:fine){.sn-pad{display:none}}
+
+/* festival countdown */
+.fest-card{background:rgba(8,10,28,.45);border:1px solid rgba(255,153,51,.5);border-radius:16px;padding:1.2rem 1.3rem}
+.fest-card small{color:var(--muted)}
+.fest-card h4{font-family:var(--serif);font-size:clamp(1.5rem,5vw,2rem);line-height:1.2}
+.fest-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:1rem}
+.fest-nums[hidden]{display:none}
+.fest-nums div{text-align:center;background:var(--raised);border-radius:12px;padding:.7rem .3rem}
+.fest-nums b{display:block;font-family:var(--serif);font-size:clamp(1.5rem,5vw,2.2rem);font-variant-numeric:tabular-nums;color:var(--saffron);line-height:1.1}
+.fest-nums span{font-size:.78rem;color:var(--muted)}
+.fest-today{margin-top:1rem;font-family:var(--serif);font-size:1.3rem;color:var(--green)}
+.fest-today[hidden]{display:none}
+.fest-list{list-style:none;margin-top:1.2rem;display:grid;gap:.5rem}
+.fest-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.8rem;text-align:left;background:rgba(8,10,28,.4);border:1px solid var(--line);border-radius:12px;padding:.65rem .9rem;color:var(--text);font:inherit;cursor:pointer}
+.fest-row:hover{border-color:var(--saffron)}
+.fest-row[aria-pressed="true"]{border-color:var(--saffron);background:rgba(255,153,51,.12)}
+.fest-row .l{display:flex;gap:.7rem;align-items:center;min-width:0}
+.fest-row .l small{display:block;color:var(--muted)}
+.fest-row .ic2{font-size:1.4rem}
+.fest-row .r{color:var(--saffron);font-weight:700;white-space:nowrap}
+
 /* about */
 .about{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
 .about p{color:var(--muted);margin-bottom:1rem}
@@ -191,7 +232,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
   .panel.enter{animation-name:fade}
   .sk{animation-duration:2.4s}
   .bg i,.bg .chakra,.caret,.ty-box .cur{animation:none}
-  .card{transition:none}
+  .card,.fest-home{transition:none}
 }
 
 /* =====================================================================
@@ -287,8 +328,9 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
 <header>
   <div class="wrap">
-    <a class="brand" href="#top" data-go="home">Nishant Chandel</a>
+    <a class="brand" href="#home" data-go="home">Nishant Chandel</a>
     <nav aria-label="Main">
+      <a href="#home" data-go="home" aria-current="page">Home</a>
       <a href="#tools" data-go="tools">Tools</a>
       <a href="#about" data-go="about">About</a>
 
@@ -328,8 +370,8 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     <div class="wrap hero">
       <div>
         <h1>Nishant Chandel</h1>
-        <div class="hero-line" aria-live="off">Free tools for <b id="rot">EMI planning</b><i class="caret" aria-hidden="true"></i></div>
-        <p class="lead">Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, test your typing speed and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
+        <div class="hero-line" aria-live="off">Free tools for <b id="rot">GST maths</b><i class="caret" aria-hidden="true"></i></div>
+        <p class="lead">Simple, fast tools for everyday life in India. Add or remove GST, write amounts in rupees, test your typing speed, play a quick game of snake, count down to the next festival and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
         <a class="cta" href="#tools" data-go="tools">Open the tools</a>
         <div class="chips"><span>No ads</span><span>No trackers</span><span>Works in your browser</span></div>
       </div>
@@ -342,14 +384,21 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     </div>
 
     <div class="wrap home-tools">
+      <a class="fest-home" href="#festival-countdown" data-tool="festival-countdown">
+        <span class="fi" id="fhIcon" aria-hidden="true">🪔</span>
+        <span class="ft"><small>Next festival</small><b id="fhName">Loading…</b></span>
+        <span class="fc" id="fhCount"></span>
+      </a>
+
       <h2>Pick a tool</h2>
       <p class="sub">Tap a card to open it.</p>
       <div class="cards">
-        <a class="card" href="#emi-calculator" data-tool="emi-calculator" style="--a:#ff9933"><span class="ic">₹</span><b>EMI calculator</b><span>Monthly instalment for any loan.</span></a>
         <a class="card" href="#gst-calculator" data-tool="gst-calculator" style="--a:#3fd48f"><span class="ic">%</span><b>GST calculator</b><span>Add or remove GST with CGST and SGST.</span></a>
         <a class="card" href="#typing-test" data-tool="typing-test" style="--a:#ff6b9d"><span class="ic">⌨</span><b>Typing test</b><span>Check your speed and accuracy. Mistakes show in red.</span></a>
+        <a class="card" href="#snake-game" data-tool="snake-game" style="--a:#ff9933"><span class="ic">🐍</span><b>Snake game</b><span>Eat, grow and beat your best score.</span></a>
+        <a class="card" href="#festival-countdown" data-tool="festival-countdown" style="--a:#ffcf5c"><span class="ic">🪔</span><b>Festival countdown</b><span>Days left for Diwali, Holi and more.</span></a>
         <a class="card" href="#age-calculator" data-tool="age-calculator" style="--a:#7c6cf0"><span class="ic">🎂</span><b>Age calculator</b><span>Exact age and days to your birthday.</span></a>
-        <a class="card" href="#rupees-in-words" data-tool="rupees-in-words" style="--a:#ffcf5c"><span class="ic">अ</span><b>Rupees in words</b><span>For cheques and invoices, in lakh and crore.</span></a>
+        <a class="card" href="#rupees-in-words" data-tool="rupees-in-words" style="--a:#ff8a5c"><span class="ic">अ</span><b>Rupees in words</b><span>For cheques and invoices, in lakh and crore.</span></a>
         <a class="card" href="#password-maker" data-tool="password-maker" style="--a:#4cc9f0"><span class="ic">🔑</span><b>Password maker</b><span>Strong passwords made on your device.</span></a>
         <a class="card" href="#word-counter" data-tool="word-counter" style="--a:#b5e86b"><span class="ic">¶</span><b>Word counter</b><span>Words, characters and reading time.</span></a>
       </div>
@@ -369,9 +418,10 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       </div>
 
       <div class="tabs" role="tablist" aria-label="Tools">
-        <button class="tab" role="tab" id="t-emi" aria-controls="p-emi" aria-selected="true" data-slug="emi-calculator" data-title="EMI calculator">EMI calculator</button>
-        <button class="tab" role="tab" id="t-gst" aria-controls="p-gst" aria-selected="false" data-slug="gst-calculator" data-title="GST calculator">GST calculator</button>
+        <button class="tab" role="tab" id="t-gst" aria-controls="p-gst" aria-selected="true" data-slug="gst-calculator" data-title="GST calculator">GST calculator</button>
         <button class="tab" role="tab" id="t-type" aria-controls="p-type" aria-selected="false" data-slug="typing-test" data-title="Typing test">Typing test</button>
+        <button class="tab" role="tab" id="t-snake" aria-controls="p-snake" aria-selected="false" data-slug="snake-game" data-title="Snake game">Snake game</button>
+        <button class="tab" role="tab" id="t-fest" aria-controls="p-fest" aria-selected="false" data-slug="festival-countdown" data-title="Festival countdown">Festival countdown</button>
         <button class="tab" role="tab" id="t-age" aria-controls="p-age" aria-selected="false" data-slug="age-calculator" data-title="Age calculator">Age calculator</button>
         <button class="tab" role="tab" id="t-words" aria-controls="p-words" aria-selected="false" data-slug="rupees-in-words" data-title="Rupees in words">Rupees in words</button>
         <button class="tab" role="tab" id="t-pw" aria-controls="p-pw" aria-selected="false" data-slug="password-maker" data-title="Password maker">Password maker</button>
@@ -388,30 +438,8 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
         <div class="sk-row"><span class="sk s"></span><span class="sk s"></span><span class="sk s"></span></div>
       </div>
 
-      <!-- EMI -->
-      <div class="panel" id="p-emi" role="tabpanel" aria-labelledby="t-emi">
-        <h3>Loan EMI calculator</h3>
-        <p>Works for home, car and personal loans.</p>
-        <div class="grid">
-          <div><label for="emiP">Loan amount (₹)</label><input id="emiP" type="number" min="1" value="1000000"></div>
-          <div><label for="emiR">Interest rate (% per year)</label><input id="emiR" type="number" min="0" step="0.05" value="8.5"></div>
-          <div><label for="emiY">Tenure (years)</label><input id="emiY" type="number" min="0.1" step="0.5" value="10"></div>
-        </div>
-        <button class="btn main" id="emiGo">Calculate EMI</button>
-        <div class="err" id="emiErr" role="alert"></div>
-        <div class="result" id="emiOut" hidden>
-          <div class="stat hl"><span>Monthly EMI</span><b id="emiV">–</b></div>
-          <div class="stat"><span>Total interest</span><b id="emiI">–</b></div>
-          <div class="stat"><span>Total payable</span><b id="emiT">–</b></div>
-        </div>
-        <div id="emiBarBox" hidden>
-          <div class="bar" aria-hidden="true"><i id="barP" style="background:var(--green)"></i><i id="barI" style="background:var(--saffron)"></i></div>
-          <div class="legend"><span>Principal <b id="lgP"></b></span><span>Interest <b id="lgI"></b></span></div>
-        </div>
-      </div>
-
       <!-- GST -->
-      <div class="panel" id="p-gst" role="tabpanel" aria-labelledby="t-gst" hidden>
+      <div class="panel" id="p-gst" role="tabpanel" aria-labelledby="t-gst">
         <h3>GST calculator</h3>
         <p>Add GST to a price, or take it out of a GST-inclusive price.</p>
         <div class="grid">
@@ -459,6 +487,51 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
           <div class="stat"><span>Your best</span><b id="tyBest">–</b></div>
         </div>
         <div class="ty-end" id="tyEnd" role="status" aria-live="polite" hidden></div>
+      </div>
+
+      <!-- Snake game -->
+      <div class="panel" id="p-snake" role="tabpanel" aria-labelledby="t-snake" hidden>
+        <h3>Snake game</h3>
+        <p>Eat the red dots to grow. Do not hit the wall or yourself. Use the arrow keys or W A S D, press Space to pause, or swipe on the board on a phone.</p>
+        <div class="result" style="margin-top:0">
+          <div class="stat hl"><span>Score</span><b id="snScore">0</b></div>
+          <div class="stat"><span>Best</span><b id="snBest">0</b></div>
+          <div class="stat"><span>Level</span><b id="snLvl">1</b></div>
+        </div>
+        <div class="sn-wrap">
+          <canvas id="snCv" width="400" height="400" role="img" aria-label="Snake game board"></canvas>
+          <div class="sn-msg" id="snMsg"><span id="snMsgT">Press an arrow key or Start</span></div>
+        </div>
+        <div class="sn-btns">
+          <button class="btn main" id="snGo" type="button">Start</button>
+          <button class="btn" id="snRestart" type="button">Restart</button>
+        </div>
+        <div class="sn-pad" aria-label="On-screen arrow buttons">
+          <button type="button" class="u" data-dx="0" data-dy="-1" aria-label="Up">▲</button>
+          <button type="button" data-dx="-1" data-dy="0" aria-label="Left">◀</button>
+          <button type="button" data-dx="0" data-dy="1" aria-label="Down">▼</button>
+          <button type="button" data-dx="1" data-dy="0" aria-label="Right">▶</button>
+        </div>
+      </div>
+
+      <!-- Festival countdown -->
+      <div class="panel" id="p-fest" role="tabpanel" aria-labelledby="t-fest" hidden>
+        <h3>Festival countdown</h3>
+        <p>See how much time is left for the next festival. Tap any festival in the list to count down to it.</p>
+        <div class="fest-card">
+          <small>Counting down to</small>
+          <h4><span id="fIcon" aria-hidden="true"></span> <span id="fName">–</span></h4>
+          <small id="fDate"></small>
+          <div class="fest-today" id="fToday" hidden></div>
+          <div class="fest-nums" id="fNums">
+            <div><b id="fD">0</b><span>days</span></div>
+            <div><b id="fH">00</b><span>hours</span></div>
+            <div><b id="fM">00</b><span>minutes</span></div>
+            <div><b id="fS">00</b><span>seconds</span></div>
+          </div>
+        </div>
+        <ul class="fest-list" id="festList"></ul>
+        <p class="note">Time is counted in India Standard Time. Festivals that follow the moon can fall a day earlier or later in some places.</p>
       </div>
 
       <!-- Age -->
@@ -626,7 +699,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
   /* Hero: changing words (typewriter) */
   (function () {
-    var rot = $("rot"), words = ["EMI planning", "GST maths", "typing speed", "safe passwords", "cheques and invoices", "birthday countdowns"];
+    var rot = $("rot"), words = ["GST maths", "typing speed", "festival countdowns", "a quick game of snake", "safe passwords", "cheques and invoices", "birthday countdowns"];
     if (reduceMotion) { rot.textContent = words[0]; return; }
     var wi = 0, ci = 0, del = false;
     function step() {
@@ -837,7 +910,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     }, 250);
   }
 
-  /* Clicks on links with data-go: logo, Tools, About, "Open the tools" */
+  /* Clicks on links with data-go: logo, Home, Tools, About, "Open the tools" */
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("[data-go]") : null;
     if (!a) return;
@@ -846,7 +919,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     openPage(a.getAttribute("data-go"), true);
   });
 
-  /* Clicks on the tool cards on the home page */
+  /* Clicks on the tool cards and the festival banner on the home page */
   document.addEventListener("click", function (e) {
     var c = e.target.closest ? e.target.closest("[data-tool]") : null;
     if (!c) return;
@@ -877,30 +950,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     markNav(page);
     document.title = pageTitle(page);
   })();
-
-  /* EMI */
-  $("emiGo").addEventListener("click", function () {
-    var P = parseFloat($("emiP").value), R = parseFloat($("emiR").value), Y = parseFloat($("emiY").value);
-    var err = $("emiErr");
-    if (!(P > 0) || !(R >= 0) || !(Y > 0)) {
-      err.textContent = "Enter a loan amount, interest rate and tenure greater than zero.";
-      $("emiOut").hidden = true; $("emiBarBox").hidden = true; return;
-    }
-    err.textContent = "";
-    var n = Math.round(Y * 12), r = R / 12 / 100, emi;
-    if (n < 1) n = 1;
-    emi = r === 0 ? P / n : P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
-    var total = emi * n, interest = total - P;
-    $("emiV").textContent = inr(emi);
-    $("emiI").textContent = inr(interest);
-    $("emiT").textContent = inr(total);
-    var pp = (P / total) * 100;
-    $("barP").style.width = pp + "%";
-    $("barI").style.width = (100 - pp) + "%";
-    $("lgP").textContent = Math.round(pp) + "%";
-    $("lgI").textContent = Math.round(100 - pp) + "%";
-    $("emiOut").hidden = false; $("emiBarBox").hidden = false;
-  });
 
   /* GST */
   $("gstGo").addEventListener("click", function () {
@@ -1056,6 +1105,268 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   $("tyRestart").addEventListener("click", function () { tyReset(false); tyIn.focus(); });
   $("tyNew").addEventListener("click", function () { tyReset(true); tyIn.focus(); });
   tyReset(true);
+
+  /* ---------- Snake game ---------- */
+  var sn = { N: 20, C: 20, snake: [], dir: { x: 1, y: 0 }, q: [], food: null, score: 0, best: 0, state: "idle", timer: null };
+  try { sn.best = parseInt(localStorage.getItem("nc_snake_best"), 10) || 0; } catch (e) {}
+  var snCv = $("snCv"), snCtx = snCv.getContext ? snCv.getContext("2d") : null;
+
+  function snRR(x, y, w, h, r) {
+    snCtx.beginPath();
+    snCtx.moveTo(x + r, y);
+    snCtx.arcTo(x + w, y, x + w, y + h, r);
+    snCtx.arcTo(x + w, y + h, x, y + h, r);
+    snCtx.arcTo(x, y + h, x, y, r);
+    snCtx.arcTo(x, y, x + w, y, r);
+    snCtx.closePath();
+  }
+  function snDraw() {
+    if (!snCtx) return;
+    var c = sn.C, N = sn.N, x, y, i, s;
+    snCtx.fillStyle = "#0a0c1f";
+    snCtx.fillRect(0, 0, c * N, c * N);
+    snCtx.fillStyle = "rgba(255,255,255,.035)";
+    for (x = 0; x < N; x++) for (y = 0; y < N; y++) if ((x + y) % 2) snCtx.fillRect(x * c, y * c, c, c);
+    if (sn.food) {
+      snCtx.shadowColor = "#ff6b6b"; snCtx.shadowBlur = 14;
+      snCtx.fillStyle = "#ff6b6b";
+      snCtx.beginPath();
+      snCtx.arc(sn.food.x * c + c / 2, sn.food.y * c + c / 2, c * 0.34, 0, Math.PI * 2);
+      snCtx.fill();
+      snCtx.shadowBlur = 0;
+    }
+    for (i = sn.snake.length - 1; i >= 0; i--) {
+      s = sn.snake[i];
+      snCtx.fillStyle = i === 0 ? "#ff9933" : (i % 2 ? "#3fd48f" : "#35c47f");
+      snRR(s.x * c + 1, s.y * c + 1, c - 2, c - 2, 5);
+      snCtx.fill();
+    }
+    var h = sn.snake[0], d = sn.dir, cx = h.x * c + c / 2, cy = h.y * c + c / 2;
+    var px = -d.y, py = d.x;
+    snCtx.fillStyle = "#1a1205";
+    [-1, 1].forEach(function (sg) {
+      snCtx.beginPath();
+      snCtx.arc(cx + d.x * 3 + px * 4 * sg, cy + d.y * 3 + py * 4 * sg, 2.2, 0, Math.PI * 2);
+      snCtx.fill();
+    });
+  }
+  function snStats() {
+    $("snScore").textContent = sn.score;
+    $("snBest").textContent = sn.best;
+    $("snLvl").textContent = Math.floor(sn.score / 50) + 1;
+  }
+  function snSet(st, msg) {
+    sn.state = st;
+    $("snMsg").hidden = !msg;
+    if (msg) $("snMsgT").textContent = msg;
+    $("snGo").textContent = st === "run" ? "Pause" : st === "pause" ? "Resume" : st === "over" ? "Play again" : "Start";
+  }
+  function snFood() {
+    var x, y, free;
+    do {
+      x = Math.floor(Math.random() * sn.N); y = Math.floor(Math.random() * sn.N);
+      free = !sn.snake.some(function (s) { return s.x === x && s.y === y; });
+    } while (!free);
+    sn.food = { x: x, y: y };
+  }
+  function snReset() {
+    clearTimeout(sn.timer);
+    sn.snake = [{ x: 8, y: 10 }, { x: 7, y: 10 }, { x: 6, y: 10 }];
+    sn.dir = { x: 1, y: 0 }; sn.q = []; sn.score = 0;
+    snFood(); snStats(); snDraw();
+    snSet("idle", "Press an arrow key, W A S D or Start");
+  }
+  function snSpeed() { return Math.max(60, 150 - Math.floor(sn.score / 10) * 5); }
+  function snLoop() {
+    sn.timer = setTimeout(function () {
+      snStep();
+      if (sn.state === "run") snLoop();
+    }, snSpeed());
+  }
+  function snPause(msg) {
+    clearTimeout(sn.timer);
+    snSet("pause", msg || "Paused. Press Space or Resume");
+  }
+  function snStart() {
+    if (sn.state === "over") snReset();
+    if (sn.state === "run") return;
+    snSet("run", "");
+    snLoop();
+  }
+  function snOver() {
+    clearTimeout(sn.timer);
+    var newBest = false;
+    if (sn.score > sn.best) {
+      sn.best = sn.score; newBest = true;
+      try { localStorage.setItem("nc_snake_best", String(sn.best)); } catch (e) {}
+    }
+    snStats();
+    snSet("over", "Game over! Score " + sn.score + (newBest ? ". New best!" : ""));
+  }
+  function snStep() {
+    if ($("p-snake").hidden || pageEls.tools.hidden) { snPause("Paused. Press Space or Resume"); return; }
+    if (sn.q.length) {
+      var nd = sn.q.shift();
+      if (!(nd.x === -sn.dir.x && nd.y === -sn.dir.y)) sn.dir = nd;
+    }
+    var head = { x: sn.snake[0].x + sn.dir.x, y: sn.snake[0].y + sn.dir.y };
+    var hit = head.x < 0 || head.y < 0 || head.x >= sn.N || head.y >= sn.N;
+    if (!hit) {
+      for (var i = 0; i < sn.snake.length - 1; i++) {
+        if (sn.snake[i].x === head.x && sn.snake[i].y === head.y) { hit = true; break; }
+      }
+    }
+    if (hit) { snDraw(); snOver(); return; }
+    sn.snake.unshift(head);
+    if (sn.food && head.x === sn.food.x && head.y === sn.food.y) {
+      sn.score += 10;
+      if (sn.score > sn.best) sn.best = sn.score;
+      if (sn.snake.length >= sn.N * sn.N) { snDraw(); snStats(); snOver(); return; }
+      snFood();
+    } else {
+      sn.snake.pop();
+    }
+    snStats(); snDraw();
+  }
+  function snDir(x, y) {
+    if (sn.state === "over") return;
+    var last = sn.q.length ? sn.q[sn.q.length - 1] : sn.dir;
+    if (!(x === last.x && y === last.y) && !(x === -last.x && y === -last.y) && sn.q.length < 2) sn.q.push({ x: x, y: y });
+    if (sn.state !== "run") snStart();
+  }
+  $("snGo").addEventListener("click", function () {
+    if (sn.state === "run") snPause(); else snStart();
+  });
+  $("snRestart").addEventListener("click", function () { snReset(); });
+  Array.prototype.slice.call(document.querySelectorAll(".sn-pad button")).forEach(function (b) {
+    b.addEventListener("click", function () { snDir(parseInt(b.getAttribute("data-dx"), 10), parseInt(b.getAttribute("data-dy"), 10)); });
+  });
+  document.addEventListener("keydown", function (e) {
+    if ($("p-snake").hidden || pageEls.tools.hidden) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target, tag = t && t.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if (t && t.getAttribute && t.getAttribute("role") === "tab") return;
+    var k = e.key, handled = true;
+    if (k === "ArrowUp" || k === "w" || k === "W") snDir(0, -1);
+    else if (k === "ArrowDown" || k === "s" || k === "S") snDir(0, 1);
+    else if (k === "ArrowLeft" || k === "a" || k === "A") snDir(-1, 0);
+    else if (k === "ArrowRight" || k === "d" || k === "D") snDir(1, 0);
+    else if (k === " " || k === "Spacebar") {
+      if (tag === "BUTTON") return;
+      if (sn.state === "run") snPause(); else snStart();
+    } else handled = false;
+    if (handled && (k.indexOf("Arrow") === 0 || k === " " || k === "Spacebar")) e.preventDefault();
+  });
+  (function swipe() {
+    var sx = 0, sy = 0;
+    snCv.addEventListener("touchstart", function (e) {
+      var t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY;
+    }, { passive: true });
+    snCv.addEventListener("touchend", function (e) {
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) { if (sn.state !== "run") snStart(); return; }
+      if (Math.abs(dx) > Math.abs(dy)) snDir(dx > 0 ? 1 : -1, 0); else snDir(0, dy > 0 ? 1 : -1);
+    }, { passive: true });
+  })();
+  snReset();
+
+  /* ---------- Festival countdown (India Standard Time) ---------- */
+  /* Fixed-date festivals repeat every year by themselves. */
+  var fixedF = [
+    ["01-01", "New Year’s Day", "🎆"],
+    ["01-14", "Makar Sankranti", "🪁"],
+    ["01-26", "Republic Day", "🎉"],
+    ["08-15", "Independence Day", "🎉"],
+    ["10-02", "Gandhi Jayanti", "🕊"],
+    ["12-25", "Christmas", "🎄"]
+  ];
+  /* Festivals that follow the moon: add the next year's dates here when they pass. */
+  var lunarF = [
+    ["2026-10-20", "Dussehra", "🏹"],
+    ["2026-10-29", "Karwa Chauth", "🌙"],
+    ["2026-11-08", "Diwali", "🪔"],
+    ["2026-11-24", "Guru Nanak Jayanti", "🙏"],
+    ["2027-03-06", "Maha Shivratri", "🔱"],
+    ["2027-03-22", "Holi", "🎨"],
+    ["2027-04-15", "Ram Navami", "🛕"]
+  ];
+  var fest = { list: [], sel: "", day: "" };
+  var fdf;
+  try { fdf = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", weekday: "short", day: "numeric", month: "short", year: "numeric" }); } catch (e) { fdf = null; }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function istToday() {
+    var d = new Date(Date.now() + 19800000);
+    return d.getUTCFullYear() + "-" + pad2(d.getUTCMonth() + 1) + "-" + pad2(d.getUTCDate());
+  }
+  function daysTo(a, b) { return Math.round((Date.parse(b + "T00:00:00Z") - Date.parse(a + "T00:00:00Z")) / 864e5); }
+  function fDate(s) { var d = new Date(s + "T00:00:00+05:30"); return fdf ? fdf.format(d) : s; }
+  function fKey(f) { return f.date + f.name; }
+  function leftText(days) { return days === 0 ? "Today" : days === 1 ? "Tomorrow" : days + " days"; }
+
+  function festRenderList() {
+    var ul = $("festList"), t = fest.day;
+    ul.textContent = "";
+    fest.list.forEach(function (f) {
+      var li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.className = "fest-row";
+      b.setAttribute("aria-pressed", fKey(f) === fest.sel ? "true" : "false");
+      var l = document.createElement("span"); l.className = "l";
+      var ic = document.createElement("span"); ic.className = "ic2"; ic.textContent = f.icon;
+      var tx = document.createElement("span");
+      var nm = document.createElement("b"); nm.textContent = f.name;
+      var sm = document.createElement("small"); sm.textContent = fDate(f.date);
+      tx.appendChild(nm); tx.appendChild(sm);
+      l.appendChild(ic); l.appendChild(tx);
+      var r = document.createElement("span"); r.className = "r"; r.textContent = leftText(daysTo(t, f.date));
+      b.appendChild(l); b.appendChild(r);
+      b.addEventListener("click", function () { fest.sel = fKey(f); festRenderList(); festTick(); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+  function festBuild() {
+    var t = fest.day, y = parseInt(t.slice(0, 4), 10), all = [], i, k;
+    for (k = 0; k < 2; k++) for (i = 0; i < fixedF.length; i++) all.push({ date: (y + k) + "-" + fixedF[i][0], name: fixedF[i][1], icon: fixedF[i][2] });
+    lunarF.forEach(function (f) { all.push({ date: f[0], name: f[1], icon: f[2] }); });
+    fest.list = all.filter(function (f) { return f.date >= t; })
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; })
+      .slice(0, 10);
+    var found = false;
+    fest.list.forEach(function (f) { if (fKey(f) === fest.sel) found = true; });
+    if (!found) fest.sel = fest.list.length ? fKey(fest.list[0]) : "";
+    festRenderList();
+  }
+  function festTick() {
+    var t = istToday();
+    if (t !== fest.day) { fest.day = t; festBuild(); }
+    if (!fest.list.length) return;
+    var sel = fest.list[0], i;
+    for (i = 0; i < fest.list.length; i++) if (fKey(fest.list[i]) === fest.sel) sel = fest.list[i];
+
+    /* featured countdown in the tool */
+    $("fIcon").textContent = sel.icon; $("fName").textContent = sel.name; $("fDate").textContent = fDate(sel.date);
+    var rem = Date.parse(sel.date + "T00:00:00+05:30") - Date.now();
+    if (sel.date === t) {
+      $("fNums").hidden = true; $("fToday").hidden = false;
+      $("fToday").textContent = "It is today! Happy " + sel.name + " 🎉";
+    } else {
+      $("fNums").hidden = false; $("fToday").hidden = true;
+      $("fD").textContent = Math.max(0, Math.floor(rem / 864e5));
+      $("fH").textContent = pad2(Math.max(0, Math.floor(rem % 864e5 / 36e5)));
+      $("fM").textContent = pad2(Math.max(0, Math.floor(rem % 36e5 / 6e4)));
+      $("fS").textContent = pad2(Math.max(0, Math.floor(rem % 6e4 / 1e3)));
+    }
+
+    /* next festival banner on the home page */
+    var nx = fest.list[0], nr = Date.parse(nx.date + "T00:00:00+05:30") - Date.now();
+    $("fhIcon").textContent = nx.icon;
+    $("fhName").textContent = nx.name + " · " + fDate(nx.date);
+    $("fhCount").textContent = nx.date === t ? "Today! 🎉" :
+      Math.max(0, Math.floor(nr / 864e5)) + "d " + pad2(Math.max(0, Math.floor(nr % 864e5 / 36e5))) + "h " +
+      pad2(Math.max(0, Math.floor(nr % 36e5 / 6e4))) + "m " + pad2(Math.max(0, Math.floor(nr % 6e4 / 1e3))) + "s";
+  }
+  festTick();
+  setInterval(festTick, 1000);
 
   /* Age */
   $("dob").max = new Date().toISOString().slice(0, 10);
