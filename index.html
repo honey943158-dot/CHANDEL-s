@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Nishant Chandel – free everyday tools for India: EMI, GST, age, rupees in words, password generator and word counter.">
+<meta name="description" content="Nishant Chandel – free everyday tools for India: EMI, GST, age, rupees in words, typing test, password generator and word counter.">
 <title>Nishant Chandel · Useful Tools for India</title>
 <style>
 :root{
-  --bg:#0f1226; --surface:#171b38; --raised:#1f2447; --line:#2d3461;
-  --text:#ecebf6; --muted:#9a9cc0; --saffron:#ff9933; --green:#3fd48f; --danger:#ff6b6b;
+  --bg:#0a0c1f; --surface:rgba(22,26,56,.62); --raised:#20254a; --line:rgba(120,130,220,.22);
+  --text:#ecebf6; --muted:#a3a5c8; --saffron:#ff9933; --green:#3fd48f; --danger:#ff6b6b; --violet:#7c6cf0;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -20,36 +21,66 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--saffron);outline-offset:3px;border-radius:4px}
 .wrap{width:min(1040px,100% - 2rem);margin-inline:auto}
 
+/* ---------- animated background (pure CSS) ---------- */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#0a0c1f 0%,#0d1030 55%,#0a0c1f 100%)}
+.bg i{position:absolute;border-radius:50%;width:60vmax;height:60vmax}
+.bg .o1{top:-22vmax;left:-18vmax;background:radial-gradient(circle,rgba(255,153,51,.30),transparent 62%);animation:drift1 26s ease-in-out infinite alternate}
+.bg .o2{top:18vh;right:-24vmax;background:radial-gradient(circle,rgba(124,108,240,.34),transparent 62%);animation:drift2 32s ease-in-out infinite alternate}
+.bg .o3{bottom:-28vmax;left:12vw;background:radial-gradient(circle,rgba(63,212,143,.22),transparent 62%);animation:drift3 29s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(9vmax,7vmax)}}
+@keyframes drift2{to{transform:translate(-8vmax,-6vmax)}}
+@keyframes drift3{to{transform:translate(6vmax,-8vmax)}}
+.bg .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);background-size:30px 30px;-webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000 15%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 25%,#000 15%,transparent 75%)}
+.bg .chakra{position:absolute;right:-16vmax;top:10vh;width:48vmax;height:48vmax;border-radius:50%;border:2px solid rgba(255,255,255,.07);background:repeating-conic-gradient(rgba(255,255,255,.09) 0 .7deg,transparent .7deg 15deg);-webkit-mask-image:radial-gradient(circle,transparent 20%,#000 21%,#000 62%,transparent 63%);mask-image:radial-gradient(circle,transparent 20%,#000 21%,#000 62%,transparent 63%);animation:spinSlow 160s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+header,main,footer{position:relative;z-index:1}
+
 /* top loading bar (page switch effect) */
-#loadbar{position:fixed;top:0;left:0;height:4px;width:0;opacity:0;z-index:100;background:linear-gradient(90deg,var(--saffron),#ffd08a);box-shadow:0 0 12px var(--saffron);pointer-events:none}
+#loadbar{position:fixed;top:0;left:0;height:4px;width:0;opacity:0;z-index:100;background:linear-gradient(90deg,var(--saffron),#fff,var(--green));box-shadow:0 0 12px var(--saffron);pointer-events:none}
 
 /* header */
-header{padding:1.1rem 0;border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:60;padding:.9rem 0;border-bottom:1px solid var(--line);background:rgba(10,12,31,.65);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
-.brand{font-family:var(--serif);font-size:1.15rem;font-weight:700;text-decoration:none}
+.brand{font-family:var(--serif);font-size:1.2rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.brand::before{content:"";width:10px;height:26px;border-radius:3px;background:linear-gradient(180deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
 nav{display:flex;gap:1.4rem;font-size:.95rem}
 nav a{color:var(--muted);text-decoration:none}
 nav a:hover{color:var(--text)}
 
 /* hero */
-.hero{padding:clamp(2.5rem,8vw,6rem) 0 3rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:end}
-.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,8vw,5.4rem);line-height:1.02;letter-spacing:-.02em;font-weight:700}
-.hero p{margin-top:1.3rem;color:var(--muted);max-width:46ch;font-size:1.1rem}
-.cta{display:inline-block;margin-top:1.8rem;background:var(--saffron);color:#1a1205;font-weight:700;padding:.8rem 1.4rem;border-radius:8px;text-decoration:none}
+.hero{padding:clamp(2.5rem,8vw,5.5rem) 0 3rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:center}
+.hero h1{font-family:var(--serif);font-size:clamp(2.7rem,8.5vw,5.6rem);line-height:1.02;letter-spacing:-.02em;font-weight:700;background:linear-gradient(95deg,var(--saffron) 5%,#ffffff 50%,var(--green) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-bottom:.1em}
+.hero-line{margin-top:1rem;font-size:clamp(1.15rem,3vw,1.5rem);font-family:var(--serif);color:var(--text);min-height:2.2rem}
+.hero-line b{color:var(--saffron);font-weight:700}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--saffron);margin-left:3px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{margin-top:1rem;color:var(--muted);max-width:48ch;font-size:1.05rem}
+.cta{display:inline-block;margin-top:1.6rem;background:linear-gradient(135deg,var(--saffron),#ffb866);color:#1a1205;font-weight:700;padding:.85rem 1.5rem;border-radius:10px;text-decoration:none;box-shadow:0 8px 26px rgba(255,153,51,.3)}
 .cta:hover{filter:brightness(1.08)}
-.clock{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:12px;padding:1.4rem 1.5rem}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.4rem}
+.chips span{font-size:.82rem;color:var(--muted);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.25rem .8rem}
+.clock{background:var(--surface);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:16px;padding:1.5rem 1.6rem;box-shadow:0 20px 50px rgba(0,0,0,.35)}
 .clock small{color:var(--muted);display:block}
 #time{font-family:var(--serif);font-size:clamp(2.2rem,6vw,3.3rem);font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1.1;margin:.3rem 0}
 #date{color:var(--text)}
 .stripe{height:4px;margin-top:1rem;border-radius:2px;background:linear-gradient(90deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
 
+/* home tool cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1rem}
+.card{display:flex;flex-direction:column;gap:.35rem;text-decoration:none;background:var(--surface);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.2rem 1.3rem;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--a);box-shadow:0 14px 34px rgba(0,0,0,.35),0 0 0 1px var(--a)}
+.card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;font-weight:700;color:var(--a);background:rgba(255,255,255,.06);border:1px solid var(--a);margin-bottom:.4rem}
+.card b{font-size:1.05rem}
+.card span:last-child{color:var(--muted);font-size:.9rem}
+
 /* tools */
 section{padding:3rem 0}
 h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4rem}
 .sub{color:var(--muted);margin-bottom:1.6rem}
+.home-tools{padding-bottom:3rem}
 
 /* fake address bar */
-.addr{display:flex;align-items:center;gap:.6rem;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;margin-bottom:1rem;font-size:.88rem;color:var(--muted);overflow:hidden}
+.addr{display:flex;align-items:center;gap:.6rem;background:var(--surface);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;margin-bottom:1rem;font-size:.88rem;color:var(--muted);overflow:hidden}
 .addr .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--green)}
 .addr .dot.busy{background:var(--saffron);animation:pulse .6s ease-in-out infinite alternate}
 @keyframes pulse{from{opacity:1;transform:scale(1)}to{opacity:.3;transform:scale(1.5)}}
@@ -58,10 +89,10 @@ h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4r
 #addrState{flex:none;color:var(--saffron);font-weight:600;min-width:4.5rem;text-align:right}
 
 .tabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.6rem;scrollbar-width:thin}
-.tab{flex:none;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;font:inherit;cursor:pointer}
-.tab:hover{color:var(--text)}
-.tab[aria-selected="true"]{background:var(--saffron);border-color:var(--saffron);color:#1a1205;font-weight:700}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.6rem;margin-top:.8rem}
+.tab{flex:none;background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;font:inherit;cursor:pointer}
+.tab:hover{color:var(--text);border-color:var(--saffron)}
+.tab[aria-selected="true"]{background:linear-gradient(135deg,var(--saffron),#ffb866);border-color:var(--saffron);color:#1a1205;font-weight:700}
+.panel{background:linear-gradient(160deg,rgba(32,37,74,.72),rgba(22,26,56,.6));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:18px;padding:1.6rem;margin-top:.8rem;box-shadow:0 20px 50px rgba(0,0,0,.3)}
 .panel[hidden]{display:none}
 .panel.leave{opacity:0;transform:translateX(-24px);transition:opacity .25s ease,transform .25s ease}
 .panel.enter{animation:enter .5s ease both}
@@ -71,7 +102,7 @@ h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4r
 .panel>p{color:var(--muted);margin-bottom:1.2rem}
 
 /* loading box shown during the page switch */
-.skeleton{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.6rem;margin-top:.8rem;min-height:360px}
+.skeleton{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.6rem;margin-top:.8rem;min-height:360px}
 .skeleton[hidden]{display:none}
 .loading-note{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem;color:var(--muted)}
 .spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--saffron);animation:spin .7s linear infinite}
@@ -87,31 +118,59 @@ h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4r
 
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
 label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:.3rem}
-input,select,textarea{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.65rem .8rem;font:inherit}
+input,select,textarea{width:100%;background:rgba(8,10,28,.7);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem;font:inherit}
 input:focus,select:focus,textarea:focus{border-color:var(--saffron);outline:none}
 input[type=range]{padding:0;accent-color:var(--saffron)}
 input[type=checkbox]{width:auto;accent-color:var(--saffron);margin-right:.4rem}
 textarea{min-height:170px;resize:vertical}
-.btn{margin-top:1.1rem;background:var(--raised);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.65rem 1.2rem;font:inherit;font-weight:600;cursor:pointer}
+.btn{margin-top:1.1rem;background:var(--raised);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:.65rem 1.2rem;font:inherit;font-weight:600;cursor:pointer}
 .btn:hover{border-color:var(--saffron)}
-.btn.main{background:var(--saffron);border-color:var(--saffron);color:#1a1205}
+.btn.main{background:linear-gradient(135deg,var(--saffron),#ffb866);border-color:var(--saffron);color:#1a1205}
 .result{margin-top:1.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem}
-.stat{background:var(--raised);border-radius:10px;padding:.9rem 1rem}
+.stat{background:rgba(8,10,28,.45);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem}
 .stat span{display:block;font-size:.82rem;color:var(--muted)}
 .stat b{font-family:var(--serif);font-size:1.45rem;font-weight:700;word-break:break-word}
+.stat.hl{border-color:rgba(255,153,51,.5)}
 .stat.hl b{color:var(--saffron)}
 .bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:1rem;background:var(--raised)}
 .bar i{display:block;height:100%}
 .legend{display:flex;gap:1.2rem;font-size:.85rem;color:var(--muted);margin-top:.5rem}
-.words{margin-top:1.2rem;background:var(--raised);border-radius:10px;padding:1rem;min-height:3.2rem;font-family:var(--serif);font-size:1.2rem}
+.words{margin-top:1.2rem;background:rgba(8,10,28,.45);border:1px solid var(--line);border-radius:12px;padding:1rem;min-height:3.2rem;font-family:var(--serif);font-size:1.2rem}
 .pw{margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
-.pw output{flex:1 1 260px;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:.7rem .9rem;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+.pw output{flex:1 1 260px;background:rgba(8,10,28,.7);border:1px dashed var(--line);border-radius:10px;padding:.7rem .9rem;font-family:var(--mono);word-break:break-all}
 .pw .btn{margin-top:0}
 .opts{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1rem}
 .opts label{display:flex;align-items:center;margin:0;color:var(--text);cursor:pointer}
 .meter{height:6px;border-radius:3px;background:var(--raised);margin-top:1rem;overflow:hidden}
 .meter i{display:block;height:100%;width:0;transition:width .3s,background .3s}
 .err{color:var(--danger);margin-top:1rem;min-height:1.2rem;font-size:.92rem}
+
+/* typing test */
+.ty-top{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.ty-modes{display:flex;gap:.3rem;background:rgba(8,10,28,.6);border:1px solid var(--line);border-radius:12px;padding:.25rem}
+.ty-modes button{background:transparent;border:0;border-radius:9px;color:var(--muted);font:inherit;font-weight:600;padding:.4rem .9rem;cursor:pointer}
+.ty-modes button:hover{color:var(--text)}
+.ty-modes button[aria-pressed="true"]{background:var(--raised);color:var(--saffron)}
+.ty-wrap{position:relative;background:rgba(8,10,28,.6);border:1px solid var(--line);border-radius:14px;transition:border-color .12s ease}
+.ty-wrap:focus-within{border-color:var(--saffron)}
+.ty-wrap.oops{border-color:var(--danger)}
+.ty-box{position:relative;overflow:hidden;height:calc(2.2rem * 3 + 2.4rem);padding:1.2rem 1.3rem;font-family:var(--mono);font-size:1.3rem;line-height:2.2rem;white-space:pre-wrap;word-break:normal;color:#6d7099;transition:opacity .2s ease;border-radius:14px}
+.ty-box span{border-radius:4px}
+.ty-box .ok{color:var(--green)}
+.ty-box .bad{color:#ff9a9a;background:rgba(255,107,107,.22);text-decoration:underline}
+.ty-box .cur{box-shadow:inset 3px 0 0 var(--saffron);background:rgba(255,153,51,.16);animation:curBlink 1s steps(1) infinite}
+.ty-box .cur.bad{box-shadow:none}
+@keyframes curBlink{50%{background:transparent;box-shadow:none}}
+.ty-in{position:absolute;inset:0;width:100%;height:100%;min-height:0;opacity:0;resize:none;cursor:text;z-index:1;font-size:16px;padding:0;border:0}
+.ty-hint{position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;padding:1rem;pointer-events:none;font-weight:600;color:var(--text)}
+.ty-hint span{background:rgba(10,12,31,.85);border:1px solid var(--saffron);border-radius:999px;padding:.5rem 1.2rem}
+.ty-wrap.focus .ty-hint,.ty-wrap.done .ty-hint{display:none}
+.ty-wrap:not(.focus):not(.done) .ty-box{opacity:.35}
+.ty-btns{display:flex;gap:.6rem;flex-wrap:wrap}
+.ty-btns .btn{margin-top:1rem}
+.ty-end{margin-top:1.2rem;padding:1rem 1.2rem;border-radius:12px;border:1px solid var(--green);background:rgba(63,212,143,.1)}
+.ty-end[hidden]{display:none}
+.ty-end b{font-family:var(--serif);font-size:1.25rem;display:block;margin-bottom:.2rem}
 
 /* about */
 .about{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
@@ -120,21 +179,23 @@ textarea{min-height:170px;resize:vertical}
 .about li{padding:.7rem 0;border-bottom:1px solid var(--line)}
 .about li b{display:block}
 .about li span{color:var(--muted);font-size:.92rem}
-footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.9rem}
+footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.9rem;background:rgba(10,12,31,.55)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 
-@media(max-width:760px){.hero,.about{grid-template-columns:1fr}nav{gap:1rem}}
+@media(max-width:760px){.hero,.about{grid-template-columns:1fr}nav{gap:1rem}.ty-box{font-size:1.1rem}}
 
-/* Reduced motion: remove sliding only. Loading bar, spinner and loading box stay visible. */
+/* Reduced motion: remove sliding and background drifting only. Loading bar, spinner and loading box stay visible. */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .panel.leave{transform:none}
   .panel.enter{animation-name:fade}
   .sk{animation-duration:2.4s}
+  .bg i,.bg .chakra,.caret,.ty-box .cur{animation:none}
+  .card{transition:none}
 }
 
 /* =====================================================================
-   ADDED: Firebase sign-in (navigation button, user box, popup, toast)
+   Firebase sign-in (navigation button, user box, popup, toast)
    ===================================================================== */
 nav{align-items:center;flex-wrap:wrap}
 .auth-area{display:flex;align-items:center;margin-left:.4rem}
@@ -150,7 +211,7 @@ nav{align-items:center;flex-wrap:wrap}
 body.auth-lock{overflow:hidden}
 .auth-overlay{position:fixed;inset:0;z-index:200;display:flex;padding:1rem;overflow-y:auto;background:rgba(6,7,20,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .auth-overlay[hidden]{display:none}
-.auth-box{position:relative;width:min(420px,100%);margin:auto;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--saffron);border-radius:16px;padding:1.8rem 1.6rem 1.5rem;box-shadow:0 24px 60px rgba(0,0,0,.5);animation:authIn .3s ease both}
+.auth-box{position:relative;width:min(420px,100%);margin:auto;background:#171b38;border:1px solid var(--line);border-top:4px solid var(--saffron);border-radius:16px;padding:1.8rem 1.6rem 1.5rem;box-shadow:0 24px 60px rgba(0,0,0,.5);animation:authIn .3s ease both}
 .auth-box:focus{outline:none}
 @keyframes authIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
 .auth-x{position:absolute;top:.7rem;right:.8rem;width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer}
@@ -196,7 +257,7 @@ body.auth-lock{overflow:hidden}
 }
 
 /* =====================================================================
-   ADDED: fake multi-page effect (Home / Tools / About)
+   Fake multi-page effect (Home / Tools / About)
    ===================================================================== */
 main{min-height:62vh}
 [data-page][hidden]{display:none}
@@ -215,6 +276,13 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 </head>
 <body>
 
+<!-- Animated background -->
+<div class="bg" aria-hidden="true">
+  <i class="o1"></i><i class="o2"></i><i class="o3"></i>
+  <div class="dots"></div>
+  <div class="chakra"></div>
+</div>
+
 <div id="loadbar" aria-hidden="true"></div>
 
 <header>
@@ -224,7 +292,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       <a href="#tools" data-go="tools">Tools</a>
       <a href="#about" data-go="about">About</a>
 
-      <!-- ADDED: sign in / user area -->
+      <!-- sign in / user area -->
       <div class="auth-area" id="authArea">
         <button class="btn main auth-btn" id="authOpen" type="button" aria-haspopup="dialog">Sign in</button>
         <div class="auth-user" id="authUser" hidden>
@@ -242,7 +310,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
 <main id="top">
 
-  <!-- ADDED: loading screen shown while a page "opens" -->
+  <!-- loading screen shown while a page "opens" -->
   <section class="page-load" id="pageLoad" hidden role="status" aria-live="polite">
     <div class="wrap">
       <div class="skeleton">
@@ -256,17 +324,35 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   </section>
 
   <!-- PAGE: Home -->
-  <div class="wrap hero page" data-page="home">
-    <div>
-      <h1>Nishant Chandel</h1>
-      <p>Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
-      <a class="cta" href="#tools" data-go="tools">Open the tools</a>
+  <div class="page" data-page="home">
+    <div class="wrap hero">
+      <div>
+        <h1>Nishant Chandel</h1>
+        <div class="hero-line" aria-live="off">Free tools for <b id="rot">EMI planning</b><i class="caret" aria-hidden="true"></i></div>
+        <p class="lead">Simple, fast tools for everyday life in India. Calculate your EMI, add or remove GST, write amounts in rupees, test your typing speed and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
+        <a class="cta" href="#tools" data-go="tools">Open the tools</a>
+        <div class="chips"><span>No ads</span><span>No trackers</span><span>Works in your browser</span></div>
+      </div>
+      <div class="clock" aria-live="off">
+        <small>India Standard Time</small>
+        <div id="time">--:--:--</div>
+        <div id="date">Loading date…</div>
+        <div class="stripe"></div>
+      </div>
     </div>
-    <div class="clock" aria-live="off">
-      <small>India Standard Time</small>
-      <div id="time">--:--:--</div>
-      <div id="date">Loading date…</div>
-      <div class="stripe"></div>
+
+    <div class="wrap home-tools">
+      <h2>Pick a tool</h2>
+      <p class="sub">Tap a card to open it.</p>
+      <div class="cards">
+        <a class="card" href="#emi-calculator" data-tool="emi-calculator" style="--a:#ff9933"><span class="ic">₹</span><b>EMI calculator</b><span>Monthly instalment for any loan.</span></a>
+        <a class="card" href="#gst-calculator" data-tool="gst-calculator" style="--a:#3fd48f"><span class="ic">%</span><b>GST calculator</b><span>Add or remove GST with CGST and SGST.</span></a>
+        <a class="card" href="#typing-test" data-tool="typing-test" style="--a:#ff6b9d"><span class="ic">⌨</span><b>Typing test</b><span>Check your speed and accuracy. Mistakes show in red.</span></a>
+        <a class="card" href="#age-calculator" data-tool="age-calculator" style="--a:#7c6cf0"><span class="ic">🎂</span><b>Age calculator</b><span>Exact age and days to your birthday.</span></a>
+        <a class="card" href="#rupees-in-words" data-tool="rupees-in-words" style="--a:#ffcf5c"><span class="ic">अ</span><b>Rupees in words</b><span>For cheques and invoices, in lakh and crore.</span></a>
+        <a class="card" href="#password-maker" data-tool="password-maker" style="--a:#4cc9f0"><span class="ic">🔑</span><b>Password maker</b><span>Strong passwords made on your device.</span></a>
+        <a class="card" href="#word-counter" data-tool="word-counter" style="--a:#b5e86b"><span class="ic">¶</span><b>Word counter</b><span>Words, characters and reading time.</span></a>
+      </div>
     </div>
   </div>
 
@@ -285,6 +371,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       <div class="tabs" role="tablist" aria-label="Tools">
         <button class="tab" role="tab" id="t-emi" aria-controls="p-emi" aria-selected="true" data-slug="emi-calculator" data-title="EMI calculator">EMI calculator</button>
         <button class="tab" role="tab" id="t-gst" aria-controls="p-gst" aria-selected="false" data-slug="gst-calculator" data-title="GST calculator">GST calculator</button>
+        <button class="tab" role="tab" id="t-type" aria-controls="p-type" aria-selected="false" data-slug="typing-test" data-title="Typing test">Typing test</button>
         <button class="tab" role="tab" id="t-age" aria-controls="p-age" aria-selected="false" data-slug="age-calculator" data-title="Age calculator">Age calculator</button>
         <button class="tab" role="tab" id="t-words" aria-controls="p-words" aria-selected="false" data-slug="rupees-in-words" data-title="Rupees in words">Rupees in words</button>
         <button class="tab" role="tab" id="t-pw" aria-controls="p-pw" aria-selected="false" data-slug="password-maker" data-title="Password maker">Password maker</button>
@@ -342,6 +429,36 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
           <div class="stat"><span>SGST</span><b id="gstS">–</b></div>
           <div class="stat hl"><span>Price with GST</span><b id="gstT">–</b></div>
         </div>
+      </div>
+
+      <!-- Typing test -->
+      <div class="panel" id="p-type" role="tabpanel" aria-labelledby="t-type" hidden>
+        <h3>Typing speed test</h3>
+        <p>Click the box and type the paragraph. Correct letters turn green and mistakes turn red. The timer starts with your first key.</p>
+        <div class="ty-top">
+          <div class="ty-modes" role="group" aria-label="Test length">
+            <button type="button" data-d="30" aria-pressed="false">30 sec</button>
+            <button type="button" data-d="60" aria-pressed="true">60 sec</button>
+            <button type="button" data-d="120" aria-pressed="false">2 min</button>
+          </div>
+          <div class="ty-btns">
+            <button class="btn" id="tyRestart" type="button" style="margin-top:0">Restart</button>
+            <button class="btn" id="tyNew" type="button" style="margin-top:0">New paragraph</button>
+          </div>
+        </div>
+        <div class="ty-wrap" id="tyWrap">
+          <div class="ty-box" id="tyBox" aria-hidden="true"></div>
+          <textarea class="ty-in" id="tyIn" aria-label="Type the paragraph shown above here" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+          <div class="ty-hint"><span>Click here and start typing</span></div>
+        </div>
+        <div class="result">
+          <div class="stat"><span>Time left</span><b id="tyTime">60s</b></div>
+          <div class="stat hl"><span>Speed (WPM)</span><b id="tyWpm">0</b></div>
+          <div class="stat"><span>Accuracy</span><b id="tyAcc">100%</b></div>
+          <div class="stat"><span>Mistakes</span><b id="tyErr">0</b></div>
+          <div class="stat"><span>Your best</span><b id="tyBest">–</b></div>
+        </div>
+        <div class="ty-end" id="tyEnd" role="status" aria-live="polite" hidden></div>
       </div>
 
       <!-- Age -->
@@ -429,7 +546,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   </div>
 </footer>
 
-<!-- ADDED: sign in / create account popup -->
+<!-- sign in / create account popup -->
 <div class="auth-overlay" id="authOverlay" hidden>
   <div class="auth-box" id="authDialog" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authDesc" tabindex="-1">
     <button class="auth-x" id="authClose" type="button" aria-label="Close sign in window">×</button>
@@ -479,7 +596,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   </div>
 </div>
 
-<!-- ADDED: small message shown after logout -->
+<!-- small message shown after logout -->
 <div class="auth-toast" id="authToast" role="status" aria-live="polite"></div>
 
 <script>
@@ -489,6 +606,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   var inr = function (n, d) {
     return "₹" + Number(n).toLocaleString("en-IN", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
   };
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* Footer year */
   $("yr").textContent = new Date().getFullYear();
@@ -505,6 +623,23 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     $("date").textContent = df ? df.format(now) : now.toDateString();
   }
   tick(); setInterval(tick, 1000);
+
+  /* Hero: changing words (typewriter) */
+  (function () {
+    var rot = $("rot"), words = ["EMI planning", "GST maths", "typing speed", "safe passwords", "cheques and invoices", "birthday countdowns"];
+    if (reduceMotion) { rot.textContent = words[0]; return; }
+    var wi = 0, ci = 0, del = false;
+    function step() {
+      var w = words[wi], d = del ? 35 : 75;
+      ci += del ? -1 : 1;
+      rot.textContent = w.slice(0, ci);
+      if (!del && ci === w.length) { del = true; d = 1500; }
+      else if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; d = 350; }
+      setTimeout(step, d);
+    }
+    ci = words[0].length; rot.textContent = words[0]; del = true;
+    setTimeout(step, 1800);
+  })();
 
   /* ---------- Tabs with fake page-switch transition ---------- */
   var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
@@ -711,6 +846,16 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     openPage(a.getAttribute("data-go"), true);
   });
 
+  /* Clicks on the tool cards on the home page */
+  document.addEventListener("click", function (e) {
+    var c = e.target.closest ? e.target.closest("[data-tool]") : null;
+    if (!c) return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
+    var t = tabFromSlug(c.getAttribute("data-tool"));
+    if (t) openPage("tools", true, t);
+  });
+
   /* Back / Forward buttons */
   window.addEventListener("popstate", function () {
     var h = location.hash.slice(1), page = pageFromHash(h), t = tabFromSlug(h);
@@ -771,6 +916,146 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     $("gstT").textContent = inr(net + gst, 2);
     $("gstOut").hidden = false;
   });
+
+  /* ---------- Typing test ---------- */
+  var tySent = [
+    "The morning train from Shimla winds slowly through the green hills.",
+    "A cup of hot chai makes every rainy evening feel a little warmer.",
+    "India celebrates Diwali with lamps, sweets and the laughter of family.",
+    "Practice every day, and your fingers will soon move faster than your thoughts.",
+    "The market was full of colour, from bright spices to hand woven shawls.",
+    "Cricket is more than a game, it brings whole streets together.",
+    "A good habit starts small and grows stronger with each passing day.",
+    "Mountains teach patience, because the best view comes after the hardest climb.",
+    "She saved a little money every month and bought her first laptop.",
+    "Clear code is like a clear road, and it takes you where you want to go.",
+    "The river carried the evening light slowly toward the distant sea.",
+    "Type with calm hands, keep your eyes on the words, and let the speed come."
+  ];
+  var ty = { dur: 60, text: "", spans: [], prev: 0, total: 0, wrong: 0, ok: 0, start: 0, timer: null, started: false, done: false };
+  var tyBox = $("tyBox"), tyIn = $("tyIn"), tyWrap = $("tyWrap"), tyEnd = $("tyEnd"), oopsTimer = null;
+  var tyModes = Array.prototype.slice.call(document.querySelectorAll(".ty-modes button"));
+  var tyBest = 0;
+  try { tyBest = parseInt(localStorage.getItem("nc_typing_best"), 10) || 0; } catch (e) {}
+
+  function tyBuild() {
+    var a = tySent.slice(), i, j, t;
+    for (i = a.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+    var n = ty.dur === 30 ? 4 : ty.dur === 60 ? 7 : 12;
+    ty.text = a.slice(0, n).join(" ");
+    tyBox.textContent = ""; ty.spans = [];
+    var frag = document.createDocumentFragment();
+    for (i = 0; i < ty.text.length; i++) {
+      var s = document.createElement("span");
+      s.textContent = ty.text.charAt(i);
+      frag.appendChild(s); ty.spans.push(s);
+    }
+    tyBox.appendChild(frag);
+  }
+  function tyPaint() {
+    var v = tyIn.value, ok = 0, i, c;
+    for (i = 0; i < ty.spans.length; i++) {
+      if (i < v.length) {
+        if (v.charAt(i) === ty.text.charAt(i)) { c = "ok"; ok++; } else c = "bad";
+      } else c = "";
+      if (i === v.length && !ty.done) c += " cur";
+      ty.spans[i].className = c;
+    }
+    ty.ok = ok;
+    var cur = ty.spans[Math.min(v.length, ty.spans.length - 1)];
+    var lh = parseFloat(getComputedStyle(tyBox).lineHeight) || 35;
+    tyBox.scrollTop = Math.max(0, cur.offsetTop - lh * 1.3);
+  }
+  function tyStats(el) {
+    var secs = Math.max(el, 2);
+    var wpm = Math.round((ty.ok / 5) / (secs / 60));
+    var acc = ty.total ? Math.round(((ty.total - ty.wrong) / ty.total) * 100) : 100;
+    $("tyWpm").textContent = ty.started ? wpm : 0;
+    $("tyAcc").textContent = acc + "%";
+    $("tyErr").textContent = ty.wrong;
+    return { wpm: wpm, acc: acc };
+  }
+  function tyTick() {
+    if ($("p-type").hidden) { tyReset(false); return; }   /* the person left this tool */
+    var el = (Date.now() - ty.start) / 1000;
+    if (el >= ty.dur) { tyFinish(ty.dur); return; }
+    $("tyTime").textContent = Math.ceil(ty.dur - el) + "s";
+    tyStats(el);
+  }
+  function tyFinish(el) {
+    clearInterval(ty.timer);
+    ty.done = true;
+    tyIn.disabled = true;
+    tyWrap.classList.remove("focus"); tyWrap.classList.add("done");
+    tyPaint();
+    $("tyTime").textContent = "0s";
+    var r = tyStats(el), newBest = false;
+    if (r.wpm > tyBest) {
+      tyBest = r.wpm; newBest = true;
+      try { localStorage.setItem("nc_typing_best", String(tyBest)); } catch (e) {}
+    }
+    $("tyBest").textContent = tyBest + " WPM";
+    var level = r.wpm < 20 ? "Good start. Keep practising." : r.wpm < 40 ? "Nice work. You are above the average beginner." : r.wpm < 60 ? "Great speed. That is a solid typist." : r.wpm < 80 ? "Excellent. Very fast typing." : "Outstanding. You type like a pro.";
+    tyEnd.innerHTML = "<b></b><span></span>";
+    tyEnd.firstChild.textContent = (el >= ty.dur ? "Time is up! " : "Finished! ") + r.wpm + " WPM at " + r.acc + "% accuracy";
+    tyEnd.lastChild.textContent = (newBest ? "New personal best on this device. " : "") + level + " Press Restart to try again.";
+    tyEnd.hidden = false;
+  }
+  function tyReset(newText) {
+    clearInterval(ty.timer);
+    ty.started = false; ty.done = false; ty.prev = 0; ty.total = 0; ty.wrong = 0; ty.ok = 0;
+    tyIn.value = ""; tyIn.disabled = false;
+    tyWrap.classList.remove("done");
+    if (newText || !ty.text) tyBuild();
+    tyBox.scrollTop = 0;
+    tyPaint();
+    tyBox.scrollTop = 0;
+    $("tyTime").textContent = ty.dur + "s";
+    $("tyWpm").textContent = "0"; $("tyAcc").textContent = "100%"; $("tyErr").textContent = "0";
+    $("tyBest").textContent = tyBest ? tyBest + " WPM" : "–";
+    tyEnd.hidden = true;
+  }
+  tyIn.addEventListener("input", function () {
+    if (ty.done) return;
+    var v = tyIn.value;
+    if (v.length > ty.text.length) { v = v.slice(0, ty.text.length); tyIn.value = v; }
+    if (!ty.started && v.length > 0) {
+      ty.started = true; ty.start = Date.now();
+      ty.timer = setInterval(tyTick, 200);
+    }
+    var i, bad = false;
+    for (i = ty.prev; i < v.length; i++) {
+      ty.total++;
+      if (v.charAt(i) !== ty.text.charAt(i)) { ty.wrong++; bad = true; }
+    }
+    ty.prev = v.length;
+    if (bad) {
+      tyWrap.classList.add("oops");
+      clearTimeout(oopsTimer);
+      oopsTimer = setTimeout(function () { tyWrap.classList.remove("oops"); }, 160);
+    }
+    tyPaint();
+    if (v.length === ty.text.length) { tyFinish((Date.now() - ty.start) / 1000); return; }
+    tyStats((Date.now() - ty.start) / 1000);
+  });
+  tyIn.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") e.preventDefault();
+    if (e.key === "Escape") { e.preventDefault(); tyReset(false); }
+  });
+  tyIn.addEventListener("paste", function (e) { e.preventDefault(); });
+  tyIn.addEventListener("drop", function (e) { e.preventDefault(); });
+  tyIn.addEventListener("focus", function () { tyWrap.classList.add("focus"); });
+  tyIn.addEventListener("blur", function () { tyWrap.classList.remove("focus"); });
+  tyModes.forEach(function (b) {
+    b.addEventListener("click", function () {
+      ty.dur = parseInt(b.getAttribute("data-d"), 10);
+      tyModes.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      tyReset(true); tyIn.focus();
+    });
+  });
+  $("tyRestart").addEventListener("click", function () { tyReset(false); tyIn.focus(); });
+  $("tyNew").addEventListener("click", function () { tyReset(true); tyIn.focus(); });
+  tyReset(true);
 
   /* Age */
   $("dob").max = new Date().toISOString().slice(0, 10);
@@ -881,7 +1166,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 </script>
 
 <!-- =====================================================================
-     ADDED: Firebase Authentication (modular SDK, loaded as an ES module)
+     Firebase Authentication (modular SDK, loaded as an ES module)
      ===================================================================== -->
 <script type="module">
 /* Firebase SDK version: change it here and both files below follow. */
