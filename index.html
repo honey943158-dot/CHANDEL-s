@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Nishant Chandel – free everyday tools for India: GST, age, rupees in words, typing test, snake game, festival countdown, password generator and word counter.">
-<title>Nishant Chandel · Useful Tools for India</title>
+<meta name="description" content="NISHANT TOOLS by Nishant Chandel – free everyday tools for India: GST calculator, calculator, age calculator, typing test, snake game, festival countdown and password generator.">
+<title>NISHANT TOOLS · Useful Tools for India</title>
 <style>
 :root{
   --bg:#0a0c1f; --surface:rgba(22,26,56,.62); --raised:#20254a; --line:rgba(120,130,220,.22);
@@ -21,7 +21,7 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--saffron);outline-offset:3px;border-radius:4px}
 .wrap{width:min(1040px,100% - 2rem);margin-inline:auto}
 
-/* ---------- animated background (pure CSS) ---------- */
+/* animated background */
 .bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#0a0c1f 0%,#0d1030 55%,#0a0c1f 100%)}
 .bg i{position:absolute;border-radius:50%;width:60vmax;height:60vmax}
 .bg .o1{top:-22vmax;left:-18vmax;background:radial-gradient(circle,rgba(255,153,51,.30),transparent 62%);animation:drift1 26s ease-in-out infinite alternate}
@@ -35,13 +35,12 @@ a{color:inherit}
 @keyframes spinSlow{to{transform:rotate(360deg)}}
 header,main,footer{position:relative;z-index:1}
 
-/* top loading bar (page switch effect) */
 #loadbar{position:fixed;top:0;left:0;height:4px;width:0;opacity:0;z-index:100;background:linear-gradient(90deg,var(--saffron),#fff,var(--green));box-shadow:0 0 12px var(--saffron);pointer-events:none}
 
 /* header */
 header{position:sticky;top:0;z-index:60;padding:.9rem 0;border-bottom:1px solid var(--line);background:rgba(10,12,31,.65);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
-.brand{font-family:var(--serif);font-size:1.2rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.brand{font-family:var(--serif);font-size:1.2rem;font-weight:700;letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;gap:.6rem}
 .brand::before{content:"";width:10px;height:26px;border-radius:3px;background:linear-gradient(180deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
 nav{display:flex;gap:1.4rem;font-size:.95rem}
 nav a{color:var(--muted);text-decoration:none}
@@ -49,6 +48,7 @@ nav a:hover{color:var(--text)}
 
 /* hero */
 .hero{padding:clamp(2.5rem,8vw,5.5rem) 0 2rem;display:grid;gap:2.5rem;grid-template-columns:1.3fr 1fr;align-items:center}
+.eyebrow{color:var(--saffron);font-weight:700;letter-spacing:.18em;font-size:.85rem;margin-bottom:.6rem}
 .hero h1{font-family:var(--serif);font-size:clamp(2.7rem,8.5vw,5.6rem);line-height:1.02;letter-spacing:-.02em;font-weight:700;background:linear-gradient(95deg,var(--saffron) 5%,#ffffff 50%,var(--green) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;padding-bottom:.1em}
 .hero-line{margin-top:1rem;font-size:clamp(1.15rem,3vw,1.5rem);font-family:var(--serif);color:var(--text);min-height:2.2rem}
 .hero-line b{color:var(--saffron);font-weight:700}
@@ -65,7 +65,7 @@ nav a:hover{color:var(--text)}
 #date{color:var(--text)}
 .stripe{height:4px;margin-top:1rem;border-radius:2px;background:linear-gradient(90deg,var(--saffron) 33%,#f4f4fa 33% 66%,var(--green) 66%)}
 
-/* next festival banner on home */
+/* next festival banner */
 .fest-home{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;text-decoration:none;background:linear-gradient(110deg,rgba(255,153,51,.18),rgba(124,108,240,.14));border:1px solid rgba(255,153,51,.5);border-radius:16px;padding:1rem 1.3rem;margin-bottom:2.4rem;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:transform .2s ease,box-shadow .2s ease}
 .fest-home:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.35)}
 .fest-home .fi{font-size:2rem;line-height:1}
@@ -82,7 +82,6 @@ nav a:hover{color:var(--text)}
 .card b{font-size:1.05rem}
 .card span:last-child{color:var(--muted);font-size:.9rem}
 
-/* tools */
 section{padding:3rem 0}
 h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4rem}
 .sub{color:var(--muted);margin-bottom:1.6rem}
@@ -110,7 +109,7 @@ h2{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:.4r
 .panel h3{font-size:1.15rem;margin-bottom:.3rem}
 .panel>p{color:var(--muted);margin-bottom:1.2rem}
 
-/* loading box shown during the page switch */
+/* loading skeleton */
 .skeleton{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.6rem;margin-top:.8rem;min-height:360px}
 .skeleton[hidden]{display:none}
 .loading-note{display:flex;align-items:center;gap:.8rem;margin-bottom:1.6rem;color:var(--muted)}
@@ -141,7 +140,6 @@ textarea{min-height:170px;resize:vertical}
 .stat b{font-family:var(--serif);font-size:1.45rem;font-weight:700;word-break:break-word}
 .stat.hl{border-color:rgba(255,153,51,.5)}
 .stat.hl b{color:var(--saffron)}
-.words{margin-top:1.2rem;background:rgba(8,10,28,.45);border:1px solid var(--line);border-radius:12px;padding:1rem;min-height:3.2rem;font-family:var(--serif);font-size:1.2rem}
 .pw{margin-top:1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
 .pw output{flex:1 1 260px;background:rgba(8,10,28,.7);border:1px dashed var(--line);border-radius:10px;padding:.7rem .9rem;font-family:var(--mono);word-break:break-all}
 .pw .btn{margin-top:0}
@@ -151,6 +149,19 @@ textarea{min-height:170px;resize:vertical}
 .meter i{display:block;height:100%;width:0;transition:width .3s,background .3s}
 .err{color:var(--danger);margin-top:1rem;min-height:1.2rem;font-size:.92rem}
 .note{color:var(--muted);font-size:.82rem;margin-top:1rem}
+
+/* calculator */
+.calc{max-width:340px;margin:0 auto;background:rgba(8,10,28,.55);border:1px solid var(--line);border-radius:18px;padding:1rem}
+.calc-expr{min-height:1.4rem;text-align:right;color:var(--muted);font-family:var(--mono);font-size:.95rem;overflow-x:auto;white-space:nowrap}
+.calc-out{display:block;text-align:right;font-family:var(--serif);font-size:2.4rem;font-weight:700;margin:.2rem 0 .9rem;overflow-x:auto;white-space:nowrap}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.calc-keys button{height:56px;border-radius:12px;border:1px solid var(--line);background:var(--raised);color:var(--text);font:inherit;font-size:1.25rem;font-weight:600;cursor:pointer;touch-action:manipulation}
+.calc-keys button:hover{border-color:var(--saffron)}
+.calc-keys button:active{background:#2a3160}
+.calc-keys .fn{color:var(--green)}
+.calc-keys .op{color:var(--saffron)}
+.calc-keys .zero{grid-column:span 2}
+.calc-keys .eq{background:linear-gradient(135deg,var(--saffron),#ffb866);color:#1a1205;border-color:var(--saffron)}
 
 /* typing test */
 .ty-top{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1rem}
@@ -214,18 +225,32 @@ textarea{min-height:170px;resize:vertical}
 .fest-row .r{color:var(--saffron);font-weight:700;white-space:nowrap}
 
 /* about */
-.about{display:grid;gap:2rem;grid-template-columns:1fr 1fr}
-.about p{color:var(--muted);margin-bottom:1rem}
-.about ul{list-style:none}
-.about li{padding:.7rem 0;border-bottom:1px solid var(--line)}
-.about li b{display:block}
-.about li span{color:var(--muted);font-size:.92rem}
+.about-hero{max-width:720px}
+.about-hero .tag{display:inline-block;color:var(--saffron);border:1px solid rgba(255,153,51,.5);background:rgba(255,153,51,.1);border-radius:999px;padding:.25rem .9rem;font-size:.82rem;font-weight:700;letter-spacing:.12em;margin-bottom:1rem}
+.about-hero h2{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin-bottom:1rem}
+.about-hero h2 em{font-style:normal;background:linear-gradient(95deg,var(--saffron),#fff 55%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.about-hero p{color:var(--muted);font-size:1.05rem;margin-bottom:1rem}
+.about-hero p b{color:var(--text)}
+.about-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin:2rem 0}
+.about-stats div{text-align:center;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--saffron);border-radius:14px;padding:1rem .6rem}
+.about-stats div:nth-child(2){border-top-color:#f4f4fa}
+.about-stats div:nth-child(3){border-top-color:var(--green)}
+.about-stats div:nth-child(4){border-top-color:var(--violet)}
+.about-stats b{display:block;font-family:var(--serif);font-size:2rem;line-height:1.1;color:var(--saffron)}
+.about-stats span{color:var(--muted);font-size:.85rem}
+.about-feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.about-feats div{background:var(--surface);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;padding:1.2rem}
+.about-feats .ai{font-size:1.6rem;display:block;margin-bottom:.4rem}
+.about-feats b{display:block;margin-bottom:.2rem}
+.about-feats span.d{color:var(--muted);font-size:.92rem}
+.about-sign{margin-top:2rem;padding:1.2rem 1.4rem;border-left:4px solid var(--saffron);background:linear-gradient(110deg,rgba(255,153,51,.14),transparent);border-radius:0 14px 14px 0;font-family:var(--serif);font-size:1.15rem}
+.about-sign small{display:block;margin-top:.4rem;font-family:var(--sans);font-size:.88rem;color:var(--muted)}
+
 footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.9rem;background:rgba(10,12,31,.55)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 
-@media(max-width:760px){.hero,.about{grid-template-columns:1fr}nav{gap:1rem}.ty-box{font-size:1.1rem}}
+@media(max-width:760px){.hero{grid-template-columns:1fr}nav{gap:1rem}.ty-box{font-size:1.1rem}}
 
-/* Reduced motion: remove sliding and background drifting only. Loading bar, spinner and loading box stay visible. */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .panel.leave{transform:none}
@@ -235,9 +260,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
   .card,.fest-home{transition:none}
 }
 
-/* =====================================================================
-   Firebase sign-in (navigation button, user box, popup, toast)
-   ===================================================================== */
+/* Firebase sign-in */
 nav{align-items:center;flex-wrap:wrap}
 .auth-area{display:flex;align-items:center;margin-left:.4rem}
 .auth-btn{margin-top:0;padding:.45rem 1.1rem;font-size:.92rem;white-space:nowrap}
@@ -248,7 +271,6 @@ nav{align-items:center;flex-wrap:wrap}
 .auth-name{font-size:.9rem;font-weight:600;color:var(--text);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .auth-mail{font-size:.75rem;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .auth-mail:empty{display:none}
-
 body.auth-lock{overflow:hidden}
 .auth-overlay{position:fixed;inset:0;z-index:200;display:flex;padding:1rem;overflow-y:auto;background:rgba(6,7,20,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .auth-overlay[hidden]{display:none}
@@ -271,6 +293,11 @@ body.auth-lock{overflow:hidden}
 .auth-eye:hover{color:var(--text)}
 .auth-hint{font-size:.8rem;color:var(--muted);margin-top:.3rem}
 .auth-hint[hidden]{display:none}
+.auth-forgot-row{display:flex;justify-content:flex-end;margin:-.4rem 0 .7rem}
+.auth-forgot-row[hidden]{display:none}
+.auth-forgot{background:transparent;border:0;border-radius:6px;color:var(--saffron);font:inherit;font-size:.86rem;font-weight:600;padding:.25rem .4rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.auth-forgot:hover{filter:brightness(1.15)}
+.auth-forgot:disabled{opacity:.6;cursor:not-allowed}
 .auth-msg{min-height:1.3rem;font-size:.9rem;margin:.2rem 0 .8rem}
 .auth-msg:not(:empty){padding:.55rem .75rem;border-radius:8px;background:var(--raised);border-left:3px solid currentColor}
 .auth-msg[data-type="error"]{color:var(--danger)}
@@ -283,23 +310,12 @@ body.auth-lock{overflow:hidden}
 .auth-or{display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.82rem;margin:1rem 0}
 .auth-or::before,.auth-or::after{content:"";flex:1;height:1px;background:var(--line)}
 .auth-note{margin-top:1rem;font-size:.78rem;color:var(--muted);text-align:center}
-
 .auth-toast{position:fixed;left:50%;bottom:1.4rem;z-index:210;max-width:calc(100% - 2rem);transform:translate(-50%,20px);background:var(--raised);border:1px solid var(--line);border-left:4px solid var(--saffron);border-radius:10px;padding:.7rem 1.1rem;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
 .auth-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.auth-area{margin-left:0}.auth-mail{display:none}.auth-name{max-width:110px}}
+@media(prefers-reduced-motion:reduce){.auth-box{animation:none}.auth-toast{transition:none}}
 
-@media(max-width:760px){
-  .auth-area{margin-left:0}
-  .auth-mail{display:none}
-  .auth-name{max-width:110px}
-}
-@media(prefers-reduced-motion:reduce){
-  .auth-box{animation:none}
-  .auth-toast{transition:none}
-}
-
-/* =====================================================================
-   Fake multi-page effect (Home / Tools / About)
-   ===================================================================== */
+/* page switch effect */
 main{min-height:62vh}
 [data-page][hidden]{display:none}
 .page:focus{outline:none}
@@ -309,15 +325,11 @@ main{min-height:62vh}
 .page-load .skeleton{margin-top:0}
 nav a[data-go]{padding-bottom:.15rem;border-bottom:2px solid transparent}
 nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
-@media(prefers-reduced-motion:reduce){
-  .page.leave{transform:none}
-  .page.enter{animation-name:fade}
-}
+@media(prefers-reduced-motion:reduce){.page.leave{transform:none}.page.enter{animation-name:fade}}
 </style>
 </head>
 <body>
 
-<!-- Animated background -->
 <div class="bg" aria-hidden="true">
   <i class="o1"></i><i class="o2"></i><i class="o3"></i>
   <div class="dots"></div>
@@ -328,13 +340,12 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
 <header>
   <div class="wrap">
-    <a class="brand" href="#home" data-go="home">Nishant Chandel</a>
+    <a class="brand" href="#home" data-go="home">NISHANT TOOLS</a>
     <nav aria-label="Main">
       <a href="#home" data-go="home" aria-current="page">Home</a>
       <a href="#tools" data-go="tools">Tools</a>
       <a href="#about" data-go="about">About</a>
 
-      <!-- sign in / user area -->
       <div class="auth-area" id="authArea">
         <button class="btn main auth-btn" id="authOpen" type="button" aria-haspopup="dialog">Sign in</button>
         <div class="auth-user" id="authUser" hidden>
@@ -352,7 +363,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
 <main id="top">
 
-  <!-- loading screen shown while a page "opens" -->
   <section class="page-load" id="pageLoad" hidden role="status" aria-live="polite">
     <div class="wrap">
       <div class="skeleton">
@@ -369,9 +379,10 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   <div class="page" data-page="home">
     <div class="wrap hero">
       <div>
+        <p class="eyebrow">WELCOME TO NISHANT TOOLS</p>
         <h1>Nishant Chandel</h1>
         <div class="hero-line" aria-live="off">Free tools for <b id="rot">GST maths</b><i class="caret" aria-hidden="true"></i></div>
-        <p class="lead">Simple, fast tools for everyday life in India. Add or remove GST, write amounts in rupees, test your typing speed, play a quick game of snake, count down to the next festival and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
+        <p class="lead">Simple, fast tools for everyday life in India. Add or remove GST, do quick sums on a calculator, test your typing speed, play a quick game of snake, count down to the next festival and more. The tools run in your browser, so nothing you type into them is ever sent anywhere.</p>
         <a class="cta" href="#tools" data-go="tools">Open the tools</a>
         <div class="chips"><span>No ads</span><span>No trackers</span><span>Works in your browser</span></div>
       </div>
@@ -394,13 +405,12 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       <p class="sub">Tap a card to open it.</p>
       <div class="cards">
         <a class="card" href="#gst-calculator" data-tool="gst-calculator" style="--a:#3fd48f"><span class="ic">%</span><b>GST calculator</b><span>Add or remove GST with CGST and SGST.</span></a>
+        <a class="card" href="#calculator" data-tool="calculator" style="--a:#4cc9f0"><span class="ic">＋</span><b>Calculator</b><span>Add, subtract, multiply, divide and percent.</span></a>
         <a class="card" href="#typing-test" data-tool="typing-test" style="--a:#ff6b9d"><span class="ic">⌨</span><b>Typing test</b><span>Check your speed and accuracy. Mistakes show in red.</span></a>
         <a class="card" href="#snake-game" data-tool="snake-game" style="--a:#ff9933"><span class="ic">🐍</span><b>Snake game</b><span>Eat, grow and beat your best score.</span></a>
         <a class="card" href="#festival-countdown" data-tool="festival-countdown" style="--a:#ffcf5c"><span class="ic">🪔</span><b>Festival countdown</b><span>Days left for Diwali, Holi and more.</span></a>
         <a class="card" href="#age-calculator" data-tool="age-calculator" style="--a:#7c6cf0"><span class="ic">🎂</span><b>Age calculator</b><span>Exact age and days to your birthday.</span></a>
-        <a class="card" href="#rupees-in-words" data-tool="rupees-in-words" style="--a:#ff8a5c"><span class="ic">अ</span><b>Rupees in words</b><span>For cheques and invoices, in lakh and crore.</span></a>
-        <a class="card" href="#password-maker" data-tool="password-maker" style="--a:#4cc9f0"><span class="ic">🔑</span><b>Password maker</b><span>Strong passwords made on your device.</span></a>
-        <a class="card" href="#word-counter" data-tool="word-counter" style="--a:#b5e86b"><span class="ic">¶</span><b>Word counter</b><span>Words, characters and reading time.</span></a>
+        <a class="card" href="#password-maker" data-tool="password-maker" style="--a:#b5e86b"><span class="ic">🔑</span><b>Password maker</b><span>Strong passwords made on your device.</span></a>
       </div>
     </div>
   </div>
@@ -419,16 +429,14 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
       <div class="tabs" role="tablist" aria-label="Tools">
         <button class="tab" role="tab" id="t-gst" aria-controls="p-gst" aria-selected="true" data-slug="gst-calculator" data-title="GST calculator">GST calculator</button>
+        <button class="tab" role="tab" id="t-calc" aria-controls="p-calc" aria-selected="false" data-slug="calculator" data-title="Calculator">Calculator</button>
         <button class="tab" role="tab" id="t-type" aria-controls="p-type" aria-selected="false" data-slug="typing-test" data-title="Typing test">Typing test</button>
         <button class="tab" role="tab" id="t-snake" aria-controls="p-snake" aria-selected="false" data-slug="snake-game" data-title="Snake game">Snake game</button>
         <button class="tab" role="tab" id="t-fest" aria-controls="p-fest" aria-selected="false" data-slug="festival-countdown" data-title="Festival countdown">Festival countdown</button>
         <button class="tab" role="tab" id="t-age" aria-controls="p-age" aria-selected="false" data-slug="age-calculator" data-title="Age calculator">Age calculator</button>
-        <button class="tab" role="tab" id="t-words" aria-controls="p-words" aria-selected="false" data-slug="rupees-in-words" data-title="Rupees in words">Rupees in words</button>
         <button class="tab" role="tab" id="t-pw" aria-controls="p-pw" aria-selected="false" data-slug="password-maker" data-title="Password maker">Password maker</button>
-        <button class="tab" role="tab" id="t-count" aria-controls="p-count" aria-selected="false" data-slug="word-counter" data-title="Word counter">Word counter</button>
       </div>
 
-      <!-- Loading box shown during the tool switch -->
       <div class="skeleton" id="skeleton" role="status" hidden>
         <div class="loading-note"><i class="spin"></i><span id="loadNote">Loading…</span></div>
         <span class="sk t"></span>
@@ -456,6 +464,37 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
           <div class="stat"><span>CGST</span><b id="gstC">–</b></div>
           <div class="stat"><span>SGST</span><b id="gstS">–</b></div>
           <div class="stat hl"><span>Price with GST</span><b id="gstT">–</b></div>
+        </div>
+      </div>
+
+      <!-- Calculator -->
+      <div class="panel" id="p-calc" role="tabpanel" aria-labelledby="t-calc" hidden>
+        <h3>Calculator</h3>
+        <p>Tap the buttons or use your keyboard: numbers, + − * /, %, Enter for equals, Backspace to delete, Esc to clear.</p>
+        <div class="calc">
+          <div class="calc-expr" id="cExpr">&nbsp;</div>
+          <output class="calc-out" id="cOut" aria-live="polite">0</output>
+          <div class="calc-keys" id="cKeys">
+            <button type="button" class="fn" data-k="C">AC</button>
+            <button type="button" class="fn" data-k="B" aria-label="Backspace">⌫</button>
+            <button type="button" class="fn" data-k="%">%</button>
+            <button type="button" class="op" data-k="/" aria-label="Divide">÷</button>
+            <button type="button" data-k="7">7</button>
+            <button type="button" data-k="8">8</button>
+            <button type="button" data-k="9">9</button>
+            <button type="button" class="op" data-k="*" aria-label="Multiply">×</button>
+            <button type="button" data-k="4">4</button>
+            <button type="button" data-k="5">5</button>
+            <button type="button" data-k="6">6</button>
+            <button type="button" class="op" data-k="-" aria-label="Minus">−</button>
+            <button type="button" data-k="1">1</button>
+            <button type="button" data-k="2">2</button>
+            <button type="button" data-k="3">3</button>
+            <button type="button" class="op" data-k="+" aria-label="Plus">+</button>
+            <button type="button" class="zero" data-k="0">0</button>
+            <button type="button" data-k=".">.</button>
+            <button type="button" class="eq" data-k="=" aria-label="Equals">=</button>
+          </div>
         </div>
       </div>
 
@@ -548,16 +587,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
         </div>
       </div>
 
-      <!-- Rupees in words -->
-      <div class="panel" id="p-words" role="tabpanel" aria-labelledby="t-words" hidden>
-        <h3>Rupees in words</h3>
-        <p>Useful for cheques and invoices. Uses lakh and crore.</p>
-        <div class="grid"><div><label for="rw">Amount (₹)</label><input id="rw" type="number" min="0" step="0.01" value="1234567.50"></div></div>
-        <button class="btn main" id="rwGo">Convert to words</button>
-        <div class="err" id="rwErr" role="alert"></div>
-        <div class="words" id="rwOut" aria-live="polite"></div>
-      </div>
-
       <!-- Password -->
       <div class="panel" id="p-pw" role="tabpanel" aria-labelledby="t-pw" hidden>
         <h3>Strong password maker</h3>
@@ -578,43 +607,44 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
         <button class="btn main" id="pwGo">Make password</button>
         <div class="err" id="pwErr" role="alert"></div>
       </div>
-
-      <!-- Word counter -->
-      <div class="panel" id="p-count" role="tabpanel" aria-labelledby="t-count" hidden>
-        <h3>Word counter</h3>
-        <p>Paste or type your text. Counts update as you type.</p>
-        <label for="txt">Your text</label>
-        <textarea id="txt" placeholder="Start typing here…"></textarea>
-        <div class="result">
-          <div class="stat hl"><span>Words</span><b id="cW">0</b></div>
-          <div class="stat"><span>Characters</span><b id="cC">0</b></div>
-          <div class="stat"><span>Sentences</span><b id="cS">0</b></div>
-          <div class="stat"><span>Reading time</span><b id="cR">0 sec</b></div>
-        </div>
-      </div>
     </div>
   </section>
 
   <!-- PAGE: About -->
   <section id="about" class="page" data-page="about" hidden>
-    <div class="wrap about">
-      <div>
-        <h2>About this site</h2>
-        <p>Hi, I’m Nishant Chandel. I built this site to put the small calculators people look for every day in one clean, dark page that loads instantly, even on a slow connection.</p>
-        <p>There are no ads and no trackers. Signing in is optional and handled by Google Firebase. All the maths happens inside your browser.</p>
+    <div class="wrap">
+      <div class="about-hero">
+        <span class="tag">ABOUT NISHANT TOOLS</span>
+        <h2>Small tools. <em>Big everyday help.</em></h2>
+        <p>Hi, I’m <b>Nishant Chandel</b>, and <b>NISHANT TOOLS</b> is my little corner of the internet built for everyone in India. Instead of hunting through ten slow, ad-filled websites to work out GST, do a quick sum or check how fast you type, you get everything in one clean, dark, lightning-fast place.</p>
+        <p>Every tool is made to open instantly, work on any phone or laptop, and respect your privacy. All the maths happens inside your own browser, so what you type stays with you.</p>
       </div>
-      <ul>
-        <li><b>Made for India</b><span>Amounts in ₹ with lakh and crore grouping, GST split into CGST and SGST, and time in IST.</span></li>
-        <li><b>Private</b><span>Nothing you enter in the tools leaves your device.</span></li>
-        <li><b>Works offline</b><span>One file, no outside fonts or images. Only the optional sign-in loads Google’s Firebase library.</span></li>
-      </ul>
+
+      <div class="about-stats">
+        <div><b>7</b><span>Free tools</span></div>
+        <div><b>0</b><span>Ads or trackers</span></div>
+        <div><b>100%</b><span>Private in your browser</span></div>
+        <div><b>₹ + IST</b><span>Made for India</span></div>
+      </div>
+
+      <div class="about-feats">
+        <div><span class="ai">🇮🇳</span><b>Made for India</b><span class="d">Amounts in ₹ with lakh and crore grouping, GST split into CGST and SGST, festival dates and time in IST.</span></div>
+        <div><span class="ai">⚡</span><b>Fast and light</b><span class="d">One page, no heavy images, no waiting. It loads quickly even on a slow mobile connection.</span></div>
+        <div><span class="ai">🔒</span><b>Private by design</b><span class="d">Nothing you enter in the tools leaves your device. Signing in is optional and handled safely by Google Firebase.</span></div>
+        <div><span class="ai">🎮</span><b>Useful and fun</b><span class="d">From a GST calculator and a full calculator to a typing test and a snake game, there is something for work and for a break.</span></div>
+      </div>
+
+      <div class="about-sign">
+        Built with care in India, for everyone who loves simple tools that just work.
+        <small>— Nishant Chandel, creator of NISHANT TOOLS</small>
+      </div>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr"></span> Nishant Chandel. Made in India.</span>
+    <span>© <span id="yr"></span> NISHANT TOOLS by Nishant Chandel. Made in India.</span>
     <span>Results are for guidance only.</span>
   </div>
 </footer>
@@ -645,6 +675,11 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
         <p class="auth-hint" id="authHint" hidden>Use at least 6 characters.</p>
       </div>
 
+      <!-- Forgot password (Sign in mode only) -->
+      <div class="auth-forgot-row" id="authForgotRow">
+        <button class="auth-forgot" id="authForgot" type="button">Forgot password? Reset it</button>
+      </div>
+
       <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
 
       <button class="btn main auth-submit" id="authSubmit" type="submit">
@@ -669,7 +704,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   </div>
 </div>
 
-<!-- small message shown after logout -->
 <div class="auth-toast" id="authToast" role="status" aria-live="polite"></div>
 
 <script>
@@ -680,8 +714,8 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     return "₹" + Number(n).toLocaleString("en-IN", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
   };
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SITE = "NISHANT TOOLS";
 
-  /* Footer year */
   $("yr").textContent = new Date().getFullYear();
 
   /* Live IST clock */
@@ -697,20 +731,20 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   }
   tick(); setInterval(tick, 1000);
 
-  /* Hero: changing words (typewriter) */
+  /* Hero typewriter */
   (function () {
-    var rot = $("rot"), words = ["GST maths", "typing speed", "festival countdowns", "a quick game of snake", "safe passwords", "cheques and invoices", "birthday countdowns"];
-    if (reduceMotion) { rot.textContent = words[0]; return; }
+    var rot = $("rot"), list = ["GST maths", "quick calculations", "typing speed", "festival countdowns", "a quick game of snake", "safe passwords", "birthday countdowns"];
+    if (reduceMotion) { rot.textContent = list[0]; return; }
     var wi = 0, ci = 0, del = false;
     function step() {
-      var w = words[wi], d = del ? 35 : 75;
+      var w = list[wi], d = del ? 35 : 75;
       ci += del ? -1 : 1;
       rot.textContent = w.slice(0, ci);
       if (!del && ci === w.length) { del = true; d = 1500; }
-      else if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; d = 350; }
+      else if (del && ci === 0) { del = false; wi = (wi + 1) % list.length; d = 350; }
       setTimeout(step, d);
     }
-    ci = words[0].length; rot.textContent = words[0]; del = true;
+    ci = list[0].length; rot.textContent = list[0]; del = true;
     setTimeout(step, 1800);
   })();
 
@@ -745,7 +779,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     dot.className = on ? "dot busy" : "dot";
     state.textContent = on ? "Loading…" : "";
     note.textContent = on ? "Loading " + name + "…" : "";
-    document.title = on ? "Loading… · Nishant Chandel" : name + " · Nishant Chandel";
+    document.title = on ? "Loading… · " + SITE : name + " · " + SITE;
   }
   function hideAll() {
     panels.forEach(function (p) { p.hidden = true; p.classList.remove("leave", "enter"); });
@@ -804,7 +838,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     });
   });
 
-  /* Open the right tool if the page is opened with a link like #gst-calculator */
   (function init() {
     var first = tabFromSlug(location.hash.slice(1)) || tabs[0];
     if (first !== tabs[0]) {
@@ -814,7 +847,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     showAddr(first);
   })();
 
-  /* ---------- Pages: Home / Tools / About (fake page-opening effect) ---------- */
+  /* ---------- Pages: Home / Tools / About ---------- */
   var pageEls = {
     home: document.querySelector('[data-page="home"]'),
     tools: document.querySelector('[data-page="tools"]'),
@@ -839,9 +872,9 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     return page;
   }
   function pageTitle(page) {
-    if (page === "tools") return current.getAttribute("data-title") + " · Nishant Chandel";
-    if (page === "about") return "About · Nishant Chandel";
-    return "Nishant Chandel · Useful Tools for India";
+    if (page === "tools") return current.getAttribute("data-title") + " · " + SITE;
+    if (page === "about") return "About · " + SITE;
+    return SITE + " · Useful Tools for India";
   }
   function markNav(page) {
     navLinks.forEach(function (a) {
@@ -860,7 +893,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     for (var i = 0; i < keys.length; i++) if (!pageEls[keys[i]].hidden) return pageEls[keys[i]];
     return null;
   }
-  /* Finish any tool switch that is still running, so the tool box is in a clean state */
   function settleTool() {
     token++;
     skel.hidden = true;
@@ -871,17 +903,16 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 
   function openPage(page, push, tool) {
     if (page === currentPage && !pageLoad.hidden === false) {
-      /* already on this page */
       if (tool && tool !== current) go(tool, push);
       else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       return;
     }
     var my = ++pageToken;
     currentPage = page;
-    token++;                                  /* cancel a tool switch that may be running */
+    token++;
     markNav(page);
     if (push) { try { history.pushState({ page: page }, "", "#" + hashFor(page, tool)); } catch (e) {} }
-    document.title = "Loading… · Nishant Chandel";
+    document.title = "Loading… · " + SITE;
     pageNote.textContent = "Opening " + pageNames[page] + "…";
     startBar();
 
@@ -910,16 +941,14 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     }, 250);
   }
 
-  /* Clicks on links with data-go: logo, Home, Tools, About, "Open the tools" */
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("[data-go]") : null;
     if (!a) return;
-    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   /* let "open in new tab" work */
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
     e.preventDefault();
     openPage(a.getAttribute("data-go"), true);
   });
 
-  /* Clicks on the tool cards and the festival banner on the home page */
   document.addEventListener("click", function (e) {
     var c = e.target.closest ? e.target.closest("[data-tool]") : null;
     if (!c) return;
@@ -929,19 +958,16 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     if (t) openPage("tools", true, t);
   });
 
-  /* Back / Forward buttons */
   window.addEventListener("popstate", function () {
     var h = location.hash.slice(1), page = pageFromHash(h), t = tabFromSlug(h);
     if (page === "tools" && !t && h === "tools") t = tabs[0];
     openPage(page, false, t);
   });
 
-  /* The sign-in button asks for the same loading bar (see the Firebase script below) */
   document.addEventListener("site:progress", function (e) {
     if (e.detail === "start") startBar(); else finishBar();
   });
 
-  /* First load: show the page that matches the link, with no animation */
   (function initPage() {
     var page = pageFromHash(location.hash.slice(1));
     hidePages();
@@ -951,7 +977,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     document.title = pageTitle(page);
   })();
 
-  /* GST */
+  /* ---------- GST ---------- */
   $("gstGo").addEventListener("click", function () {
     var a = parseFloat($("gstA").value), r = parseFloat($("gstR").value), m = $("gstM").value;
     if (!(a >= 0)) { $("gstErr").textContent = "Enter an amount of zero or more."; $("gstOut").hidden = true; return; }
@@ -964,6 +990,97 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     $("gstS").textContent = inr(gst / 2, 2);
     $("gstT").textContent = inr(net + gst, 2);
     $("gstOut").hidden = false;
+  });
+
+  /* ---------- Calculator ---------- */
+  function calEval(s) {
+    var i = 0;
+    function pk() { return s.charAt(i); }
+    function num() {
+      var st = i; while (/[0-9.]/.test(pk())) i++;
+      if (st === i) throw 0;
+      var v = parseFloat(s.slice(st, i)); if (isNaN(v)) throw 0; return v;
+    }
+    function un() {
+      if (pk() === "-") { i++; return -un(); }
+      var v = num(); while (pk() === "%") { i++; v /= 100; } return v;
+    }
+    function term() {
+      var v = un();
+      while (pk() === "*" || pk() === "/") {
+        var o = s.charAt(i++), r = un();
+        if (o === "*") v *= r; else { if (r === 0) throw 1; v /= r; }
+      }
+      return v;
+    }
+    function ex() {
+      var v = term();
+      while (pk() === "+" || pk() === "-") { var o = s.charAt(i++), r = term(); v = o === "+" ? v + r : v - r; }
+      return v;
+    }
+    var res = ex(); if (i < s.length) throw 0; return res;
+  }
+  var cal = { e: "", done: false }, cOut = $("cOut"), cExpr = $("cExpr");
+  function calPretty(s) { return s.replace(/\*/g, "×").replace(/\//g, "÷").replace(/-/g, "−"); }
+  function calShow(main) {
+    cExpr.textContent = cal.e ? calPretty(cal.e) : "\u00a0";
+    cOut.textContent = main !== undefined ? main : (cal.e.split(/[+\-*\/]/).pop() || "0");
+  }
+  function calPress(k) {
+    var seg;
+    if (/[0-9]/.test(k)) {
+      if (cal.done) { cal.e = ""; cal.done = false; }
+      cal.e += k;
+    } else if (k === ".") {
+      if (cal.done) { cal.e = ""; cal.done = false; }
+      seg = cal.e.split(/[+\-*\/]/).pop();
+      if (seg.indexOf(".") > -1 || /%$/.test(cal.e)) return;
+      cal.e += seg === "" ? "0." : ".";
+    } else if ("+-*/".indexOf(k) > -1) {
+      cal.done = false;
+      if (cal.e === "") { if (k === "-") cal.e = "-"; return calShow(); }
+      if (/[+\-*\/]$/.test(cal.e)) { if (cal.e.length > 1) cal.e = cal.e.slice(0, -1) + k; }
+      else cal.e += k;
+    } else if (k === "%") {
+      if (/[0-9%]$/.test(cal.e)) { cal.done = false; cal.e += "%"; }
+    } else if (k === "C") {
+      cal.e = ""; cal.done = false; return calShow("0");
+    } else if (k === "B") {
+      if (cal.done) { cal.e = ""; cal.done = false; return calShow("0"); }
+      cal.e = cal.e.slice(0, -1);
+    } else if (k === "=") {
+      if (!cal.e || cal.done) return;
+      var t = cal.e.replace(/[+\-*\/]$/, "");
+      try {
+        var r = calEval(t);
+        if (!isFinite(r)) throw 1;
+        r = parseFloat(r.toPrecision(12));
+        var s = String(r);
+        if (/e/i.test(s)) s = r.toFixed(8).replace(/\.?0+$/, "");
+        cal.e = s; cal.done = true;
+        calShow(s); cExpr.textContent = calPretty(t) + " =";
+      } catch (x) { cal.e = ""; cal.done = false; calShow("Error"); cExpr.textContent = "Cannot calculate"; }
+      return;
+    }
+    calShow();
+  }
+  $("cKeys").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-k]"); if (b) calPress(b.getAttribute("data-k"));
+  });
+  document.addEventListener("keydown", function (e) {
+    if ($("p-calc").hidden || pageEls.tools.hidden) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target, tag = t && t.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if (t && t.getAttribute && t.getAttribute("role") === "tab") return;
+    var k = e.key;
+    if (/^[0-9.+\-*\/%]$/.test(k)) calPress(k);
+    else if (k === "x" || k === "X") calPress("*");
+    else if (k === "Enter" || k === "=") { if (tag === "BUTTON") return; calPress("="); }
+    else if (k === "Backspace") calPress("B");
+    else if (k === "Escape" || k === "Delete") calPress("C");
+    else return;
+    e.preventDefault();
   });
 
   /* ---------- Typing test ---------- */
@@ -1025,7 +1142,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     return { wpm: wpm, acc: acc };
   }
   function tyTick() {
-    if ($("p-type").hidden) { tyReset(false); return; }   /* the person left this tool */
+    if ($("p-type").hidden) { tyReset(false); return; }
     var el = (Date.now() - ty.start) / 1000;
     if (el >= ty.dur) { tyFinish(ty.dur); return; }
     $("tyTime").textContent = Math.ceil(ty.dur - el) + "s";
@@ -1272,7 +1389,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   snReset();
 
   /* ---------- Festival countdown (India Standard Time) ---------- */
-  /* Fixed-date festivals repeat every year by themselves. */
   var fixedF = [
     ["01-01", "New Year’s Day", "🎆"],
     ["01-14", "Makar Sankranti", "🪁"],
@@ -1281,7 +1397,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     ["10-02", "Gandhi Jayanti", "🕊"],
     ["12-25", "Christmas", "🎄"]
   ];
-  /* Festivals that follow the moon: add the next year's dates here when they pass. */
+  /* Festivals that follow the moon: add next year's dates here when they pass. */
   var lunarF = [
     ["2026-10-20", "Dussehra", "🏹"],
     ["2026-10-29", "Karwa Chauth", "🌙"],
@@ -1343,7 +1459,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     var sel = fest.list[0], i;
     for (i = 0; i < fest.list.length; i++) if (fKey(fest.list[i]) === fest.sel) sel = fest.list[i];
 
-    /* featured countdown in the tool */
     $("fIcon").textContent = sel.icon; $("fName").textContent = sel.name; $("fDate").textContent = fDate(sel.date);
     var rem = Date.parse(sel.date + "T00:00:00+05:30") - Date.now();
     if (sel.date === t) {
@@ -1357,7 +1472,6 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       $("fS").textContent = pad2(Math.max(0, Math.floor(rem % 6e4 / 1e3)));
     }
 
-    /* next festival banner on the home page */
     var nx = fest.list[0], nr = Date.parse(nx.date + "T00:00:00+05:30") - Date.now();
     $("fhIcon").textContent = nx.icon;
     $("fhName").textContent = nx.name + " · " + fDate(nx.date);
@@ -1368,7 +1482,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
   festTick();
   setInterval(festTick, 1000);
 
-  /* Age */
+  /* ---------- Age ---------- */
   $("dob").max = new Date().toISOString().slice(0, 10);
   $("ageGo").addEventListener("click", function () {
     var v = $("dob").value;
@@ -1389,39 +1503,7 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
     $("ageOut").hidden = false;
   });
 
-  /* Rupees in words (Indian system) */
-  var ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-  var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-  function two(n) { return n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : ""); }
-  function three(n) {
-    var h = Math.floor(n / 100), r = n % 100, s = "";
-    if (h) s = ones[h] + " Hundred";
-    if (r) s += (s ? " " : "") + two(r);
-    return s;
-  }
-  function words(n) {
-    if (n === 0) return "Zero";
-    var parts = [], cr = Math.floor(n / 1e7), la = Math.floor(n / 1e5) % 100, th = Math.floor(n / 1e3) % 100, rest = n % 1e3;
-    if (cr) parts.push(words(cr) + " Crore");
-    if (la) parts.push(two(la) + " Lakh");
-    if (th) parts.push(two(th) + " Thousand");
-    if (rest) parts.push(three(rest));
-    return parts.join(" ");
-  }
-  $("rwGo").addEventListener("click", function () {
-    var v = parseFloat($("rw").value);
-    if (!(v >= 0) || v >= 1e12) {
-      $("rwErr").textContent = "Enter an amount from 0 up to 99,99,99,99,999.99.";
-      $("rwOut").textContent = ""; return;
-    }
-    $("rwErr").textContent = "";
-    var total = Math.round(v * 100), rs = Math.floor(total / 100), ps = total % 100;
-    var out = "Rupees " + words(rs);
-    if (ps) out += " and " + two(ps) + " Paise";
-    $("rwOut").textContent = out + " Only";
-  });
-
-  /* Password */
+  /* ---------- Password ---------- */
   var sets = { oU: "ABCDEFGHIJKLMNOPQRSTUVWXYZ", oL: "abcdefghijklmnopqrstuvwxyz", oN: "0123456789", oS: "!@#$%^&*()-_=+[]{};:,.?" };
   function rnd(max) {
     var c = window.crypto || window.msCrypto;
@@ -1461,30 +1543,14 @@ nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
       navigator.clipboard.writeText(txt).then(done, fallback);
     } else { fallback(); }
   });
-
-  /* Word counter */
-  $("txt").addEventListener("input", function () {
-    var t = this.value, trimmed = t.trim();
-    var w = trimmed ? trimmed.split(/\s+/).length : 0;
-    var s = trimmed ? (trimmed.match(/[^.!?।]+[.!?।]+|[^.!?।]+$/g) || []).length : 0;
-    var secs = Math.round(w / 200 * 60);
-    $("cW").textContent = w.toLocaleString("en-IN");
-    $("cC").textContent = t.length.toLocaleString("en-IN");
-    $("cS").textContent = s;
-    $("cR").textContent = secs < 60 ? secs + " sec" : Math.ceil(secs / 60) + " min";
-  });
 })();
 </script>
 
-<!-- =====================================================================
-     Firebase Authentication (modular SDK, loaded as an ES module)
-     ===================================================================== -->
+<!-- Firebase Authentication (modular SDK, loaded as an ES module) -->
 <script type="module">
-/* Firebase SDK version: change it here and both files below follow. */
 const FIREBASE_VERSION = "13.0.0";
 const FIREBASE_BASE = "https://www.gstatic.com/firebasejs/" + FIREBASE_VERSION + "/";
 
-/* YOUR Firebase configuration (exactly as given from your Firebase Console) */
 const firebaseConfig = {
   apiKey: "AIzaSyDuA8SA6MepdMgjfAocQ2d_YvZMvivVr_8",
   authDomain: "chandel-s-a525e.firebaseapp.com",
@@ -1504,21 +1570,15 @@ const ui = {
   modeIn: byId("authModeIn"), modeUp: byId("authModeUp"),
   form: byId("authForm"), email: byId("authEmail"), pass: byId("authPass"),
   eye: byId("authEye"), hint: byId("authHint"), msg: byId("authMsg"),
+  forgot: byId("authForgot"), forgotRow: byId("authForgotRow"),
   submit: byId("authSubmit"), submitText: byId("authSubmitText"),
   google: byId("authGoogle"), toast: byId("authToast")
 };
 
-let sdk = null;        // firebase-auth module
-let auth = null;       // Auth instance
-let loading = null;    // promise, so Firebase loads and starts only once
-let mode = "signin";   // "signin" or "signup"
-let busy = false;
-let opening = false;   // true while the Sign in button is doing its short loading effect
-let lastFocus = null;
-let closeTimer = null;
-let toastTimer = null;
+let sdk = null, auth = null, loading = null;
+let mode = "signin", busy = false, opening = false;
+let lastFocus = null, closeTimer = null, toastTimer = null;
 
-/* ---------- Load Firebase (once) ---------- */
 function loadFirebase() {
   if (loading) return loading;
   loading = (async () => {
@@ -1532,11 +1592,10 @@ function loadFirebase() {
     authMod.onAuthStateChanged(auth, renderUser);
     return true;
   })();
-  loading.catch(() => { loading = null; }); // allow a retry if loading failed
+  loading.catch(() => { loading = null; });
   return loading;
 }
 
-/* ---------- Navigation: signed in / signed out ---------- */
 function renderUser(user) {
   if (user) {
     const name = user.displayName || user.email || "Account";
@@ -1554,7 +1613,6 @@ function renderUser(user) {
   }
 }
 
-/* ---------- Friendly error messages ---------- */
 function friendly(err) {
   const code = err && err.code;
   if (!code) return "Could not load the sign-in service. Check your internet connection and try again.";
@@ -1578,20 +1636,13 @@ function friendly(err) {
   return map[code] || "Something went wrong (" + code + "). Please try again.";
 }
 
-/* ---------- Messages, loading state ---------- */
-function showMsg(type, text) {
-  ui.msg.dataset.type = type;
-  ui.msg.textContent = text;
-}
-function clearMsg() {
-  ui.msg.textContent = "";
-  ui.msg.removeAttribute("data-type");
-}
+function showMsg(type, text) { ui.msg.dataset.type = type; ui.msg.textContent = text; }
+function clearMsg() { ui.msg.textContent = ""; ui.msg.removeAttribute("data-type"); }
 function setBusy(on, label) {
   busy = on;
   ui.dialog.setAttribute("aria-busy", on ? "true" : "false");
   ui.submit.classList.toggle("is-busy", on);
-  [ui.submit, ui.google, ui.modeIn, ui.modeUp, ui.eye, ui.email, ui.pass].forEach((n) => { n.disabled = on; });
+  [ui.submit, ui.google, ui.modeIn, ui.modeUp, ui.eye, ui.forgot, ui.email, ui.pass].forEach((n) => { n.disabled = on; });
   ui.submitText.textContent = on ? label : (mode === "signin" ? "Sign in" : "Create account");
   if (on) ui.dialog.focus();
 }
@@ -1602,7 +1653,6 @@ function toast(text) {
   toastTimer = setTimeout(() => ui.toast.classList.remove("show"), 3200);
 }
 
-/* ---------- Modal: open, close, mode ---------- */
 function setMode(m) {
   mode = m;
   const up = m === "signup";
@@ -1614,6 +1664,7 @@ function setMode(m) {
   ui.pass.autocomplete = up ? "new-password" : "current-password";
   ui.pass.placeholder = up ? "At least 6 characters" : "Your password";
   ui.hint.hidden = !up;
+  ui.forgotRow.hidden = up;
   clearMsg();
 }
 function setPasswordVisible(show) {
@@ -1643,7 +1694,6 @@ function closeModal() {
   if (back && back.focus) back.focus();
 }
 
-/* Keyboard: Escape closes, Tab stays inside the popup */
 function focusables() {
   return Array.from(ui.dialog.querySelectorAll("button, input, [href]"))
     .filter((n) => !n.disabled && n.offsetParent !== null);
@@ -1659,7 +1709,6 @@ ui.overlay.addEventListener("keydown", (e) => {
 });
 ui.overlay.addEventListener("mousedown", (e) => { if (e.target === ui.overlay) closeModal(); });
 
-/* Sign in button: short loading bar first (same effect as the pages), then the popup opens */
 ui.open.addEventListener("click", () => {
   if (opening) return;
   opening = true;
@@ -1675,7 +1724,7 @@ ui.modeIn.addEventListener("click", () => setMode("signin"));
 ui.modeUp.addEventListener("click", () => setMode("signup"));
 ui.eye.addEventListener("click", () => setPasswordVisible(ui.pass.type === "password"));
 
-/* ---------- Email / password ---------- */
+/* Email / password */
 ui.form.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (busy) return;
@@ -1705,7 +1754,39 @@ ui.form.addEventListener("submit", async (e) => {
   else { focusTarget.focus(); }
 });
 
-/* ---------- Google ---------- */
+/* Forgot password: sends a reset link by email */
+ui.forgot.addEventListener("click", async () => {
+  if (busy) return;
+  const email = ui.email.value.trim();
+  if (!email) {
+    showMsg("error", "Type your email address above, then press “Forgot password? Reset it”.");
+    ui.email.focus();
+    return;
+  }
+
+  clearMsg();
+  setBusy(true, "Sending email…");
+  let sent = false;
+  const okText = "If an account exists for " + email + ", a password reset link has been sent. Check your inbox and spam folder.";
+  try {
+    await loadFirebase();
+    await sdk.sendPasswordResetEmail(auth, email);
+    sent = true;
+    showMsg("success", okText);
+  } catch (err) {
+    if (err && err.code === "auth/user-not-found") {
+      sent = true;
+      showMsg("success", okText);
+    } else {
+      showMsg("error", friendly(err));
+    }
+  } finally {
+    setBusy(false);
+  }
+  if (sent) ui.pass.focus(); else ui.email.focus();
+});
+
+/* Google */
 ui.google.addEventListener("click", async () => {
   if (busy) return;
   clearMsg();
@@ -1727,7 +1808,7 @@ ui.google.addEventListener("click", async () => {
   else { ui.google.focus(); }
 });
 
-/* ---------- Logout ---------- */
+/* Logout */
 ui.logout.addEventListener("click", async () => {
   try {
     await loadFirebase();
@@ -1738,7 +1819,6 @@ ui.logout.addEventListener("click", async () => {
   }
 });
 
-/* Start Firebase on page load so a saved login is restored automatically */
 loadFirebase().catch(() => {});
 </script>
 </body>
