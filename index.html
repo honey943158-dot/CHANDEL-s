@@ -445,7 +445,7 @@ header.pe-shadow{box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .fb-side b{display:block;margin-bottom:.15rem}
 .fb-side span.d{color:var(--muted);font-size:.9rem}
 
-/* setup notice (only shown while EmailJS is not configured) */
+
 .fb-setup{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:1.1rem;padding:.8rem 1rem;border-radius:12px;font-size:.9rem;color:#ffd9a8;background:rgba(255,153,51,.1);border:1px dashed rgba(255,153,51,.55)}
 .fb-setup[hidden]{display:none}
 
@@ -856,17 +856,12 @@ footer a[data-go]:hover{color:var(--saffron)}
       <div class="fb-intro">
         <span class="tag">FEEDBACK</span>
         <h2>Tell us what <em>you think.</em></h2>
-        <p>Found a bug, have an idea, or just want to say hello? Send it here. You will get a confirmation email, and every message is read.</p>
+        <p>Found a bug, have an idea, or just want to say hello? Share your feedback here.</p>
       </div>
 
       <div class="fb-layout">
         <div class="fb-card" id="fbCard">
-          <div class="fb-setup" id="fbSetup" hidden role="note">
-            <span aria-hidden="true">⚙️</span>
-            <span><b>Setup needed.</b> The email service is not connected yet, so this form cannot send messages. Site owner: fill in the <code>FB_CONFIG</code> values in <code>index.html</code>.</span>
-          </div>
-
-          <form id="fbForm" novalidate autocomplete="on">
+<form id="fbForm" novalidate autocomplete="on">
             <h3>Send feedback</h3>
             <p class="fb-lead">Fields marked <span class="req" style="color:var(--saffron)">*</span> are required.</p>
 
@@ -953,8 +948,7 @@ footer a[data-go]:hover{color:var(--saffron)}
         <aside class="fb-side" aria-label="About feedback">
           <div><span class="ai">📧</span><b>Confirmation email</b><span class="d">After you submit, a confirmation is sent to your address. It usually takes a minute or two, but delivery is not guaranteed, so check spam or promotions too.</span></div>
           <div><span class="ai">👀</span><b>Every message is read</b><span class="d">Bug reports, ideas and kind words all reach the site owner. A personal reply is not promised for every message.</span></div>
-          <div><span class="ai">🔒</span><b>Your privacy</b><span class="d">Your message is sent by email through EmailJS. This page does not save your feedback in your browser.</span></div>
-        </aside>
+          <div><span class="ai">🔒</span><b>Your privacy</b><span class="d">Your message is sent by email through         </aside>
       </div>
     </div>
   </section>
@@ -2463,24 +2457,13 @@ loadFirebase().catch(() => {});
 </script>
 <script id="fbScript">
 /* =====================================================================
-   FEEDBACK FORM  (EmailJS, runs fully in the browser, GitHub Pages safe)
-   ---------------------------------------------------------------------
-   1. Create a free account at https://www.emailjs.com
-   2. Replace the four values below with YOUR OWN from the EmailJS dashboard.
-   These are not secrets: the Public Key is meant to be used in browser code.
+   FEEDBACK FORM  (   ---------------------------------------------------------------------
+   1. Create a free account at https://www.   2. Replace the four values below with YOUR OWN from the    These are not secrets: the Public Key is meant to be used in browser code.
    NEVER put a Private Key, an email password or any API secret in this file.
    ===================================================================== */
 (function () {
   "use strict";
 
-  var FB_CONFIG = {
-    PUBLIC_KEY:        "oGvvmEOLU4ZVR9fkPby__",        /* EmailJS > Account > General > Public Key */
-    SERVICE_ID:        "service_7gdwq4c",        /* EmailJS > Email Services > your service  */
-    TEMPLATE_ID_USER:  "template_q3esank",     /* template that emails the VISITOR (confirmation) */
-    TEMPLATE_ID_OWNER: "template_3ne8ria",  /* template that emails YOU (new feedback alert)   */
-    SITE_NAME: "NISHANT TOOLS",
-    SDK_URL: "https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"
-  };
 
   var $ = function (id) { return document.getElementById(id); };
   var form = $("fbForm");
@@ -2497,7 +2480,7 @@ loadFirebase().catch(() => {});
   var REPLIES = {
     "General Feedback": {
       head: "Thank you for sharing your thoughts",
-      body: "We really appreciate you taking the time to tell us what you think about " + FB_CONFIG.SITE_NAME + ". Honest comments help show what is useful and what could be better.",
+      body: "We really appreciate you taking the time to tell us what you think about " + "NISHANT TOOLS" + ". Honest comments help show what is useful and what could be better.",
       next: "Your message has been received and will be read and reviewed."
     },
     "Technical Issue": {
@@ -2517,7 +2500,7 @@ loadFirebase().catch(() => {});
     },
     "Feature Request": {
       head: "Thank you for the suggestion",
-      body: "We love hearing ideas for improving " + FB_CONFIG.SITE_NAME + ". Your suggestion has been received and will be considered.",
+      body: "We love hearing ideas for improving " + "NISHANT TOOLS" + ". Your suggestion has been received and will be considered.",
       next: "Not every idea can be built, but every one is read."
     },
     "Other": {
@@ -2541,13 +2524,9 @@ loadFirebase().catch(() => {});
     msg:   { box: $("fbMsgField"),   input: el.msg,   err: $("fbMsgErr") }
   };
 
-  var rating = 0, sending = false, openedAt = Date.now(), sdkPromise = null, statusTimer = 0;
+  var rating = 0, sending = false, openedAt = Date.now(), statusTimer = 0;
 
   /* ---------- helpers ---------- */
-  function configured() {
-    return [FB_CONFIG.PUBLIC_KEY, FB_CONFIG.SERVICE_ID, FB_CONFIG.TEMPLATE_ID_USER, FB_CONFIG.TEMPLATE_ID_OWNER]
-      .every(function (v) { return typeof v === "string" && v.length > 0 && v.indexOf("YOUR_") !== 0; });
-  }
   function tidy(s) { return String(s || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim(); }
   function excerpt(s) {
     /* shown back to the visitor in the confirmation email: links removed and shortened so the email cannot be used to push spam */
@@ -2668,42 +2647,6 @@ loadFirebase().catch(() => {});
   el.starWrap.addEventListener("mouseleave", function () { paint(rating); });
   el.rateClear.addEventListener("click", function () { setRating(0); el.stars[0].focus(); });
 
-  /* ---------- EmailJS SDK (loaded only when this page is opened) ---------- */
-  function loadSdk() {
-    if (window.emailjs && typeof window.emailjs.send === "function") return Promise.resolve();
-    if (sdkPromise) return sdkPromise;
-    sdkPromise = new Promise(function (resolve, reject) {
-      var s = document.createElement("script");
-      s.src = FB_CONFIG.SDK_URL;
-      s.async = true;
-      s.crossOrigin = "anonymous";
-      s.onload = function () {
-        if (window.emailjs && typeof window.emailjs.send === "function") resolve();
-        else { sdkPromise = null; reject({ status: 0, text: "sdk-missing" }); }
-      };
-      s.onerror = function () { sdkPromise = null; reject({ status: 0, text: "sdk-blocked" }); };
-      document.head.appendChild(s);
-    });
-    return sdkPromise;
-  }
-  function send(templateId, params) {
-    return new Promise(function (resolve, reject) {
-      var t = setTimeout(function () { reject({ status: 0, text: "timeout" }); }, TIMEOUT_MS);
-      window.emailjs.send(FB_CONFIG.SERVICE_ID, templateId, params, { publicKey: FB_CONFIG.PUBLIC_KEY, blockHeadless: true })
-        .then(function (r) { clearTimeout(t); resolve(r); }, function (e) { clearTimeout(t); reject(e); });
-    });
-  }
-  function explain(err) {
-    var st = err && typeof err.status === "number" ? err.status : 0;
-    var tx = err && err.text ? String(err.text) : "";
-    if (tx === "sdk-blocked" || tx === "sdk-missing") return "The email service could not be loaded. Check your internet connection or turn off any blocker for this site, then try again.";
-    if (tx === "timeout") return "This is taking longer than expected. Please wait a moment and try again.";
-    if (st === 429) return "Too many requests right now. Please wait a minute and try again.";
-    if (st === 400 || st === 401 || st === 403 || st === 404 || st === 412) return "Your feedback could not be sent because the email service rejected the request. Please try again later.";
-    if (st === 0) return "Network problem. Please check your connection and try again.";
-    return "Something went wrong and your feedback was not sent. Please try again.";
-  }
-
   /* ---------- sending state ---------- */
   function setSending(on) {
     sending = on;
@@ -2721,69 +2664,17 @@ loadFirebase().catch(() => {});
   }
   function markSent() { try { sessionStorage.setItem("fbLast", String(Date.now())); } catch (e) {} }
 
-  /* ---------- submit ---------- */
+  /* ---------- submit (email sending removed) ---------- */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (sending) return;                                   /* duplicate-submission guard */
+    if (sending) return;
     hideStatus();
     var d = read();
-    if (!validateAll(d)) { showStatus("error", "Please fix the highlighted fields and try again."); return; }
-
-    if (el.hp.value !== "" || Date.now() - openedAt < MIN_FILL_MS) {
-      showStatus("error", "That looked automated. Please take a moment, check your details and try again.");
+    if (!validateAll(d)) {
+      showStatus("error", "Please fix the highlighted fields and try again.");
       return;
     }
-    var wait = cooldownLeft();
-    if (wait) { showStatus("warn", "Thanks! Please wait " + wait + " seconds before sending another message."); return; }
-    if (!configured()) {
-      el.setup.hidden = false;
-      showStatus("error", "Feedback cannot be sent yet because the email service has not been set up by the site owner.");
-      return;
-    }
-
-    var id = refId(), reply = REPLIES[d.category];
-    var ownerParams = {
-      reference_id: id,
-      from_name: d.name,
-      from_email: d.email,
-      reply_to: d.email,
-      category: d.category,
-      message: d.message,
-      rating: stars(d.rating),
-      submitted_at: istNow(),
-      site_name: FB_CONFIG.SITE_NAME
-    };
-    var userParams = {
-      reference_id: id,
-      to_name: d.name,
-      to_email: d.email,
-      category: d.category,
-      response_heading: reply.head,
-      response_body: reply.body,
-      response_next: reply.next,
-      message_excerpt: excerpt(d.message),
-      rating_text: stars(d.rating),
-      site_name: FB_CONFIG.SITE_NAME,
-      site_url: location.origin + location.pathname,
-      year: String(new Date().getFullYear())
-    };
-
-    setSending(true);
-    loadSdk()
-      .then(function () { return send(FB_CONFIG.TEMPLATE_ID_OWNER, ownerParams); })      /* step 1: the feedback must reach the owner */
-      .then(function () {
-        markSent();
-        return send(FB_CONFIG.TEMPLATE_ID_USER, userParams).then(                         /* step 2: confirmation to the visitor */
-          function () { return true; },
-          function (err) { try { console.warn("Confirmation email failed", err && err.status, err && err.text); } catch (x) {} return false; }
-        );
-      })
-      .then(function (replyOk) { setSending(false); showSuccess(d, id, replyOk); })
-      .catch(function (err) {
-        setSending(false);
-        try { console.error("Feedback send failed", err && err.status, err && err.text); } catch (x) {}
-        showStatus("error", explain(err));
-      });
+    showStatus("warn", "This feedback form is in demo mode. Email sending has been removed.");
   });
 
   /* ---------- success / reset ---------- */
