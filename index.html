@@ -247,6 +247,8 @@ textarea{min-height:170px;resize:vertical}
 .about-sign small{display:block;margin-top:.4rem;font-family:var(--sans);font-size:.88rem;color:var(--muted)}
 
 footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.9rem;background:rgba(10,12,31,.55)}
+footer a{color:var(--muted);text-underline-offset:3px}
+footer a:hover{color:var(--saffron)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 
 @media(max-width:760px){.hero{grid-template-columns:1fr}nav{gap:1rem}.ty-box{font-size:1.1rem}}
@@ -323,7 +325,7 @@ main{min-height:62vh}
 .page.enter{animation:pageIn .55s ease both}
 @keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .page-load .skeleton{margin-top:0}
-nav a[data-go]{padding-bottom:.15rem;border-bottom:2px solid transparent}
+nav a[data-go],nav a[href="feedback.html"]{padding-bottom:.15rem;border-bottom:2px solid transparent}
 nav a[aria-current="page"]{color:var(--text);border-bottom-color:var(--saffron)}
 @media(prefers-reduced-motion:reduce){.page.leave{transform:none}.page.enter{animation-name:fade}}
 </style>
@@ -418,123 +420,6 @@ header.pe-shadow{box-shadow:0 8px 24px rgba(0,0,0,.4)}
 @keyframes peWave{0%,100%{transform:skewY(-5deg) scaleY(1)}50%{transform:skewY(5deg) scaleY(.94)}}
 #peConf{position:fixed;inset:0;width:100%;height:100%;z-index:220;pointer-events:none}
 </style>
-<style id="fbStyle">
-/* ---------- Feedback page (uses the site's own colour tokens) ---------- */
-.fb-intro{max-width:720px;margin-bottom:1.6rem}
-.fb-intro .tag{display:inline-block;color:var(--saffron);border:1px solid rgba(255,153,51,.5);background:rgba(255,153,51,.1);border-radius:999px;padding:.25rem .9rem;font-size:.82rem;font-weight:700;letter-spacing:.12em;margin-bottom:1rem}
-.fb-intro h2{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin-bottom:.8rem}
-.fb-intro h2 em{font-style:normal;background:linear-gradient(95deg,var(--saffron),#fff 55%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.fb-intro p{color:var(--muted);font-size:1.05rem}
-.fb-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:1.2rem;align-items:start}
-.fb-card{position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(32,37,74,.72),rgba(22,26,56,.6));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-top:4px solid var(--saffron);border-radius:18px;padding:1.6rem;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-.fb-card h3{font-family:var(--serif);font-size:1.4rem;margin-bottom:.2rem}
-.fb-card .fb-lead{color:var(--muted);margin-bottom:1.3rem;font-size:.95rem}
-
-/* entrance: fade in + slide up (replays every time the page opens) */
-.page:not([hidden]) .fb-card{animation:fbRise .7s cubic-bezier(.22,1,.36,1) both}
-.page:not([hidden]) .fb-side>div{animation:fbRise .7s cubic-bezier(.22,1,.36,1) both}
-.page:not([hidden]) .fb-side>div:nth-child(1){animation-delay:.12s}
-.page:not([hidden]) .fb-side>div:nth-child(2){animation-delay:.2s}
-.page:not([hidden]) .fb-side>div:nth-child(3){animation-delay:.28s}
-@keyframes fbRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-
-.fb-side{display:grid;gap:1rem}
-.fb-side>div{background:var(--surface);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem;transition:transform .2s ease,border-color .2s ease}
-.fb-side>div:hover{transform:translateY(-3px);border-color:var(--saffron)}
-.fb-side .ai{font-size:1.5rem;display:block;margin-bottom:.3rem}
-.fb-side b{display:block;margin-bottom:.15rem}
-.fb-side span.d{color:var(--muted);font-size:.9rem}
-
-
-.fb-setup{display:flex;gap:.7rem;align-items:flex-start;margin-bottom:1.1rem;padding:.8rem 1rem;border-radius:12px;font-size:.9rem;color:#ffd9a8;background:rgba(255,153,51,.1);border:1px dashed rgba(255,153,51,.55)}
-.fb-setup[hidden]{display:none}
-
-/* fields */
-.fb-row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
-.fb-field{margin-bottom:1rem}
-.fb-field label,.fb-rate-label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:.3rem;transition:color .25s ease}
-.fb-field:focus-within label{color:var(--saffron)}
-.fb-field .req{color:var(--saffron)}
-.fb-field input,.fb-field select,.fb-field textarea{transition:border-color .25s ease,box-shadow .25s ease,background .25s ease}
-.fb-field input:focus,.fb-field select:focus,.fb-field textarea:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,153,51,.18);background:rgba(8,10,28,.92)}
-.fb-field select{appearance:none;-webkit-appearance:none;padding-right:2.4rem;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23a3a5c8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center}
-.fb-field textarea{min-height:140px}
-.fb-field.invalid input,.fb-field.invalid select,.fb-field.invalid textarea{border-color:var(--danger);box-shadow:0 0 0 3px rgba(255,107,107,.15)}
-.fb-field.fb-shake{animation:fbShake .42s ease}
-@keyframes fbShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
-.fb-err{color:var(--danger);font-size:.84rem;margin-top:.3rem}
-.fb-err:empty{display:none}
-.fb-meta{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:var(--muted);margin-top:.3rem}
-.fb-meta .fb-err{margin:0}
-.fb-count.warn{color:var(--saffron)}
-.fb-hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
-
-/* star rating */
-.fb-rate{margin:.2rem 0 1.2rem}
-.fb-rate-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
-.fb-stars{display:inline-flex;gap:.2rem}
-.fb-star{width:42px;height:42px;display:grid;place-items:center;padding:0;margin:0;background:transparent;border:0;border-radius:10px;color:var(--muted);cursor:pointer;transition:transform .18s ease,color .2s ease,background .2s ease}
-.fb-star svg{width:28px;height:28px;fill:transparent;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;transition:fill .2s ease,filter .2s ease}
-.fb-star:hover{transform:scale(1.15) rotate(-6deg)}
-.fb-star.on{color:var(--saffron)}
-.fb-star.on svg{fill:var(--saffron);filter:drop-shadow(0 0 6px rgba(255,153,51,.55))}
-.fb-star.pop{animation:fbPop .45s cubic-bezier(.3,1.6,.5,1)}
-@keyframes fbPop{0%{transform:scale(1)}40%{transform:scale(1.5) rotate(12deg)}100%{transform:scale(1)}}
-.fb-rate-text{color:var(--muted);font-size:.9rem;min-width:9rem}
-.fb-rate-clear{margin:0;background:transparent;border:0;color:var(--saffron);font:inherit;font-size:.84rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:.2rem .3rem;border-radius:6px}
-.fb-rate-clear[hidden]{display:none}
-
-/* status + submit */
-.fb-status{margin:.2rem 0 .9rem;padding:.65rem .85rem;border-radius:10px;font-size:.92rem;background:rgba(8,10,28,.55);border-left:3px solid currentColor}
-.fb-status[hidden]{display:none}
-.fb-status[data-type="error"]{color:var(--danger)}
-.fb-status[data-type="warn"]{color:var(--saffron)}
-.fb-status[data-type="info"]{color:var(--muted)}
-.fb-status.fb-shake{animation:fbShake .45s ease}
-.fb-submit{width:100%;margin-top:.3rem;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.8rem 1.2rem;font-size:1rem;box-shadow:0 8px 24px rgba(255,153,51,.25);transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
-.fb-submit:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 12px 30px rgba(255,153,51,.35)}
-.fb-submit:active:not(:disabled){transform:translateY(0)}
-.fb-submit:disabled{opacity:.78;cursor:not-allowed}
-.fb-spin{display:none;width:17px;height:17px;border-radius:50%;border:2px solid rgba(26,18,5,.3);border-top-color:#1a1205;animation:spin .7s linear infinite}
-.fb-submit.is-busy .fb-spin{display:inline-block}
-.fb-fine{margin-top:.9rem;font-size:.78rem;color:var(--muted);text-align:center}
-#fbForm{transition:opacity .3s ease,transform .3s ease}
-#fbForm.fb-out{opacity:0;transform:translateY(-10px)}
-#fbForm[hidden]{display:none}
-
-/* success */
-.fb-success{text-align:center;padding:1.4rem .4rem .6rem}
-.fb-success[hidden]{display:none}
-.fb-success:not([hidden]){animation:fbRise .6s cubic-bezier(.22,1,.36,1) both}
-.fb-check{position:relative;width:92px;height:92px;margin:0 auto 1rem}
-.fb-check::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(63,212,143,.35),transparent 68%);animation:fbHalo 1.8s ease-out .5s 2 both}
-.fb-check svg{position:relative;width:100%;height:100%}
-.fb-check circle{stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-dasharray:145;stroke-dashoffset:145;animation:fbDraw .7s ease .1s forwards;transform:rotate(-90deg);transform-origin:50% 50%}
-.fb-check path{stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:fbDraw .45s ease .7s forwards}
-@keyframes fbDraw{to{stroke-dashoffset:0}}
-@keyframes fbHalo{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.5);opacity:0}}
-.fb-success h3{font-size:1.6rem;margin-bottom:.4rem}
-.fb-success p{color:var(--muted);margin:0 auto .6rem;max-width:46ch}
-.fb-success p b{color:var(--text)}
-.fb-ref{display:inline-block;margin:.4rem 0 .6rem;font-family:var(--mono);font-size:.85rem;color:var(--saffron);border:1px solid rgba(255,153,51,.45);background:rgba(255,153,51,.08);border-radius:999px;padding:.2rem .8rem}
-.fb-note-warn{color:var(--saffron)!important}
-.fb-actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
-.fb-actions .btn,.fb-actions a.btn{margin-top:0;text-decoration:none;display:inline-block}
-footer a[data-go]{color:var(--muted);text-underline-offset:3px}
-footer a[data-go]:hover{color:var(--saffron)}
-
-@media(max-width:860px){.fb-layout{grid-template-columns:1fr}}
-@media(max-width:620px){.fb-row{grid-template-columns:1fr}.fb-card{padding:1.2rem}.fb-star{width:46px;height:46px}.fb-rate-text{min-width:0}}
-@media(prefers-reduced-motion:reduce){
-  .page:not([hidden]) .fb-card,.page:not([hidden]) .fb-side>div,.fb-success:not([hidden]){animation:none}
-  .fb-field.fb-shake,.fb-status.fb-shake,.fb-star.pop,.fb-spin{animation:none}
-  .fb-spin{animation:spin 1.6s linear infinite}
-  .fb-check::before{animation:none;opacity:0}
-  .fb-check circle,.fb-check path{animation:none;stroke-dashoffset:0}
-  .fb-star,.fb-star svg,.fb-submit,.fb-side>div,#fbForm,.fb-field input,.fb-field select,.fb-field textarea,.fb-field label{transition:none}
-  .fb-star:hover,.fb-side>div:hover,.fb-submit:hover:not(:disabled){transform:none}
-}
-</style>
 </head>
 <body>
 
@@ -553,7 +438,7 @@ footer a[data-go]:hover{color:var(--saffron)}
       <a href="#home" data-go="home" aria-current="page">Home</a>
       <a href="#tools" data-go="tools">Tools</a>
       <a href="#about" data-go="about">About</a>
-      <a href="#feedback" data-go="feedback">Feedback</a>
+      <a href="feedback.html">Feedback</a>
 
       <div class="auth-area" id="authArea">
         <button class="btn main auth-btn" id="authOpen" type="button" aria-haspopup="dialog">Sign in</button>
@@ -849,115 +734,12 @@ footer a[data-go]:hover{color:var(--saffron)}
       </div>
     </div>
   </section>
-
-  <!-- PAGE: Feedback -->
-  <section id="feedback" class="page" data-page="feedback" hidden>
-    <div class="wrap">
-      <div class="fb-intro">
-        <span class="tag">FEEDBACK</span>
-        <h2>Tell us what <em>you think.</em></h2>
-        <p>Found a bug, have an idea, or just want to say hello? Share your feedback here.</p>
-      </div>
-
-      <div class="fb-layout">
-        <div class="fb-card" id="fbCard">
-<form id="fbForm" novalidate autocomplete="on">
-            <h3>Send feedback</h3>
-            <p class="fb-lead">Fields marked <span class="req" style="color:var(--saffron)">*</span> are required.</p>
-
-            <div class="fb-row">
-              <div class="fb-field" id="fbNameField">
-                <label for="fbName">Full name <span class="req" aria-hidden="true">*</span></label>
-                <input id="fbName" name="name" type="text" autocomplete="name" maxlength="80" placeholder="Your name" aria-required="true" aria-describedby="fbNameErr">
-                <div class="fb-err" id="fbNameErr" role="alert"></div>
-              </div>
-              <div class="fb-field" id="fbEmailField">
-                <label for="fbEmail">Email address <span class="req" aria-hidden="true">*</span></label>
-                <input id="fbEmail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" aria-required="true" aria-describedby="fbEmailErr">
-                <div class="fb-err" id="fbEmailErr" role="alert"></div>
-              </div>
-            </div>
-
-            <div class="fb-field" id="fbCatField">
-              <label for="fbCategory">Feedback category <span class="req" aria-hidden="true">*</span></label>
-              <select id="fbCategory" name="category" aria-required="true" aria-describedby="fbCatErr">
-                <option value="General Feedback" selected>General Feedback</option>
-                <option value="Technical Issue">Technical Issue</option>
-                <option value="Login Problem">Login Problem</option>
-                <option value="Bug Report">Bug Report</option>
-                <option value="Feature Request">Feature Request</option>
-                <option value="Other">Other</option>
-              </select>
-              <div class="fb-err" id="fbCatErr" role="alert"></div>
-            </div>
-
-            <div class="fb-field" id="fbMsgField">
-              <label for="fbMessage">Feedback message <span class="req" aria-hidden="true">*</span></label>
-              <textarea id="fbMessage" name="message" maxlength="1500" placeholder="Tell us what happened, what you liked, or what you would like to see…" aria-required="true" aria-describedby="fbMsgErr fbCount"></textarea>
-              <div class="fb-meta">
-                <div class="fb-err" id="fbMsgErr" role="alert"></div>
-                <span class="fb-count" id="fbCount" aria-live="off">0 / 1500</span>
-              </div>
-            </div>
-
-            <div class="fb-rate">
-              <span class="fb-rate-label" id="fbRateLabel">Rate your experience <small>(optional)</small></span>
-              <div class="fb-rate-row">
-                <div class="fb-stars" id="fbStars" role="radiogroup" aria-labelledby="fbRateLabel">
-                  <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="1 star" data-v="1" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
-                  <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="2 stars" data-v="2" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
-                  <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="3 stars" data-v="3" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
-                  <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="4 stars" data-v="4" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
-                  <button type="button" class="fb-star" role="radio" aria-checked="false" aria-label="5 stars" data-v="5" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
-                </div>
-                <span class="fb-rate-text" id="fbRateText" aria-live="polite">Not rated</span>
-                <button type="button" class="fb-rate-clear" id="fbRateClear" hidden>Clear</button>
-              </div>
-            </div>
-
-            <!-- spam trap: real people never see or fill this -->
-            <div class="fb-hp" aria-hidden="true">
-              <label for="fbExtra">Leave this field empty</label>
-              <input id="fbExtra" name="fb_extra" type="text" tabindex="-1" autocomplete="off">
-            </div>
-
-            <div class="fb-status" id="fbStatus" role="alert" aria-live="assertive" hidden></div>
-
-            <button class="btn main fb-submit" id="fbSubmit" type="submit">
-              <span class="fb-spin" aria-hidden="true"></span>
-              <span id="fbSubmitText">Submit feedback</span>
-            </button>
-            <p class="fb-fine">Please do not include passwords or payment details.</p>
-          </form>
-
-          <div class="fb-success" id="fbSuccess" hidden tabindex="-1" role="status" aria-live="polite">
-            <div class="fb-check" aria-hidden="true">
-              <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23" fill="none"/><path fill="none" d="M15 27l8 8 14-16"/></svg>
-            </div>
-            <h3 id="fbSuccessTitle">Thank you!</h3>
-            <p id="fbSuccessMsg">Your feedback has been received.</p>
-            <span class="fb-ref" id="fbRef"></span>
-            <p id="fbSuccessMail"></p>
-            <div class="fb-actions">
-              <button class="btn main" id="fbAgain" type="button">Send more feedback</button>
-              <a class="btn" href="#home" data-go="home">Back to home</a>
-            </div>
-          </div>
-        </div>
-
-        <aside class="fb-side" aria-label="About feedback">
-          <div><span class="ai">📧</span><b>Confirmation email</b><span class="d">After you submit, a confirmation is sent to your address. It usually takes a minute or two, but delivery is not guaranteed, so check spam or promotions too.</span></div>
-          <div><span class="ai">👀</span><b>Every message is read</b><span class="d">Bug reports, ideas and kind words all reach the site owner. A personal reply is not promised for every message.</span></div>
-          <div><span class="ai">🔒</span><b>Your privacy</b><span class="d">Your message is sent by email through         </aside>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© <span id="yr"></span> NISHANT TOOLS by Nishant Chandel. Made in India.</span>
-    <span>Results are for guidance only. · <a href="#feedback" data-go="feedback">Send feedback</a></span>
+    <span>Results are for guidance only. · <a href="feedback.html">Send feedback</a></span>
   </div>
 </footer>
 
@@ -1163,10 +945,9 @@ footer a[data-go]:hover{color:var(--saffron)}
   var pageEls = {
     home: document.querySelector('[data-page="home"]'),
     tools: document.querySelector('[data-page="tools"]'),
-    about: document.querySelector('[data-page="about"]'),
-    feedback: document.querySelector('[data-page="feedback"]')
+    about: document.querySelector('[data-page="about"]')
   };
-  var pageNames = { home: "Home", tools: "Tools", about: "About", feedback: "Feedback" };
+  var pageNames = { home: "Home", tools: "Tools", about: "About" };
   var navLinks = Array.prototype.slice.call(document.querySelectorAll("nav a[data-go]"));
   var pageLoad = $("pageLoad"), pageNote = $("pageNote");
   var currentPage = "home", pageToken = 0;
@@ -1175,7 +956,6 @@ footer a[data-go]:hover{color:var(--saffron)}
     if (tabFromSlug(h)) return "tools";
     if (h === "tools") return "tools";
     if (h === "about") return "about";
-    if (h === "feedback") return "feedback";
     return "home";
   }
   function hashFor(page, tool) {
@@ -1188,7 +968,6 @@ footer a[data-go]:hover{color:var(--saffron)}
   function pageTitle(page) {
     if (page === "tools") return current.getAttribute("data-title") + " · " + SITE;
     if (page === "about") return "About · " + SITE;
-    if (page === "feedback") return "Feedback · " + SITE;
     return SITE + " · Useful Tools for India";
   }
   function markNav(page) {
@@ -2453,282 +2232,6 @@ loadFirebase().catch(() => {});
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
-})();
-</script>
-<script id="fbScript">
-/* =====================================================================
-   FEEDBACK FORM  (   ---------------------------------------------------------------------
-   1. Create a free account at https://www.   2. Replace the four values below with YOUR OWN from the    These are not secrets: the Public Key is meant to be used in browser code.
-   NEVER put a Private Key, an email password or any API secret in this file.
-   ===================================================================== */
-(function () {
-  "use strict";
-
-
-  var $ = function (id) { return document.getElementById(id); };
-  var form = $("fbForm");
-  if (!form) return;
-
-  var MIN_FILL_MS = 2500;     /* anything faster than this after the page opens is treated as a bot */
-  var COOLDOWN_MS = 60000;    /* wait between two successful submissions */
-  var TIMEOUT_MS = 20000;
-  var MAX_MSG = 1500, MIN_MSG = 10;
-  var CATEGORIES = ["General Feedback", "Technical Issue", "Login Problem", "Bug Report", "Feature Request", "Other"];
-  var LABELS = ["", "Poor", "Fair", "Good", "Very good", "Excellent"];
-
-  /* Category-based wording for the confirmation email. Nothing here claims a fix or an action that has not happened. */
-  var REPLIES = {
-    "General Feedback": {
-      head: "Thank you for sharing your thoughts",
-      body: "We really appreciate you taking the time to tell us what you think about " + "NISHANT TOOLS" + ". Honest comments help show what is useful and what could be better.",
-      next: "Your message has been received and will be read and reviewed."
-    },
-    "Technical Issue": {
-      head: "We have received your technical issue",
-      body: "Thanks for letting us know something is not working properly. Your report has reached us and will be reviewed.",
-      next: "We cannot promise a fix date, but if we need more details we may reply to this email address."
-    },
-    "Login Problem": {
-      head: "We have received your login problem",
-      body: "Thanks for reporting your sign-in trouble. For the quickest fix, open the Sign in window on the website and choose \u201cForgot password? Reset it\u201d. A password reset email is sent to your address. If you created your account with Google, use \u201cContinue with Google\u201d instead.",
-      next: "Your report will be reviewed. Please never send us your password; we will never ask for it."
-    },
-    "Bug Report": {
-      head: "Thank you for the bug report",
-      body: "Bug reports help make the site better for everyone. Your report has been received and will be reviewed.",
-      next: "We cannot promise a fix date, but if we need more details we may reply to this email address."
-    },
-    "Feature Request": {
-      head: "Thank you for the suggestion",
-      body: "We love hearing ideas for improving " + "NISHANT TOOLS" + ". Your suggestion has been received and will be considered.",
-      next: "Not every idea can be built, but every one is read."
-    },
-    "Other": {
-      head: "Thank you for getting in touch",
-      body: "Your message has been received. Thanks for taking the time to write to us.",
-      next: "It will be read and reviewed."
-    }
-  };
-
-  var el = {
-    name: $("fbName"), email: $("fbEmail"), cat: $("fbCategory"), msg: $("fbMessage"), hp: $("fbExtra"),
-    count: $("fbCount"), status: $("fbStatus"), submit: $("fbSubmit"), submitText: $("fbSubmitText"),
-    setup: $("fbSetup"), page: $("feedback"), success: $("fbSuccess"), again: $("fbAgain"),
-    stars: Array.prototype.slice.call(document.querySelectorAll("#fbStars .fb-star")),
-    starWrap: $("fbStars"), rateText: $("fbRateText"), rateClear: $("fbRateClear")
-  };
-  var fields = {
-    name:  { box: $("fbNameField"),  input: el.name,  err: $("fbNameErr") },
-    email: { box: $("fbEmailField"), input: el.email, err: $("fbEmailErr") },
-    cat:   { box: $("fbCatField"),   input: el.cat,   err: $("fbCatErr") },
-    msg:   { box: $("fbMsgField"),   input: el.msg,   err: $("fbMsgErr") }
-  };
-
-  var rating = 0, sending = false, openedAt = Date.now(), statusTimer = 0;
-
-  /* ---------- helpers ---------- */
-  function tidy(s) { return String(s || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim(); }
-  function excerpt(s) {
-    /* shown back to the visitor in the confirmation email: links removed and shortened so the email cannot be used to push spam */
-    s = String(s).replace(/(https?:\/\/|www\.)\S+/gi, "[link removed]").replace(/\s+/g, " ").trim();
-    return s.length > 240 ? s.slice(0, 237).replace(/\s+\S*$/, "") + "\u2026" : s;
-  }
-  function refId() { return "FB-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase(); }
-  function istNow() {
-    try {
-      return new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }).format(new Date()) + " IST";
-    } catch (e) { return new Date().toString(); }
-  }
-  function stars(n) { return n ? new Array(n + 1).join("\u2605") + new Array(6 - n).join("\u2606") + " (" + n + "/5)" : "Not given"; }
-  function retrigger(node, cls) { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); }
-
-  /* ---------- status banner ---------- */
-  function showStatus(type, text) {
-    clearTimeout(statusTimer);
-    el.status.dataset.type = type;
-    el.status.textContent = text;
-    el.status.hidden = false;
-    if (type === "error" || type === "warn") retrigger(el.status, "fb-shake");
-  }
-  function hideStatus() { el.status.hidden = true; el.status.textContent = ""; }
-
-  /* ---------- validation ---------- */
-  function setErr(key, msg) {
-    var f = fields[key];
-    f.err.textContent = msg || "";
-    f.box.classList.toggle("invalid", !!msg);
-    f.input.setAttribute("aria-invalid", msg ? "true" : "false");
-    if (msg) retrigger(f.box, "fb-shake");
-  }
-  function check(key, d) {
-    var m = "";
-    if (key === "name") {
-      if (d.name.length < 2) m = "Please enter your full name.";
-    } else if (key === "email") {
-      if (!d.email) m = "Please enter your email address.";
-      else if (d.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)) m = "That email address does not look right.";
-    } else if (key === "cat") {
-      if (CATEGORIES.indexOf(d.category) < 0) m = "Please choose a category.";
-    } else if (key === "msg") {
-      if (d.message.length < MIN_MSG) m = "Please write at least " + MIN_MSG + " characters.";
-      else if (d.message.length > MAX_MSG) m = "Please keep it under " + MAX_MSG + " characters.";
-    }
-    return m;
-  }
-  function read() {
-    return {
-      name: tidy(el.name.value),
-      email: el.email.value.trim(),
-      category: el.cat.value,
-      message: el.msg.value.replace(/\r\n?/g, "\n").trim(),
-      rating: rating
-    };
-  }
-  function validateAll(d) {
-    var first = null;
-    ["name", "email", "cat", "msg"].forEach(function (k) {
-      var m = check(k, d);
-      setErr(k, m);
-      if (m && !first) first = k;
-    });
-    if (first) { try { fields[first].input.focus(); } catch (e) {} }
-    return !first;
-  }
-  [["name", el.name], ["email", el.email], ["cat", el.cat], ["msg", el.msg]].forEach(function (p) {
-    var key = p[0], input = p[1];
-    input.addEventListener("blur", function () {
-      if (input.value === "" && key !== "cat" && !fields[key].box.classList.contains("invalid")) return;
-      var m = check(key, read());
-      if (m) setErr(key, m); else clearErr(key);
-    });
-    input.addEventListener("input", function () { if (fields[key].box.classList.contains("invalid")) clearErr(key); });
-  });
-  function clearErr(key) {
-    var f = fields[key];
-    f.err.textContent = ""; f.box.classList.remove("invalid"); f.input.setAttribute("aria-invalid", "false");
-  }
-
-  /* ---------- counter ---------- */
-  function updateCount() {
-    var n = el.msg.value.length;
-    el.count.textContent = n + " / " + MAX_MSG;
-    el.count.classList.toggle("warn", n > MAX_MSG - 100);
-  }
-  el.msg.addEventListener("input", updateCount);
-
-  /* ---------- star rating ---------- */
-  function paint(n) { el.stars.forEach(function (s, i) { s.classList.toggle("on", i < n); }); }
-  function setRating(n, focus) {
-    rating = n;
-    el.stars.forEach(function (s, i) {
-      s.setAttribute("aria-checked", i + 1 === n ? "true" : "false");
-      s.tabIndex = n ? (i + 1 === n ? 0 : -1) : (i === 0 ? 0 : -1);
-    });
-    paint(n);
-    el.rateText.textContent = n ? n + " / 5 \u00b7 " + LABELS[n] : "Not rated";
-    el.rateClear.hidden = !n;
-    if (n) {
-      retrigger(el.stars[n - 1], "pop");
-      if (focus) el.stars[n - 1].focus();
-    }
-  }
-  el.stars.forEach(function (s, i) {
-    s.addEventListener("click", function () { setRating(rating === i + 1 ? 0 : i + 1); });
-    s.addEventListener("mouseenter", function () { paint(i + 1); });
-    s.addEventListener("keydown", function (e) {
-      var k = e.key, n = -1;
-      if (k === "ArrowRight" || k === "ArrowUp") n = Math.min(5, (rating || 0) + 1);
-      else if (k === "ArrowLeft" || k === "ArrowDown") n = Math.max(1, (rating || 2) - 1);
-      else if (k === "Home") n = 1;
-      else if (k === "End") n = 5;
-      if (n > 0) { e.preventDefault(); setRating(n, true); }
-    });
-  });
-  el.starWrap.addEventListener("mouseleave", function () { paint(rating); });
-  el.rateClear.addEventListener("click", function () { setRating(0); el.stars[0].focus(); });
-
-  /* ---------- sending state ---------- */
-  function setSending(on) {
-    sending = on;
-    el.submit.disabled = on;
-    el.submit.classList.toggle("is-busy", on);
-    el.submit.setAttribute("aria-busy", on ? "true" : "false");
-    el.submitText.textContent = on ? "Sending\u2026" : "Submit feedback";
-  }
-  function cooldownLeft() {
-    try {
-      var last = parseInt(sessionStorage.getItem("fbLast") || "0", 10);   /* only a timestamp is stored, never the feedback */
-      var left = COOLDOWN_MS - (Date.now() - last);
-      return left > 0 ? Math.ceil(left / 1000) : 0;
-    } catch (e) { return 0; }
-  }
-  function markSent() { try { sessionStorage.setItem("fbLast", String(Date.now())); } catch (e) {} }
-
-  /* ---------- submit (email sending removed) ---------- */
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (sending) return;
-    hideStatus();
-    var d = read();
-    if (!validateAll(d)) {
-      showStatus("error", "Please fix the highlighted fields and try again.");
-      return;
-    }
-    showStatus("warn", "This feedback form is in demo mode. Email sending has been removed.");
-  });
-
-  /* ---------- success / reset ---------- */
-  function showSuccess(d, id, replyOk) {
-    $("fbSuccessTitle").textContent = "Thank you, " + d.name.split(" ")[0] + "!";
-    $("fbSuccessMsg").textContent = "Your " + d.category.toLowerCase() + " has been sent and received.";
-    $("fbRef").textContent = "Reference " + id;
-    var mail = $("fbSuccessMail");
-    if (replyOk) {
-      mail.className = "";
-      mail.textContent = "A confirmation email is on its way to " + d.email + ". It usually arrives within a minute or two, but please check spam or promotions if you do not see it.";
-    } else {
-      mail.className = "fb-note-warn";
-      mail.textContent = "Your feedback reached us, but the confirmation email to " + d.email + " could not be sent. You do not need to submit again.";
-    }
-    form.reset(); setRating(0); updateCount();
-    ["name", "email", "cat", "msg"].forEach(clearErr);
-    form.classList.add("fb-out");
-    setTimeout(function () {
-      form.hidden = true;
-      form.classList.remove("fb-out");
-      el.success.hidden = false;
-      try { el.success.focus({ preventScroll: true }); } catch (e) {}
-      var r = el.success.getBoundingClientRect();
-      if (r.top < 0 || r.top > window.innerHeight * 0.5) el.success.scrollIntoView({ block: "center", behavior: "smooth" });
-    }, 320);
-  }
-  el.again.addEventListener("click", function () {
-    el.success.hidden = true;
-    form.hidden = false;
-    hideStatus();
-    openedAt = Date.now();
-    try { el.name.focus(); } catch (e) {}
-  });
-
-  /* ---------- when the Feedback page becomes visible ---------- */
-  function onShow() {
-    openedAt = Date.now();
-    el.setup.hidden = configured();
-    if (configured()) loadSdk().catch(function () {});     /* warm up so the first submit is quick */
-    var au = $("authUser");
-    if (au && !au.hidden && !el.name.value && !el.email.value) {   /* signed-in visitors get name/email pre-filled */
-      var n = $("authName"), m = $("authMail");
-      if (n && n.textContent.trim()) el.name.value = n.textContent.trim();
-      if (m && m.textContent.trim()) el.email.value = m.textContent.trim();
-    }
-  }
-  if (el.page) {
-    new MutationObserver(function () { if (!el.page.hidden) onShow(); })
-      .observe(el.page, { attributes: true, attributeFilter: ["hidden"] });
-    if (!el.page.hidden) onShow();
-  }
-  setRating(0);
-  updateCount();
 })();
 </script>
 </body>
