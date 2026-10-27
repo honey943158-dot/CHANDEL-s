@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,6 +153,18 @@ textarea {
     color: #fb7185;
 }
 
+.back {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #aab4c8;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.back:hover {
+    color: #ff9933;
+}
+
 .footer {
     text-align: center;
     margin-top: 22px;
@@ -176,6 +187,7 @@ textarea {
 <body>
 
 <main class="container">
+    <a class="back" href="index.html">&larr; Back to Nishant Tools</a>
     <h1>Share Your Feedback 💬</h1>
 
     <p class="subtitle">
@@ -357,7 +369,7 @@ form.addEventListener("submit", async event => {
          * that Google Sheets saved the feedback successfully.
          */
         statusBox.textContent =
-            "Your request was sent. Please check the confirmation process.";
+            "Thank you! Your feedback has been sent.";
         statusBox.className = "success";
 
         form.reset();
@@ -384,4 +396,3 @@ form.addEventListener("submit", async event => {
 
 </body>
 </html>
-```
