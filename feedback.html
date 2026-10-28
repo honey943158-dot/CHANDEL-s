@@ -153,18 +153,6 @@ textarea {
     color: #fb7185;
 }
 
-.back {
-    display: inline-block;
-    margin-bottom: 18px;
-    color: #aab4c8;
-    font-size: 14px;
-    text-decoration: none;
-}
-
-.back:hover {
-    color: #ff9933;
-}
-
 .footer {
     text-align: center;
     margin-top: 22px;
@@ -187,7 +175,6 @@ textarea {
 <body>
 
 <main class="container">
-    <a class="back" href="index.html">&larr; Back to Nishant Tools</a>
     <h1>Share Your Feedback 💬</h1>
 
     <p class="subtitle">
@@ -267,7 +254,7 @@ textarea {
 
 <script>
 const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzX3VRq2IX3_vCVdaPO7DjENV_20NCsuFuHv4xNPUIDQuMl4qG_ONYPjEE2xf6_2Tgb/exec";
+    "https://script.google.com/macros/s/AKfycby2kH7cgJFrGcfpla4ONb7FiHYNNiIJKID5trgfgmUBH1GDsBXAGfUa6x-tix6hT0Yg/exec";
 
 const form = document.getElementById("feedbackForm");
 const submitBtn = document.getElementById("submitBtn");
@@ -369,7 +356,7 @@ form.addEventListener("submit", async event => {
          * that Google Sheets saved the feedback successfully.
          */
         statusBox.textContent =
-            "Thank you! Your feedback has been sent.";
+            "Your request was sent. Please check the confirmation process.";
         statusBox.className = "success";
 
         form.reset();
