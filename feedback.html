@@ -3,383 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Feedback Form | Nishant Tools</title>
-
+<title>Feedback - NISHANT TOOLS</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #090d18;
-    color: #fff;
-}
-
-.container {
-    width: 100%;
-    max-width: 520px;
-    padding: 32px;
-    background: #141b2b;
-    border: 1px solid #2c3650;
-    border-radius: 18px;
-    box-shadow: 0 15px 45px #0005;
-}
-
-h1 {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #aab4c8;
-    line-height: 1.6;
-    font-size: 14px;
-    margin-bottom: 28px;
-}
-
-.form-group {
-    margin-bottom: 19px;
-}
-
-label {
-    display: block;
-    margin-bottom: 9px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 13px;
-    color: white;
-    background: #0b1120;
-    border: 1px solid #303b54;
-    border-radius: 9px;
-    outline: none;
-    font-size: 14px;
-    font-family: inherit;
-}
-
-input:focus, select:focus, textarea:focus {
-    border-color: #8175ff;
-    box-shadow: 0 0 0 2px #8175ff25;
-}
-
-select option {
-    background: #141b2b;
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.stars {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-.stars button {
-    padding: 0;
-    border: none;
-    background: none;
-    color: #5a647b;
-    font-size: 36px;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.stars button.active {
-    color: #ffc857;
-}
-
-.stars button:hover {
-    transform: scale(1.12);
-}
-
-.rating-label {
-    text-align: center;
-    color: #aab4c8;
-    font-size: 13px;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 9px;
-    color: white;
-    background: linear-gradient(135deg, #786aff, #5045d8);
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.submit-btn:hover {
-    opacity: .9;
-}
-
-.submit-btn:disabled {
-    opacity: .6;
-    cursor: wait;
-}
-
-#status {
-    margin-top: 17px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.success {
-    color: #4ade80;
-}
-
-.error {
-    color: #fb7185;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 22px;
-    color: #8290a9;
-    font-size: 12px;
-}
-
-@media(max-width: 480px) {
-    .container {
-        padding: 24px 18px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+  body { background: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .card { background: #fff; width: 100%; max-width: 480px; padding: 28px 24px; border-radius: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+  h1 { font-size: 22px; color: #0f172a; margin-bottom: 4px; }
+  .sub { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+  label { display: block; font-size: 14px; font-weight: bold; color: #334155; margin: 14px 0 6px; }
+  select, input[type="email"], textarea { width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; }
+  select:focus, input:focus, textarea:focus { border-color: #2563eb; }
+  textarea { min-height: 110px; resize: vertical; }
+  .stars { display: flex; gap: 6px; }
+  .stars span { font-size: 32px; color: #cbd5e1; cursor: pointer; user-select: none; transition: color .15s; }
+  .stars span.on { color: #f59e0b; }
+  button { width: 100%; margin-top: 20px; padding: 13px; background: #2563eb; color: #fff; border: 0; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  button:disabled { background: #94a3b8; cursor: not-allowed; }
+  #msg { margin-top: 14px; font-size: 14px; text-align: center; min-height: 20px; }
+  .ok { color: #16a34a; } .err { color: #dc2626; }
+  .hint { font-size: 12px; color: #94a3b8; margin-top: 4px; }
 </style>
 </head>
-
 <body>
+<div class="card">
+  <h1>Your Feedback</h1>
+  <p class="sub">Help us make NISHANT TOOLS better</p>
 
-<main class="container">
-    <h1>Share Your Feedback 💬</h1>
+  <form id="fbForm">
+    <label for="category">Category</label>
+    <select id="category" required>
+      <option value="">-- Select --</option>
+      <option>Suggestion</option>
+      <option>Bug / Problem</option>
+      <option>New Tool Request</option>
+      <option>Compliment</option>
+      <option>Other</option>
+    </select>
 
-    <p class="subtitle">
-        Help us improve Nishant Tools.
-        We value your suggestions and experience!
-    </p>
-
-    <form id="feedbackForm">
-
-        <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input id="name" name="name"
-                type="text" maxlength="100"
-                placeholder="Enter your name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input id="email" name="email"
-                type="email" maxlength="254"
-                placeholder="Enter your email" required>
-        </div>
-
-        <div class="form-group">
-            <label for="category">Feedback Category *</label>
-            <select id="category" name="category" required>
-                <option value="">Choose a category</option>
-                <option value="Suggestion">Suggestion</option>
-                <option value="Bug Report">Bug Report</option>
-                <option value="Feature Request">Feature Request</option>
-                <option value="Website Experience">Website Experience</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Rate Your Experience (Optional)</label>
-
-            <div class="stars" id="stars">
-                <button type="button" data-rating="1"
-                    aria-label="1 star" aria-pressed="false">★</button>
-                <button type="button" data-rating="2"
-                    aria-label="2 stars" aria-pressed="false">★</button>
-                <button type="button" data-rating="3"
-                    aria-label="3 stars" aria-pressed="false">★</button>
-                <button type="button" data-rating="4"
-                    aria-label="4 stars" aria-pressed="false">★</button>
-                <button type="button" data-rating="5"
-                    aria-label="5 stars" aria-pressed="false">★</button>
-            </div>
-
-            <p class="rating-label" id="ratingLabel">
-                Select a rating
-            </p>
-        </div>
-
-        <div class="form-group">
-            <label for="feedback">Your Feedback *</label>
-            <textarea id="feedback" name="feedback"
-                minlength="5" maxlength="2000"
-                placeholder="Write your feedback here..."
-                required></textarea>
-        </div>
-
-        <button class="submit-btn" id="submitBtn" type="submit">
-            Submit Feedback
-        </button>
-
-        <p id="status" role="status" aria-live="polite"></p>
-
-    </form>
-
-    <div class="footer">
-        © 2026 Nishant Tools
+    <label>Rating</label>
+    <div class="stars" id="stars">
+      <span data-v="1">&#9733;</span><span data-v="2">&#9733;</span><span data-v="3">&#9733;</span><span data-v="4">&#9733;</span><span data-v="5">&#9733;</span>
     </div>
-</main>
+
+    <label for="feedback">Feedback</label>
+    <textarea id="feedback" placeholder="Write your feedback here..." required></textarea>
+
+    <label for="email">Email (optional)</label>
+    <input type="email" id="email" placeholder="you@example.com">
+    <p class="hint">If you enter your email, you will receive a thank-you message.</p>
+
+    <button type="submit" id="btn">Submit Feedback</button>
+    <div id="msg"></div>
+  </form>
+</div>
 
 <script>
-const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycby2kH7cgJFrGcfpla4ONb7FiHYNNiIJKID5trgfgmUBH1GDsBXAGfUa6x-tix6hT0Yg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyviEymRjGIp8bWJrudze_3RxdzbU9S31HMbN4aiXQxJFIzi31tX86oDzd3hApt5us5/exec";
 
-const form = document.getElementById("feedbackForm");
-const submitBtn = document.getElementById("submitBtn");
-const statusBox = document.getElementById("status");
-const ratingLabel = document.getElementById("ratingLabel");
-const starButtons = document.querySelectorAll("#stars button");
+let rating = 0;
+const stars = document.querySelectorAll("#stars span");
 
-let selectedRating = 0;
-let isSubmitting = false;
-
-const ratingNames = {
-    1: "Poor",
-    2: "Fair",
-    3: "Good",
-    4: "Very Good",
-    5: "Excellent"
-};
-
-starButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        selectedRating = Number(button.dataset.rating);
-
-        starButtons.forEach(star => {
-            const active =
-                Number(star.dataset.rating) <= selectedRating;
-
-            star.classList.toggle("active", active);
-            star.setAttribute(
-                "aria-pressed",
-                Number(star.dataset.rating) === selectedRating
-                    ? "true" : "false"
-            );
-        });
-
-        ratingLabel.textContent =
-            ratingNames[selectedRating];
-    });
+function paint(n) {
+  stars.forEach(s => s.classList.toggle("on", Number(s.dataset.v) <= n));
+}
+stars.forEach(s => {
+  s.addEventListener("click", () => { rating = Number(s.dataset.v); paint(rating); });
+  s.addEventListener("mouseover", () => paint(Number(s.dataset.v)));
+  s.addEventListener("mouseout", () => paint(rating));
 });
 
-form.addEventListener("submit", async event => {
-    event.preventDefault();
+document.getElementById("fbForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const msg = document.getElementById("msg");
+  const btn = document.getElementById("btn");
 
-    if (isSubmitting) return;
+  if (rating === 0) {
+    msg.className = "err";
+    msg.textContent = "Please select a rating (click on the stars).";
+    return;
+  }
 
-    statusBox.textContent = "";
-    statusBox.className = "";
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+  msg.textContent = "";
 
-    if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-    }
+  const data = new URLSearchParams({
+    category: document.getElementById("category").value,
+    rating: rating,
+    feedback: document.getElementById("feedback").value.trim(),
+    email: document.getElementById("email").value.trim()
+  });
 
-    if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL") {
-        statusBox.textContent =
-            "Please configure your Google Apps Script URL first.";
-        statusBox.className = "error";
-        return;
-    }
+  try {
+    await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: data });
+    msg.className = "ok";
+    msg.textContent = "Thank you! Your feedback has been received.";
+    this.reset();
+    rating = 0;
+    paint(0);
+  } catch (err) {
+    msg.className = "err";
+    msg.textContent = "Something went wrong. Please check your internet and try again.";
+  }
 
-    const data = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        category: document.getElementById("category").value,
-        rating: selectedRating,
-        feedback: document.getElementById("feedback").value.trim()
-    };
-
-    if (!data.name || !data.email ||
-        !data.category || data.feedback.length < 5) {
-        statusBox.textContent =
-            "Please complete all required fields correctly.";
-        statusBox.className = "error";
-        return;
-    }
-
-    isSubmitting = true;
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Submitting...";
-    statusBox.textContent = "Sending your feedback...";
-
-    try {
-        /*
-         * Apps Script ContentService redirects POST responses.
-         * no-cors allows the cross-origin request, but its response
-         * cannot be read by the browser.
-         */
-        await fetch(SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify(data),
-            redirect: "follow"
-        });
-
-        /*
-         * A no-cors response is opaque. Resolving fetch does not prove
-         * that Google Sheets saved the feedback successfully.
-         */
-        statusBox.textContent =
-            "Your request was sent. Please check the confirmation process.";
-        statusBox.className = "success";
-
-        form.reset();
-        selectedRating = 0;
-
-        starButtons.forEach(star => {
-            star.classList.remove("active");
-            star.setAttribute("aria-pressed", "false");
-        });
-
-        ratingLabel.textContent = "Select a rating";
-
-    } catch (error) {
-        statusBox.textContent =
-            "Could not send your feedback. Check your connection and try again.";
-        statusBox.className = "error";
-    } finally {
-        isSubmitting = false;
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Feedback";
-    }
+  btn.disabled = false;
+  btn.textContent = "Submit Feedback";
 });
 </script>
-
 </body>
 </html>
