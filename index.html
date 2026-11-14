@@ -2896,6 +2896,215 @@ loadFirebase().catch(() => {});
   setMode();
 })();
 
+  <style>
+  #chat-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    border: 0;
+    border-radius: 50px;
+    padding: 14px 20px;
+    color: white;
+    background: #2563eb;
+    font: 600 15px Arial, sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 16px #0003;
+  }
+
+  #chat-box {
+    position: fixed;
+    right: 20px;
+    bottom: 82px;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    width: min(350px, calc(100vw - 32px));
+    height: 440px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 8px 30px #0003;
+    font: 14px Arial, sans-serif;
+  }
+
+  #chat-header {
+    padding: 16px;
+    color: white;
+    background: #2563eb;
+    font-weight: bold;
+  }
+
+  #chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    background: #f8fafc;
+  }
+
+  .chat-message {
+    max-width: 85%;
+    margin: 8px 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  .bot-message {
+    background: #e2e8f0;
+    color: #111827;
+  }
+
+  .user-message {
+    margin-left: auto;
+    color: white;
+    background: #2563eb;
+  }
+
+  #chat-form {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+
+  #chat-input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  #chat-form button {
+    padding: 0 14px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    background: #2563eb;
+    cursor: pointer;
+  }
+</style>
+
+<button id="chat-toggle" type="button" aria-expanded="false">
+  Chat with us
+</button>
+
+<section id="chat-box" aria-label="Website help chat">
+  <div id="chat-header">Nishant Tools Help</div>
+  <div id="chat-messages" aria-live="polite">
+    <div class="chat-message bot-message">
+      Hi! Ask me about the tools on this website.
+    </div>
+  </div>
+
+  <form id="chat-form">
+    <input
+      id="chat-input"
+      type="text"
+      placeholder="Ask a question..."
+      autocomplete="off"
+      aria-label="Your question"
+      required
+    />
+    <button type="submit">Send</button>
+  </form>
+</section>
+
+<script>
+  const toggleButton = document.getElementById("chat-toggle");
+  const chatBox = document.getElementById("chat-box");
+  const chatForm = document.getElementById("chat-form");
+  const chatInput = document.getElementById("chat-input");
+  const chatMessages = document.getElementById("chat-messages");
+
+  // Edit these answers and links to match your site's actual routes.
+  const faq = [
+    {
+      keywords: ["gst", "tax"],
+      answer: "Use the GST calculator to add or remove GST. Open the Calculators section on the website."
+    },
+    {
+      keywords: ["calculator", "calculate", "math", "sum"],
+      answer: "The calculator tools help with quick sums and other calculations. Open the Calculators section."
+    },
+    {
+      keywords: ["typing", "wpm", "speed"],
+      answer: "The typing test measures your typing speed and accuracy. Find it in the Typing Test section."
+    },
+    {
+      keywords: ["snake", "game", "play"],
+      answer: "You can play Snake right in your browser. Look for the Snake game on the website."
+    },
+    {
+      keywords: ["festival", "diwali", "holi", "countdown"],
+      answer: "The festival countdown shows how long remains until selected Indian festivals."
+    },
+    {
+      keywords: ["age", "birthday"],
+      answer: "The age calculator works out your age and can show how many days remain until your birthday."
+    },
+    {
+      keywords: ["password", "secure", "generator"],
+      answer: "The password generator creates passwords on your device. Avoid sharing your password with anyone."
+    },
+    {
+      keywords: ["pdf", "merge", "image"],
+      answer: "The PDF tools can create a PDF from text, convert images to PDF, or merge PDFs. Your files stay on your device."
+    },
+    {
+      keywords: ["privacy", "data", "upload", "files", "safe"],
+      answer: "The site's tools run in your browser. The website says that what you enter into the tools and your PDF files stay on your device."
+    },
+    {
+      keywords: ["who made", "owner", "nishant"],
+      answer: "The website introduces Nishant Chandel as its creator."
+    }
+  ];
+
+  function addMessage(text, className) {
+    const message = document.createElement("div");
+    message.className = `chat-message ${className}`;
+    message.textContent = text; // textContent prevents user input being treated as HTML
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function getAnswer(question) {
+    const normalized = question.toLowerCase();
+
+    const match = faq.find(item =>
+      item.keywords.some(keyword => normalized.includes(keyword))
+    );
+
+    return match
+      ? match.answer
+      : "I’m not sure about that yet. Try asking about GST, calculators, the typing test, games, festivals, age, passwords, PDFs, or privacy.";
+  }
+
+  toggleButton.addEventListener("click", () => {
+    const isOpen = chatBox.style.display === "flex";
+    chatBox.style.display = isOpen ? "none" : "flex";
+    toggleButton.setAttribute("aria-expanded", String(!isOpen));
+    if (!isOpen) chatInput.focus();
+  });
+
+  chatForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const question = chatInput.value.trim();
+    if (!question) return;
+
+    addMessage(question, "user-message");
+    addMessage(getAnswer(question), "bot-message");
+    chatInput.value = "";
+    chatInput.focus();
+  });
+
+
 </script>
 </body>
 </html>
