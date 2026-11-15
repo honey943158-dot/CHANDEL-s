@@ -2896,215 +2896,327 @@ loadFirebase().catch(() => {});
   setMode();
 })();
 
-  <style>
-  #chat-toggle {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 9999;
-    border: 0;
-    border-radius: 50px;
-    padding: 14px 20px;
-    color: white;
-    background: #2563eb;
-    font: 600 15px Arial, sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 16px #0003;
-  }
-
-  #chat-box {
-    position: fixed;
-    right: 20px;
-    bottom: 82px;
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-    width: min(350px, calc(100vw - 32px));
-    height: 440px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 16px;
-    background: white;
-    box-shadow: 0 8px 30px #0003;
-    font: 14px Arial, sans-serif;
-  }
-
-  #chat-header {
-    padding: 16px;
-    color: white;
-    background: #2563eb;
-    font-weight: bold;
-  }
-
-  #chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 14px;
-    background: #f8fafc;
-  }
-
-  .chat-message {
-    max-width: 85%;
-    margin: 8px 0;
-    padding: 10px 12px;
-    border-radius: 12px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-  }
-
-  .bot-message {
-    background: #e2e8f0;
-    color: #111827;
-  }
-
-  .user-message {
-    margin-left: auto;
-    color: white;
-    background: #2563eb;
-  }
-
-  #chat-form {
-    display: flex;
-    gap: 8px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-  }
-
-  #chat-input {
-    flex: 1;
-    min-width: 0;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-
-  #chat-form button {
-    padding: 0 14px;
-    border: 0;
-    border-radius: 8px;
-    color: white;
-    background: #2563eb;
-    cursor: pointer;
-  }
+</script>
+<!-- NISHANT TOOLS chatbot v3: site-only assistant, understands many languages, replies in English (no server, no third-party) -->
+<style>
+  #nt-chat-launcher { position: fixed; right: 22px; bottom: 22px; z-index: 150; width: 64px; height: 64px; border: 0; border-radius: 50%; cursor: pointer; color: #fff; font-size: 29px; background: linear-gradient(135deg,#0369a1,#0ea5e9,#0d9488); box-shadow: 0 10px 30px rgba(3,60,110,.3); animation: nt-bob 2.6s ease-in-out infinite; }
+  #nt-chat-launcher:hover { transform: translateY(-3px) scale(1.05); }
+  #nt-chat-launcher::after { content: ""; position: absolute; right: 3px; top: 3px; width: 12px; height: 12px; border: 2px solid #fff; border-radius: 50%; background: #22c55e; }
+  @keyframes nt-bob { 50% { transform: translateY(-5px); } }
+  #nt-tip { position: fixed; right: 96px; bottom: 36px; z-index: 150; max-width: 220px; padding: 10px 14px; border-radius: 14px 14px 4px 14px; color: #18334a; background: #fff; border: 1px solid rgba(3,105,161,.25); box-shadow: 0 10px 30px rgba(3,60,110,.2); font: 13.5px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif; opacity: 0; transform: translateY(6px); pointer-events: none; transition: .25s ease; }
+  #nt-tip.nt-show { opacity: 1; transform: none; pointer-events: auto; cursor: pointer; }
+  #nt-chat { position: fixed; right: 22px; bottom: 98px; z-index: 150; padding: 0; margin: 0; width: min(390px, calc(100vw - 28px)); height: min(580px, calc(100dvh - 125px)); display: flex; flex-direction: column; overflow: hidden; background: #fff; border: 1px solid rgba(3,105,161,.25); border-radius: 20px; box-shadow: 0 22px 65px rgba(3,60,110,.27); font-family: system-ui,-apple-system,"Segoe UI",sans-serif; transform: translateY(12px) scale(.97); opacity: 0; pointer-events: none; transition: .22s ease; }
+  #nt-chat.nt-open { transform: none; opacity: 1; pointer-events: auto; }
+  .nt-chat-head { display: flex; align-items: center; gap: 11px; padding: 14px; color: #fff; background: linear-gradient(120deg,#0369a1,#0ea5e9,#0d9488); }
+  .nt-bot-avatar { width: 42px; height: 42px; flex: none; display: grid; place-items: center; border-radius: 15px; background: rgba(255,255,255,.2); font-size: 23px; }
+  .nt-chat-title { flex: 1; min-width: 0; }
+  .nt-chat-title b { display: block; font-size: 15px; }
+  .nt-chat-title span { font-size: 12px; opacity: .92; }
+  .nt-hbtn { width: 34px; height: 34px; border: 0; border-radius: 50%; color: #fff; background: rgba(255,255,255,.16); font-size: 16px; cursor: pointer; }
+  .nt-hbtn:hover { background: rgba(255,255,255,.3); }
+  .nt-chat-body { flex: 1; overflow-y: auto; padding: 14px; background: linear-gradient(180deg,#f4faff,#fff); }
+  .nt-msg { max-width: 88%; margin: 0 0 9px; padding: 10px 12px; border-radius: 14px; font-size: 13.5px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .nt-msg.bot { color: #18334a; background: #e7f3fb; border-bottom-left-radius: 4px; }
+  .nt-msg.user { margin-left: auto; color: #fff; background: #0369a1; border-bottom-right-radius: 4px; }
+  .nt-typing { display: flex; gap: 4px; width: 56px; }
+  .nt-typing i { width: 7px; height: 7px; border-radius: 50%; background: #0369a1; opacity: .35; animation: nt-dot 1s infinite; }
+  .nt-typing i:nth-child(2) { animation-delay: .15s; } .nt-typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes nt-dot { 50% { opacity: 1; transform: translateY(-3px); } }
+  .nt-acts { display: flex; gap: 7px; flex-wrap: wrap; margin: -2px 0 11px; }
+  .nt-act { display: inline-block; border: 0; border-radius: 10px; padding: 8px 12px; color: #fff; background: linear-gradient(135deg,#0369a1,#0ea5e9); font: 600 12.5px system-ui,sans-serif; text-decoration: none; cursor: pointer; }
+  .nt-act:hover { filter: brightness(1.1); }
+  #nt-chips { display: flex; gap: 7px; padding: 8px 11px 2px; overflow-x: auto; scrollbar-width: none; background: #fff; border-top: 1px solid #e3f0f9; }
+  #nt-chips::-webkit-scrollbar { display: none; }
+  #nt-chips:empty { display: none; }
+  #nt-chips button { flex: none; border: 1px solid #b6d8ed; border-radius: 999px; padding: 7px 11px; color: #075985; background: #fff; font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  #nt-chips button:hover { background: #e0f2fe; }
+  .nt-chat-form { display: flex; gap: 8px; padding: 10px 11px 11px; background: #fff; }
+  #nt-chat-input { min-width: 0; flex: 1; border: 1px solid #b6d8ed; border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 14px; outline: none; }
+  #nt-chat-input:focus { border-color: #0369a1; box-shadow: 0 0 0 3px rgba(3,105,161,.12); }
+  #nt-chat-send { width: 43px; flex: none; border: 0; border-radius: 12px; color: #fff; background: #0369a1; font-size: 19px; cursor: pointer; }
+  #nt-chat-send:hover { background: #0284c7; }
+  @media (max-width: 480px) { #nt-chat-launcher { right: 15px; bottom: 15px; } #nt-chat { right: 14px; bottom: 88px; } #nt-tip { right: 86px; bottom: 28px; } }
+  @media (prefers-reduced-motion: reduce) { #nt-chat-launcher, .nt-typing i { animation: none; } #nt-chat, #nt-tip { transition: none; } }
 </style>
 
-<button id="chat-toggle" type="button" aria-expanded="false">
-  Chat with us
-</button>
+<button id="nt-chat-launcher" type="button" aria-label="Open NISHANT TOOLS chatbot" aria-expanded="false" aria-controls="nt-chat">🤖</button>
+<div id="nt-tip" role="status">👋 Have a question? I’m here to help!</div>
 
-<section id="chat-box" aria-label="Website help chat">
-  <div id="chat-header">Nishant Tools Help</div>
-  <div id="chat-messages" aria-live="polite">
-    <div class="chat-message bot-message">
-      Hi! Ask me about the tools on this website.
-    </div>
+<section id="nt-chat" aria-label="NISHANT TOOLS chatbot" aria-hidden="true">
+  <div class="nt-chat-head">
+    <div class="nt-bot-avatar" aria-hidden="true">🤖</div>
+    <div class="nt-chat-title"><b>Nishant Tools Buddy</b><span>● Online · Ask in any language</span></div>
+    <button class="nt-hbtn" id="nt-clear" type="button" aria-label="Clear chat" title="Clear chat">🗑</button>
+    <button class="nt-hbtn nt-chat-close" type="button" aria-label="Close chatbot" style="font-size:22px">×</button>
   </div>
-
-  <form id="chat-form">
-    <input
-      id="chat-input"
-      type="text"
-      placeholder="Ask a question..."
-      autocomplete="off"
-      aria-label="Your question"
-      required
-    />
-    <button type="submit">Send</button>
+  <div class="nt-chat-body" id="nt-chat-body" aria-live="polite"></div>
+  <div id="nt-chips"></div>
+  <form class="nt-chat-form" id="nt-chat-form">
+    <input id="nt-chat-input" type="text" maxlength="400" placeholder="Type any message… (e.g. 18% GST on 5000)" autocomplete="off" aria-label="Your message">
+    <button id="nt-chat-send" type="submit" aria-label="Send message">➤</button>
   </form>
 </section>
 
 <script>
-  const toggleButton = document.getElementById("chat-toggle");
-  const chatBox = document.getElementById("chat-box");
-  const chatForm = document.getElementById("chat-form");
-  const chatInput = document.getElementById("chat-input");
-  const chatMessages = document.getElementById("chat-messages");
+(function () {
+  var $ = function (i) { return document.getElementById(i); };
+  var launcher = $("nt-chat-launcher"), chat = $("nt-chat"), body = $("nt-chat-body"), form = $("nt-chat-form"), input = $("nt-chat-input"), chipsEl = $("nt-chips"), tip = $("nt-tip"), sendBtn = $("nt-chat-send");
+  var S = { name: "", last: "", hist: [], fails: 0 };
+  try { var sv = JSON.parse(sessionStorage.getItem("ntChat3") || "null"); if (sv && sv.hist) S = sv; } catch (e) {}
+  function save() { try { S.hist = S.hist.slice(-40); sessionStorage.setItem("ntChat3", JSON.stringify(S)); } catch (e) {} }
+  var TOK; try { TOK = new RegExp("[^\\p{L}\\p{M}\\p{N}%]+", "u"); } catch (e) { TOK = /[^a-z0-9\u0900-\u097f%]+/; }
 
-  // Edit these answers and links to match your site's actual routes.
-  const faq = [
-    {
-      keywords: ["gst", "tax"],
-      answer: "Use the GST calculator to add or remove GST. Open the Calculators section on the website."
-    },
-    {
-      keywords: ["calculator", "calculate", "math", "sum"],
-      answer: "The calculator tools help with quick sums and other calculations. Open the Calculators section."
-    },
-    {
-      keywords: ["typing", "wpm", "speed"],
-      answer: "The typing test measures your typing speed and accuracy. Find it in the Typing Test section."
-    },
-    {
-      keywords: ["snake", "game", "play"],
-      answer: "You can play Snake right in your browser. Look for the Snake game on the website."
-    },
-    {
-      keywords: ["festival", "diwali", "holi", "countdown"],
-      answer: "The festival countdown shows how long remains until selected Indian festivals."
-    },
-    {
-      keywords: ["age", "birthday"],
-      answer: "The age calculator works out your age and can show how many days remain until your birthday."
-    },
-    {
-      keywords: ["password", "secure", "generator"],
-      answer: "The password generator creates passwords on your device. Avoid sharing your password with anyone."
-    },
-    {
-      keywords: ["pdf", "merge", "image"],
-      answer: "The PDF tools can create a PDF from text, convert images to PDF, or merge PDFs. Your files stay on your device."
-    },
-    {
-      keywords: ["privacy", "data", "upload", "files", "safe"],
-      answer: "The site's tools run in your browser. The website says that what you enter into the tools and your PDF files stay on your device."
-    },
-    {
-      keywords: ["who made", "owner", "nishant"],
-      answer: "The website introduces Nishant Chandel as its creator."
+  /* ---------- helpers ---------- */
+  var T = { gst: ["GST calculator", "gst-calculator"], calc: ["Calculator", "calculator"], type: ["Typing test", "typing-test"], snake: ["Snake game", "snake-game"], fest: ["Festival countdown", "festival-countdown"], age: ["Age calculator", "age-calculator"], pw: ["Password maker", "password-maker"], pdf: ["PDF tools", "pdf-tools"], emi: ["EMI calculator", "emi-calculator"], sip: ["SIP calculator", "sip-calculator"], pct: ["Percentage calculator", "percentage-calculator"] };
+  function open(id) { return ["Open " + T[id][0], "tool", T[id][1]]; }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function fmt(n) { return Number(n).toLocaleString("en-IN", { maximumFractionDigits: 2 }); }
+  function rs(n) { return "₹" + fmt(n); }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function lev(a, b) { var d = [], i, j; for (i = 0; i <= a.length; i++) d[i] = [i]; for (j = 1; j <= b.length; j++) d[0][j] = j; for (i = 1; i <= a.length; i++) for (j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[a.length][b.length]; }
+  function near(a, b) { if (a.length < 6 || b.length < 6 || /[^a-z]/.test(a + b) || Math.abs(a.length - b.length) > 2) return false; return lev(a, b) <= (b.length >= 8 ? 2 : 1); }
+  function hourIST() { try { return Number(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", hour12: false })) % 24; } catch (e) { return new Date().getHours(); } }
+  function greeting() { var h = hourIST(); return h < 5 ? "Hello" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : h < 21 ? "Good evening" : "Hello"; }
+  function who() { return S.name ? ", " + S.name : ""; }
+  function isMobile() { return window.innerWidth < 700; }
+
+  /* ---------- UI ---------- */
+  function fit() {
+    if (!chat.classList.contains("nt-open") || !isMobile()) { chat.style.bottom = chat.style.height = ""; return; }
+    var vv = window.visualViewport, h = vv ? vv.height : window.innerHeight, off = vv ? window.innerHeight - vv.height - vv.offsetTop : 0;
+    chat.style.bottom = Math.max(10, off + 10) + "px"; chat.style.height = Math.max(260, Math.min(600, h - 24)) + "px";
+  }
+  function setOpen(o, quiet) {
+    chat.classList.toggle("nt-open", o); chat.setAttribute("aria-hidden", String(!o)); launcher.setAttribute("aria-expanded", String(o));
+    launcher.style.display = o && isMobile() ? "none" : "";
+    tip.classList.remove("nt-show"); try { sessionStorage.setItem("ntTip", "1"); } catch (e) {}
+    fit();
+    if (quiet) return;
+    if (o) { input.focus(); body.scrollTop = body.scrollHeight; } else launcher.focus();
+  }
+  if (window.visualViewport) { window.visualViewport.addEventListener("resize", fit); window.visualViewport.addEventListener("scroll", fit); }
+  window.addEventListener("resize", fit);
+  function render(m) {
+    body.appendChild(el("div", "nt-msg " + m.w, m.t));
+    if (m.a && m.a.length) {
+      var box = el("div", "nt-acts");
+      m.a.forEach(function (a) {
+        var b;
+        if (a[1] === "link") { b = el("a", "nt-act", a[0]); b.href = a[2]; }
+        else { b = el("button", "nt-act", a[0]); b.type = "button"; if (a[1] === "tool") b.setAttribute("data-tool", a[2]); if (a[1] === "page") b.setAttribute("data-go", a[2]); }
+        b.setAttribute("data-k", a[1]); b.setAttribute("data-v", a[2]); box.appendChild(b);
+      });
+      body.appendChild(box);
     }
+    body.scrollTop = body.scrollHeight;
+  }
+  var DEF = ["18% GST on ₹5000", "How do I make a PDF?", "When is the next festival?", "Generate a password", "What tools are here?"];
+  function setChips(list) { chipsEl.textContent = ""; (list || []).forEach(function (c) { var b = el("button", "", c); b.type = "button"; chipsEl.appendChild(b); }); }
+  var chain = Promise.resolve();
+  function bot(t, a, c) {
+    chain = chain.then(function () {
+      return new Promise(function (res) {
+        var ty = el("div", "nt-msg bot nt-typing"); ty.innerHTML = "<i></i><i></i><i></i>"; body.appendChild(ty); body.scrollTop = body.scrollHeight; setChips([]);
+        setTimeout(function () { try { ty.remove(); var m = { w: "bot", t: t, a: a || [] }; S.hist.push(m); render(m); setChips(c || DEF); save(); } catch (e) {} res(); }, Math.min(800, 250 + t.length * 4));
+      });
+    });
+  }
+  function welcome() {
+    bot(greeting() + S.name + "! 👋 I\u2019m the NISHANT TOOLS assistant.\nYou can write to me in any language, and I\u2019ll reply in English. I answer questions about this website: its tools, privacy, sign-in and more. I can also do quick GST, EMI, SIP, percentage and age calculations, and generate a strong password.\n\nHow can I help?");
+  }
+
+  /* ---------- calculators ---------- */
+  function parseNums(q) {
+    var re = /(\d[\d,]*(?:\.\d+)?|\.\d+)(?:\s*(years?|yrs?|saal|sal|anos?|ans|jahre?n?|months?|mahin[ae]|meses|mois|monate?n?|lakhs?|lacs?|crores?|cr|thousand|k|percent|%|साल|वर्ष|महीने|लाख|करोड़)(?![a-z]))?/g, m, out = [];
+    while ((m = re.exec(q))) {
+      var v = parseFloat(m[1].replace(/,/g, "")), u = m[2] || "";
+      if (/^(lakh|lac|लाख)/.test(u)) { v *= 1e5; u = ""; } else if (/^(crore|cr|करोड़)/.test(u)) { v *= 1e7; u = ""; } else if (/^(thousand|k)$/.test(u)) { v *= 1e3; u = ""; }
+      else if (/^(percent|%)$/.test(u)) u = "%"; else if (/^(year|yr|saal|sal|ano|ans|jahr|साल|वर्ष)/.test(u)) u = "y"; else if (/^(month|mahin|mes|mois|monat|महीने)/.test(u)) u = "m";
+      if (isFinite(v)) out.push({ v: v, u: u });
+    }
+    return out;
+  }
+  function loanNums(q) {
+    var n = parseNums(q), plain = n.filter(function (x) { return !x.u; });
+    if (!plain.length) return null;
+    var P = plain.reduce(function (a, b) { return a.v > b.v ? a : b; }), rest = n.filter(function (x) { return x !== P; });
+    var r = rest.filter(function (x) { return x.u === "%"; })[0] || rest.filter(function (x) { return !x.u && x.v <= 40; })[0]; if (!r) return null;
+    rest = rest.filter(function (x) { return x !== r; });
+    var t = rest.filter(function (x) { return x.u === "y" || x.u === "m"; })[0] || rest.filter(function (x) { return !x.u && x.v <= 50; })[0]; if (!t) return null;
+    return { P: P.v, R: r.v, Y: t.u === "m" ? t.v / 12 : t.v };
+  }
+  function calcExpr(s) {
+    var i = 0; s = s.replace(/[,\s]/g, "");
+    function num() { var m = /^\d*\.?\d+/.exec(s.slice(i)); if (!m) throw 0; i += m[0].length; return parseFloat(m[0]); }
+    function prim() { var v; if (s[i] === "(") { i++; v = expr(); if (s[i] !== ")") throw 0; i++; } else if (s[i] === "-") { i++; return -pow(); } else if (s[i] === "+") { i++; return pow(); } else v = num(); while (s[i] === "%") { i++; v /= 100; } return v; }
+    function pow() { var b = prim(); if (s[i] === "^") { i++; return Math.pow(b, pow()); } return b; }
+    function term() { var v = pow(); while (s[i] === "*" || s[i] === "/") { var o = s[i++], r = pow(); v = o === "*" ? v * r : v / r; } return v; }
+    function expr() { var v = term(); while (s[i] === "+" || s[i] === "-") { var o = s[i++], r = term(); v = o === "+" ? v + r : v - r; } return v; }
+    var r = expr(); if (i < s.length || !isFinite(r)) throw 0; return r;
+  }
+  function genPw(len) {
+    var sets = ["ABCDEFGHJKLMNPQRSTUVWXYZ", "abcdefghijkmnopqrstuvwxyz", "23456789", "!@#$%&*-_?"], all = sets.join(""), r = new Uint32Array(len * 2), out = [], i;
+    crypto.getRandomValues(r);
+    for (i = 0; i < sets.length; i++) out.push(sets[i][r[i] % sets[i].length]);
+    for (i = sets.length; i < len; i++) out.push(all[r[i] % all.length]);
+    for (i = out.length - 1; i > 0; i--) { var j = r[len + i] % (i + 1), t = out[i]; out[i] = out[j]; out[j] = t; }
+    return out.join("");
+  }
+  var GSTW = /gst|जीएसटी|tax|taxe|steuer|impuesto|imposto|iva|टैक्स|ضريبة|税/, EMIW = /emi|loan|prestamo|pret|kredit|credito|emprestimo|prestito|قرض|लोन|कर्ज|ऋण|贷款|ローン|кредит/, SIPW = /sip|mutual|inversion|investissement|investition|investimento|निवेश|投资|投資/;
+  function tryCalc(q) {
+    var m, n;
+    if ((m = /(\d[\d,]*\.?\d*)\s*(?:%|percent|pratishat|प्रतिशत)\s*(?:of|ka|ke|ki|de|von|du|di|का|के|की)?\s*(\d[\d,]*\.?\d*)/.exec(q)) && !GSTW.test(q) && !EMIW.test(q) && !SIPW.test(q) && parseNums(q).length === 2) { var x = parseFloat(m[1].replace(/,/g, "")), y = parseFloat(m[2].replace(/,/g, "")); return { t: x + "% of " + fmt(y) + " = " + fmt(x * y / 100) + " ✅", a: [open("pct")], c: ["18% GST on ₹5000", "12*8+5"] }; }
+    if ((m = /(\d[\d,]*\.?\d*)\s*(?:is what|what)\s*(?:%|percent)\s*(?:of)\s*(\d[\d,]*\.?\d*)/.exec(q))) { var a = parseFloat(m[1].replace(/,/g, "")), b = parseFloat(m[2].replace(/,/g, "")); if (b) return { t: fmt(a) + " is " + fmt(a / b * 100) + "% of " + fmt(b) + " ✅", a: [open("pct")] }; }
+    if ((m = /(?:from|se)\s*(\d[\d,]*\.?\d*)\s*(?:to|se)\s*(\d[\d,]*\.?\d*)/.exec(q)) && /change|increase|decrease|growth|badh|ghat/.test(q)) { var f = parseFloat(m[1].replace(/,/g, "")), g = parseFloat(m[2].replace(/,/g, "")); if (f) { var ch = (g - f) / f * 100; return { t: "From " + fmt(f) + " to " + fmt(g) + " is a " + (ch >= 0 ? "rise" : "drop") + " of " + fmt(Math.abs(ch)) + "% ✅", a: [open("pct")] }; } }
+    if (GSTW.test(q) && (n = parseNums(q)).length) {
+      var rate = null, plain = n.filter(function (z) { return z.u !== "%"; });
+      n.forEach(function (z) { if (z.u === "%" && rate === null) rate = z.v; });
+      if (rate === null && plain.length >= 2) { var sm = plain.reduce(function (p, c) { return p.v < c.v ? p : c; }); if (sm.v <= 40) { rate = sm.v; plain.splice(plain.indexOf(sm), 1); } }
+      if (plain.length) {
+        var amt = plain.reduce(function (p, c) { return p.v > c.v ? p : c; }).v, assumed = rate === null; if (assumed) rate = 18;
+        var rem = /remove|without|nikal|hata|reverse|inclusive|included|including|bina|minus|sin |sans|ohne|sem |senza|निकाल|हटा|بدون|不含|без/.test(q) && !/exclusive|excluding/.test(q), base, gst, tot;
+        if (rem) { base = amt * 100 / (100 + rate); gst = amt - base; tot = amt; } else { base = amt; gst = amt * rate / 100; tot = amt + gst; }
+        return { t: "🧾 GST at " + rate + "% (" + (rem ? "removed from the price" : "added to the price") + "):\nPrice without GST: " + rs(base) + "\nCGST: " + rs(gst / 2) + "\nSGST: " + rs(gst / 2) + "\nTotal GST: " + rs(gst) + "\nPrice with GST: " + rs(tot) + (assumed ? "\n\n(You didn\u2019t give a rate, so I used 18%.)" : ""), a: [open("gst")], c: ["Calculate an EMI", "What is 20% of 850?"] };
+      }
+    }
+    if (EMIW.test(q) && (n = loanNums(q))) {
+      var mths = Math.round(n.Y * 12), r = n.R / 1200, e = r === 0 ? n.P / mths : n.P * r * Math.pow(1 + r, mths) / (Math.pow(1 + r, mths) - 1);
+      return { t: "🏦 Loan of " + rs(n.P) + " at " + n.R + "% per year for " + fmt(n.Y) + " years:\nMonthly EMI: " + rs(e) + "\nTotal interest: " + rs(e * mths - n.P) + "\nTotal payment: " + rs(e * mths), a: [open("emi")], c: ["Calculate a SIP", "18% GST on ₹5000"] };
+    }
+    if (SIPW.test(q) && (n = loanNums(q))) {
+      var k = Math.round(n.Y * 12), i2 = n.R / 1200, fv = i2 === 0 ? n.P * k : n.P * ((Math.pow(1 + i2, k) - 1) / i2) * (1 + i2), inv = n.P * k;
+      return { t: "📈 SIP of " + rs(n.P) + " per month at " + n.R + "% per year for " + fmt(n.Y) + " years:\nTotal invested: " + rs(inv) + "\nEstimated returns: " + rs(fv - inv) + "\nTotal value: " + rs(fv) + "\n\n⚠️ This is only an estimate. Returns are not guaranteed.", a: [open("sip")], c: ["Calculate an EMI"] };
+    }
+    if ((m = /(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/.exec(q)) && /age|dob|birth|born|umar|umr|janm|edad|alter|idade|عمر|उम्र|जन्म|年龄|возраст/.test(q)) {
+      var d = +m[1], mo = +m[2], y2 = +m[3], b2 = new Date(y2, mo - 1, d), t = new Date(), td = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+      if (b2.getFullYear() === y2 && b2.getMonth() === mo - 1 && b2.getDate() === d && b2 <= td) {
+        var Y = t.getFullYear() - y2, M = t.getMonth() - (mo - 1), D = t.getDate() - d; if (D < 0) { M--; D += new Date(t.getFullYear(), t.getMonth(), 0).getDate(); } if (M < 0) { Y--; M += 12; }
+        var nb = new Date(t.getFullYear(), mo - 1, d); if (nb < td) nb = new Date(t.getFullYear() + 1, mo - 1, d);
+        return { t: "🎂 Your age: " + Y + " years, " + M + " months, " + D + " days\nTotal days lived: " + fmt(Math.floor((td - b2) / 864e5)) + "\nNext birthday in: " + Math.round((nb - td) / 864e5) + " days 🎉", a: [open("age")] };
+      }
+      return { t: "That date doesn\u2019t look valid 🤔 Please write it as DD/MM/YYYY, for example 15/08/2005.", a: [] };
+    }
+    var e2 = q.replace(/(\d)\s*x\s*(\d)/g, "$1*$2").replace(/×|\bx\b|\binto\b|\btimes\b/g, "*").replace(/÷|\bdivided by\b/g, "/").replace(/\bplus\b/g, "+").replace(/\bminus\b/g, "-").replace(/\b(calculate|calc|compute|solve|what is|whats|answer|result|equals?)\b/g, " ").replace(/[=?]/g, " ").trim();
+    if (/^[\d\s.+\-*\/()^%,]+$/.test(e2) && /\d\s*[+\-*\/^]\s*[\d(]/.test(e2)) { try { var val = calcExpr(e2); return { t: e2.replace(/\s+/g, " ") + " = " + fmt(val) + " ✅", a: [open("calc")], c: ["What is 20% of 850?", "18% GST on ₹5000"] }; } catch (z) {} }
+    return null;
+  }
+
+  /* ---------- knowledge (replies are always English) ---------- */
+  var PDFT = function (q) {
+    if (/merge|combine|join|fusion|zusammen|mesclar|unire|دمج|मर्ज|合并|объедин|birlest|jod/.test(q)) return "📎 To merge PDFs:\n1️⃣ Open PDF tools and choose \"Merge PDFs\"\n2️⃣ Add two or more PDFs (use ↑ ↓ to set the order)\n3️⃣ Press \"Merge PDFs\", then press the \"Download PDF\" button\n\nNote: password-protected PDFs can\u2019t be merged, and links or form fields are not kept.";
+    if (/image|photo|jpg|jpeg|png|screenshot|picture|webp|imagen|bild|foto|immagine|صورة|तस्वीर|फोटो|图片|изображ/.test(q)) return "🖼 To turn images into a PDF:\n1️⃣ Open PDF tools and choose \"Image to PDF\"\n2️⃣ Add your photos or screenshots (JPG, PNG and WebP work; HEIC does not)\n3️⃣ Pick A4 or \"Same as image\" page size\n4️⃣ Press \"Create PDF\", then \"Download PDF\".";
+    if (/text|write|type|texto|texte|schreib|testo|نص|टेक्स्ट|文字|текст/.test(q)) return "📝 To make a PDF from text:\n1️⃣ Open PDF tools and choose \"Text to PDF (PDF maker)\"\n2️⃣ Type or paste your text and pick a size\n3️⃣ Press \"Create PDF\", then download it.\n\nEnglish text stays selectable. Other languages are saved as page images.";
+    if (/compress|smaller|reduce|shrink|comprim|komprim/.test(q)) return "The site doesn\u2019t have a PDF compressor right now 🙏 Available PDF tools: Text to PDF, Image to PDF and Merge PDFs.";
+    if (/not|error|fail|problem|issue|download|working|broken|nahi|no funciona|funktioniert nicht/.test(q)) return "If the PDF isn\u2019t being created, try this 🔧\n1️⃣ After pressing \"Create PDF\", a \"Download PDF\" button appears below it. Press it.\n2️⃣ Refresh the page (Ctrl+F5) and try again.\n3️⃣ For images, use JPG, PNG or WebP (HEIC is not supported).\n4️⃣ Password-protected PDFs can\u2019t be merged.\n\nStill stuck? Tell us through the Feedback form.";
+    return "📄 PDF tools has three modes:\n• Text to PDF (PDF maker)\n• Image to PDF\n• Merge PDFs\n\nEverything runs in your browser and nothing is uploaded. Which one do you need?";
+  };
+  var INT = [
+    { id: "crisis", w: 6, k: "suicide|suicidio|selbstmord|intihar|kill myself|end my life|self harm|self-harm|marna chahta|marna chahti|mar jana|mar jaana|mar jau|mar jaun|jeena nahi|jina nahi|quiero morir|me quiero morir|je veux mourir|ich will sterben|quero morrer|voglio morire|انتحار|आत्महत्या|मरना चाहता|मरना चाहती|মরতে চাই|தற்கொலை|ఆత్మహత్య|આત્મહત્યા|ਖੁਦਕੁਸ਼ੀ|自杀|自殺|самоубийство", t: "I\u2019m really sorry you\u2019re feeling this way 💙 You\u2019re not alone, and your life matters. Please reach out to someone you trust right now.\n\n📞 India: Tele-MANAS 14416 (free, 24x7, many languages)\n🚨 Emergency: 112\nOutside India, please call your local emergency number.\n\nI\u2019m only a website assistant, but I care that you get support.", a: [], c: [] },
+    { id: "gst", tool: "gst", k: "gst|cgst|sgst|igst|जीएसटी|tax|vat|taxe|steuer|impuesto|imposto|iva|टैक्स|ضريبة|税", t: "How to use the GST calculator 👇\n1️⃣ Enter the amount (₹)\n2️⃣ Choose a GST rate (0.25%, 3%, 5%, 12%, 18% or 28%)\n3️⃣ Choose whether to add GST or remove it\n4️⃣ Press \"Calculate GST\" to see the price, CGST and SGST.\n\n💡 You can also ask me directly, like \"18% GST on 5000\".", c: ["18% GST on ₹5000", "Remove 18% GST from 1180"] },
+    { id: "calc", tool: "calc", k: "calculator|calc|calculation|calculadora|calculatrice|taschenrechner|rechner|calcolatrice|कैलकुलेटर|हिसाब|计算器|電卓|калькулятор|math|ক্যালকুলেটর|கால்குலேட்டர்|కాలిక్యులేటర్|કેલ્ક્યુલેટર|ਕੈਲਕੂਲੇਟਰ|آلة حاسبة", t: "Calculator: tap the buttons or use your keyboard: numbers, + − * /, %, Enter for equals, Backspace to delete and Esc to clear.\n\nYou can also ask me directly, like \"12*8+5\" 🧮", c: ["12*8+5", "What is 20% of 850?"] },
+    { id: "emi", tool: "emi", k: "emi|loan|prestamo|pret|kredit|credito|emprestimo|prestito|قرض|लोन|कर्ज|ऋण|ঋণ|கடன்|రుణం|લોન|ਕਰਜ਼ਾ|贷款|ローン|кредит|interest|byaj|ब्याज|home loan|car loan", t: "EMI calculator 🏦\n1️⃣ Enter the loan amount (₹)\n2️⃣ Enter the yearly interest rate (%)\n3️⃣ Enter the loan period (years)\n4️⃣ Press \"Calculate EMI\".\n\nYou can also ask me, like \"EMI 5 lakh 9% 5 years\".", c: ["EMI 5 lakh 9% 5 years"] },
+    { id: "sip", tool: "sip", k: "sip|mutual fund|mutual|investment|invest|inversion|investissement|investition|investimento|استثمار|निवेश|বিনিয়োগ|முதலீடு|పెట్టుబడి|રોકાણ|ਨਿਵੇਸ਼|投资|投資|инвестиции|returns", t: "SIP calculator 📈\n1️⃣ Enter the monthly investment (₹)\n2️⃣ Enter the expected return (% per year)\n3️⃣ Enter the number of years\n4️⃣ Press \"Calculate SIP\".\n\nYou can also ask me, like \"SIP 5000 12% 10 years\" (returns are only an estimate).", c: ["SIP 5000 12% 10 years"] },
+    { id: "pct", tool: "pct", k: "percentage|percent|pratishat|porcentaje|pourcentage|prozent|porcentagem|percentuale|نسبة|प्रतिशत|শতাংশ|சதவீதம்|శాతం|ટકા|ਪ੍ਰਤੀਸ਼ਤ|百分比|パーセント|процент|discount|%", t: "The Percentage calculator handles three kinds of sums: X% of Y, X is what % of Y, and the % change from X to Y.\n\nAsk me directly, like \"15% of 2000\" or \"50 is what percent of 200\" ✅", c: ["15% of 2000", "50 is what percent of 200"] },
+    { id: "type", tool: "type", k: "typing|typist|wpm|type test|typing speed|speed test|mecanografia|dactylographie|tippen|digitacao|dattilografia|الكتابة|टाइपिंग|টাইপিং|தட்டச்சு|టైపింగ్|ટાઇપિંગ|ਟਾਈਪਿੰਗ|打字|タイピング|печать", t: "Typing test ⌨️\n1️⃣ Pick 30 sec, 60 sec or 2 min\n2️⃣ Click the box and type the paragraph (the timer starts with your first key)\n3️⃣ Correct letters turn green, mistakes turn red\n4️⃣ At the end you see your WPM, accuracy and mistakes.\n\nThere are also \"Restart\" and \"New paragraph\" buttons. If you sign in, your best score is saved." },
+    { id: "snake", tool: "snake", k: "snake|game|games|play|juego|jeu|spiel|jogo|gioco|لعبة|खेल|गेम|সাপ|খেলা|பாம்பு|விளையாட்டு|ఆట|રમત|ਖੇਡ|游戏|ゲーム|игра|oyun|saanp|culebra|serpent|schlange|cobra", t: "Snake game 🐍\n• Eat the red dots to grow\n• Don\u2019t hit the wall or yourself\n• Use arrow keys or W A S D, press Space to pause, or swipe / use the on-screen arrows on a phone\n• Your Score, Best and Level show at the top." },
+    { id: "fest", tool: "fest", k: "festival|festivals|diwali|holi|dussehra|christmas|raksha bandhan|countdown|fiesta|fete|feiertag|festa|مهرجان|त्योहार|उत्सव|दिवाली|होली|উৎসব|திருவிழா|పండుగ|તહેવાર|ਤਿਉਹਾਰ|节日|祭り|праздник|bayram|janmashtami|ganesh|onam|shivratri|karwa|tyohar", t: function () { var n = $("fhName"), c = $("fhCount"), nm = n && n.textContent.trim(), ct = c && c.textContent.trim(); if (nm && nm !== "Loading…" && ct) return "🪔 Next festival: " + nm + "\n⏳ Time left: " + ct + "\n\nIn Festival countdown you can tap any festival to count down to it. Festivals that follow the moon can fall a day earlier or later in some places."; return "Festival countdown shows the days, hours, minutes and seconds left for upcoming festivals such as Diwali, Holi and Dussehra. Tap any festival to count down to it 🪔"; } },
+    { id: "age", tool: "age", k: "age|edad|alter|idade|عمر|उम्र|आयु|বয়স|வயது|వయస్సు|ઉંમર|ਉਮਰ|年龄|年齢|возраст|birthday|cumpleanos|anniversaire|geburtstag|aniversario|compleanno|जन्मदिन|dob|born|date of birth|umar|umr|janamdin", t: "Age calculator 🎂\nPick your date of birth and press \"Calculate age\". You\u2019ll see your exact age, total days lived and the days left until your next birthday.\n\nYou can also ask me directly, like \"15/08/2005 my age\".", c: ["15/08/2005 my age"] },
+    { id: "pw", tool: "pw", k: "password|passcode|contrasena|mot de passe|passwort|senha|palavra-passe|كلمة المرور|पासवर्ड|পাসওয়ার্ড|கடவுச்சொல்|పాస్వర్డ్|પાસવર્ડ|ਪਾਸਵਰਡ|密码|パスワード|пароль|sifre|strong password|secure password", t: function (q) { if (/make|generate|create|suggest|give|new|need|banao|bana|dedo|genera|genere|erstell|gera|crea|nueva|nuevo|nouveau|neues|novo|nova|segura|seguro|إنشاء|बना|生成|создай/.test(q)) { var m = /(\d{1,2})/.exec(q), len = m && +m[1] >= 8 && +m[1] <= 64 ? +m[1] : 16, p = genPw(len); return { t: "🔑 Here\u2019s a strong password (" + len + " characters):\n\n" + p + "\n\nSave it somewhere safe. It was created in your browser and isn\u2019t stored anywhere.", a: [["Copy password", "copy", p], open("pw")], c: ["Generate another password", "Password safety tips"] }; } return "Password maker 🔑\nChoose a length, tick capital letters, small letters, numbers and symbols, then press \"Make password\". It uses your browser\u2019s secure random generator.\n\nI can make one for you too. Just say \"generate a password\".\nTip: use a different password for every site."; }, c: ["Generate a password", "Password safety tips"] },
+    { id: "pwtips", w: 2, k: "password tips|password safety|safe password|strong password tips|password advice", t: "Tips for a strong password 🔐\n• Use at least 12-16 characters\n• Mix capitals, small letters, numbers and symbols\n• Avoid names, birthdays and \"123456\"\n• Use a different password for each site\n• Never share your password or OTP with anyone." },
+    { id: "pdf", tool: "pdf", k: "pdf|merge|combine|image to pdf|jpg to pdf|png to pdf|compress|fusionar|fusionner|zusammenfugen|mesclar|unire|دمج|मर्ज|合并|объединить|birlestir", t: PDFT, c: ["Convert an image to PDF", "Merge PDFs", "Make a PDF from text", "My PDF isn\u2019t working"] },
+    { id: "downloader", w: 2, k: "youtube|instagram|insta|reel|reels|shorts|video download|downloader|facebook|tiktok", t: "A video downloader (YouTube, Instagram and similar) isn\u2019t part of this site 🙏 Downloading others\u2019 videos is against those platforms\u2019 rules, and a browser-only site can\u2019t do it anyway.\n\nWhat you can use here: calculators, PDF tools, typing test, password maker and more." },
+    { id: "privacy", k: "privacy|private|safe|secure|data|upload|server|tracking|track|cookie|cookies|privacidad|confidentialite|datenschutz|privacidade|riservatezza|خصوصية|गोपनीयता|प्राइवेसी|सुरक्षित|গোপনীয়তা|தனியுரிமை|గోప్యత|ગોપનીયતા|ਪਰਾਈਵੇਸੀ|隐私|プライバシー|конфиденциальность|gizlilik|surakshit|suraksha|virus", t: "🔒 Your data stays with you:\n• Calculators and tools run inside your browser\n• PDFs, photos and text are never uploaded\n• No ads and no trackers\n• Signing in is optional (it uses Google Firebase) and we never see your password\n• Feedback is saved only when you send the Feedback form\n\nFull details are on the Privacy page.", a: [["Privacy page", "page", "privacy"]] },
+    { id: "signin", w: 1.2, k: "sign in|signin|login|log in|signup|sign up|account|register|google|forgot password|reset password|password reset|forgot|iniciar sesion|connexion|anmelden|entrar|accedi|تسجيل الدخول|लॉगिन|साइन इन|লগইন|உள்நுழை|లాగిన్|લોગિન|ਲਾਗਇਨ|登录|ログイン|войти|giris|bhool gaya|bhul gaya", t: "Signing in is optional 😊 Press \"Sign in\" at the top, then log in with email and password or with Google. If you forgot your password, use \"Reset password\" in the popup.\n\nWhen you\u2019re signed in, your best Snake and Typing scores are saved to your account.", a: [["Open Sign in", "click", "authOpen"]] },
+    { id: "feedback", k: "message owner|owner ko|owner se|send message|bhejna hai|message|feedback|suggestion|complaint|contact|report|bug|email|idea|sugerencia|commentaire|rueckmeldung|sugestao|suggerimento|ملاحظات|फीडबैक|शिकायत|সুপারিশ|கருத்து|అభిప్రాయం|પ્રતિસાદ|ਫੀਡਬੈਕ|反馈|フィードバック|отзыв|sujhav|shikayat|sampark", t: "To reach the site owner, use the Feedback form 💬 Just add your name, email and what could be improved.", a: [["Open Feedback form", "link", "feedback.html"]] },
+    { id: "free", k: "paise lagte|free|cost|price|paid|charge|ads|gratis|gratuit|kostenlos|gratuito|مجاني|मुफ्त|मुफ़्त|নিঃশুল্ক|இலவசம்|ఉచితం|મફત|ਮੁਫਤ|免费|無料|бесплатно|ucretsiz|muft|kimat|cuesta|prix|preis|preco", t: "Every tool on the site is completely free ✅ No ads, no trackers and no hidden charges." },
+    { id: "device", k: "mobile|phone|android|iphone|app|laptop|browser|chrome|safari|offline|movil|telefono|handy|telemovel|cellulare|هاتف|मोबाइल|फोन|মোবাইল|மொபைல்|మొబైల్|મોબાઇલ|ਮੋਬਾਈਲ|手机|スマホ|телефон|telefon", t: "The site works in the browser on both phones and laptops 📱💻 There\u2019s nothing to install. You need an internet connection to open the page." },
+    { id: "creator", w: 1.3, k: "who made|who created|kisne banaya|creator|owner|nishant|developer|made by|founder|quien creo|qui a cree|wer hat|criador|creatore|من صنع|किसने बनाया|निर्माता|কে বানিয়েছে|யார் உருவாக்கினார்|ఎవరు చేశారు|કોણે બનાવ્યું|ਕਿਸਨੇ ਬਣਾਇਆ|谁做的|кто создал", t: "NISHANT TOOLS was made by Nishant Chandel 🇮🇳 The idea is to put everyday tools (GST, quick sums, PDFs and more) in one place, fast and without ads." },
+    { id: "about", k: "about|website|site|what is this|purpose|sitio|site web|webseite|sobre|حول|वेबसाइट|साइट|ওয়েবসাইট|இணையதளம்|వెబ్‌సైట్|વેબસાઇટ|ਵੈੱਬਸਾਈਟ|网站|ウェブサイト|сайт|web sitesi", t: "NISHANT TOOLS is a free website with everyday tools: GST, EMI, SIP, percentage and simple calculators, an age calculator, typing test, snake game, festival countdown, password maker and PDF tools 🛠 Everything runs in your browser.", a: [["See all tools", "page", "tools"]] },
+    { id: "tools", w: .9, k: "tools|tool|features|available|list|menu|help|options|services|what can you do|ayuda|aide|hilfe|ajuda|aiuto|مساعدة|मदद|सहायता|সাহায্য|உதவி|సహాయం|સહાય|ਮਦਦ|帮助|ヘルプ|помощь|yardim|herramientas|outils|werkzeuge|ferramentas|strumenti|أدوات|टूल|টুল|கருவி|madad|kya kya", t: "Here\u2019s what the site offers 👇\n🧮 GST, EMI, SIP, percentage and simple calculators\n🎂 Age calculator\n⌨️ Typing test\n🐍 Snake game\n🪔 Festival countdown\n🔑 Password maker\n📄 PDF tools (text to PDF, image to PDF, merge)\n\nAsk me about any of them, or give me a sum to work out!", a: [["Open the tools page", "page", "tools"]] },
+    { id: "who", w: .9, k: "who are you|your name|what are you|introduce|quien eres|qui es-tu|wer bist du|quem e voce|chi sei|من انت|तुम कौन|आप कौन|tum kaun|aap kaun|tumhara naam|aapka naam|你是谁|ты кто|sen kimsin", t: "I\u2019m the NISHANT TOOLS assistant 🤖 I answer questions about this website and its tools, and I can do quick calculations for you." },
+    { id: "ai", w: 1.1, k: "are you ai|chatgpt|gpt|human|robot|real person|bot|eres un robot|es-tu un robot|bist du ein roboter|e voce um robo|هل انت روبوت|ai ho", t: "I\u2019m not a human, and I\u2019m not a large AI model either 😊 I\u2019m a built-in website assistant that runs in your browser. I know this site\u2019s tools well and can do quick calculations. For anything else, please use the Feedback form." },
+    { id: "how", w: .8, k: "how are you|whats up|wassup|sup|kaise ho|kya haal|como estas|comment vas-tu|wie gehts|tudo bem|come stai|كيف حالك|कैसे हो|क्या हाल|কেমন আছো|எப்படி இருக்கிறாய்|ఎలా ఉన్నావు|કેમ છો|ਕੀ ਹਾਲ ਹੈ|你好吗|как дела|nasilsin|haal chaal", t: "I\u2019m doing great, thanks for asking! 😊 How can I help you with NISHANT TOOLS today?" },
+    { id: "thanks", w: 1.1, k: "thanks|thank|thx|tysm|thankyou|thanku|shukriya|dhanyavad|धन्यवाद|शुक्रिया|gracias|merci|danke|obrigado|obrigada|grazie|شكرا|شکریہ|ধন্যবাদ|நன்றி|ధన్యవాదాలు|આભાર|ਧੰਨਵਾਦ|谢谢|ありがとう|спасибо|tesekkurler", t: function () { return pick(["You\u2019re welcome! 😊 Ask me anything else about the site.", "Happy to help! 🙌", "Anytime! 😄"]); } },
+    { id: "bye", w: 1.1, k: "bye|goodbye|see you|alvida|tata|adios|au revoir|tschuss|hasta luego|good night|shubh ratri|phir milenge|byee|अलविदा|الوداع|বিদায়|再见|さようなら|до свидания", t: function () { return pick(["Goodbye" + who() + "! 👋 Come back anytime.", "Take care" + who() + "! 🌟 See you soon.", "Bye" + who() + "! 😊"]); }, c: [] },
+    { id: "praise", w: .9, k: "great|awesome|nice|best|good bot|love|superb|wow|cool|amazing|mast|badhiya|zabardast|shandar|kamaal|genial|excelente|bravo|رائع|बढ़िया|शानदार|বাহ|அருமை|అద్భుతం|સરસ|ਵਧੀਆ|太棒了|すごい|отлично|harika", t: function () { return pick(["Thank you! 🥰 Is there anything else I can help with?", "Thanks, that\u2019s kind of you! 😄", "Glad you like it! 🙌"]); } },
+    { id: "rude", w: 1.2, k: "stupid|idiot|useless|worst|bekar|bakwas|pagal|bewakoof|faltu|ghatiya|tonto|idiota|dummkopf|nul|ruim", t: "I\u2019m sorry I wasn\u2019t helpful 🙏 Please ask me about the site\u2019s tools, and I\u2019ll try to do better. If something on the site needs fixing, the Feedback form is the best place to say so.", a: [["Open Feedback form", "link", "feedback.html"]] },
+    { id: "greet", w: .8, k: "hi|hii|hiii|hello|helo|hey|heyy|hola|bonjour|salut|hallo|ciao|ola|oi|namaste|namaskar|नमस्ते|नमस्कार|নমস্কার|வணக்கம்|నమస్కారం|નમસ્તે|ਸਤ ਸ੍ਰੀ ਅਕਾਲ|مرحبا|السلام عليكم|سلام|你好|こんにちは|привет|merhaba|salaam|good morning|good afternoon|good evening|suprabhat|ram ram|jai hind|sat sri akal", t: function () { return greeting() + who() + "! 😊 How can I help you with NISHANT TOOLS?"; } }
   ];
 
-  function addMessage(text, className) {
-    const message = document.createElement("div");
-    message.className = `chat-message ${className}`;
-    message.textContent = text; // textContent prevents user input being treated as HTML
-    chatMessages.appendChild(message);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+  /* ---------- brain ---------- */
+  function norm(s) { s = s.toLowerCase().replace(/[\u2019']/g, ""); try { s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); } catch (e) {} return s.replace(/\s+/g, " ").trim(); }
+  function score(q, toks, it) {
+    if (!it.kk) { it.kk = it.k.split("|").map(norm); it.ph = it.kk.filter(function (k) { return /[^a-z0-9\u0900-\u097f]/.test(k); }); it.wd = it.kk.filter(function (k) { return !/[^a-z0-9\u0900-\u097f]/.test(k); }); }
+    var s = 0;
+    it.ph.forEach(function (k) { if (q.indexOf(k) > -1) s += 2; });
+    toks.forEach(function (t) { if (it.wd.indexOf(t) > -1) s += 1; else if (it.wd.some(function (k) { return near(t, k); })) s += .6; });
+    return s * (it.w || 1);
   }
-
-  function getAnswer(question) {
-    const normalized = question.toLowerCase();
-
-    const match = faq.find(item =>
-      item.keywords.some(keyword => normalized.includes(keyword))
-    );
-
-    return match
-      ? match.answer
-      : "I’m not sure about that yet. Try asking about GST, calculators, the typing test, games, festivals, age, passwords, PDFs, or privacy.";
+  function run(it, q) {
+    var r = typeof it.t === "function" ? it.t(q) : it.t, t, a = it.a || [], c = it.c;
+    if (r && typeof r === "object") { t = r.t; a = r.a || a; c = r.c || c; } else t = r;
+    if (it.tool) { S.last = it.tool; if (!a.length) a = [open(it.tool)]; }
+    bot(t, a, c); S.fails = 0;
   }
+  function offTopic() {
+    S.fails++;
+    var lead = S.fails >= 2 ? "I\u2019m sorry, I can only answer questions about NISHANT TOOLS, so I can\u2019t help with that 🙏 If you need something else from the site, please use the Feedback form." : pick(["Thanks for your message! 😊 I can only answer questions about NISHANT TOOLS, so I can\u2019t help with that one.", "I understand you, but I can only help with things related to NISHANT TOOLS 🙏", "That\u2019s outside what I can help with. I only answer questions about this website 😊"]);
+    bot(lead + "\n\nTry asking about: GST, EMI, SIP or percentage sums, PDF tools, the typing test, snake game, festival countdown, age calculator, password maker, privacy or sign-in.", S.fails >= 2 ? [["Open Feedback form", "link", "feedback.html"]] : [], DEF);
+  }
+  function handle(raw) {
+    var q = norm(raw), m;
+    if ((m = /(?:my name is|call me|i am called|mera naam|naam hai)\s+([a-z\u0900-\u097f]{2,20})/.exec(q))) { S.name = m[1].charAt(0).toUpperCase() + m[1].slice(1); bot("Nice to meet you, " + S.name + "! 😊 How can I help you with NISHANT TOOLS?"); return; }
+    var toks = q.split(TOK).filter(Boolean);
+    if (/^(yes|yeah|yep|haan|haa|han|ji|ok|okay|sure|si|oui|ja|sim|hmm)$/.test(q)) { bot("Great! 😄 Ask me anything about the site, or pick a suggestion below.", [], DEF); return; }
+    if (/^(no|nope|nahi|nahin|na|nothing|non|nein|nao)$/.test(q)) { bot("Okay! 😊 I\u2019m here whenever you need me.", [], DEF); return; }
+    var best = null, bs = 0, all = [];
+    INT.forEach(function (it) { var s = score(q, toks, it); if (s > 0) all.push([s, it]); if (s > bs) { bs = s; best = it; } });
+    if (best && best.id === "crisis") { run(best, q); return; }
+    var calc = tryCalc(q);
+    if (calc) { S.fails = 0; bot(calc.t, calc.a, calc.c); return; }
+    if (S.last && /^(how|steps|use|explain|more|detail|kaise|como|comment|wie|कैसे)/.test(q)) { if (bs < .6) { var lt = INT.filter(function (x) { return x.tool === S.last; })[0]; if (lt) { run(lt, q); return; } } }
+    if (best && bs >= .6) { run(best, q); return; }
+    offTopic();
+  }
+  function send(text) {
+    text = (text || "").trim(); if (!text) return;
+    var m = { w: "user", t: text }; S.hist.push(m); render(m); save(); setChips([]);
+    try { handle(text); } catch (e) { bot("Sorry, something went wrong on my side 🙏 Please try again.", [], DEF); }
+  }
+  var lastSend = 0;
+  function submitNow() { var now = Date.now(); if (now - lastSend < 350) return; lastSend = now; var v = input.value; input.value = ""; send(v); try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }
 
-  toggleButton.addEventListener("click", () => {
-    const isOpen = chatBox.style.display === "flex";
-    chatBox.style.display = isOpen ? "none" : "flex";
-    toggleButton.setAttribute("aria-expanded", String(!isOpen));
-    if (!isOpen) chatInput.focus();
+  /* ---------- events ---------- */
+  launcher.addEventListener("click", function () { setOpen(!chat.classList.contains("nt-open")); });
+  chat.querySelector(".nt-chat-close").addEventListener("click", function () { setOpen(false); });
+  tip.addEventListener("click", function () { setOpen(true); });
+  ["keydown", "keyup", "keypress"].forEach(function (t) { chat.addEventListener(t, function (e) { e.stopPropagation(); }); });
+  chat.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && chat.classList.contains("nt-open")) setOpen(false); });
+  input.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.keyCode === 13) && !e.isComposing && !e.shiftKey) { e.preventDefault(); submitNow(); } });
+  form.addEventListener("submit", function (e) { e.preventDefault(); submitNow(); });
+  sendBtn.addEventListener("mousedown", function (e) { e.preventDefault(); });
+  sendBtn.addEventListener("touchstart", function (e) { e.preventDefault(); }, { passive: false });
+  sendBtn.addEventListener("touchend", function (e) { e.preventDefault(); submitNow(); });
+  sendBtn.addEventListener("click", function (e) { e.preventDefault(); submitNow(); });
+  $("nt-clear").addEventListener("click", function () { S.hist = []; S.last = ""; S.fails = 0; body.textContent = ""; save(); welcome(); });
+  chipsEl.addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) send(b.textContent); });
+  body.addEventListener("click", function (e) {
+    var b = e.target.closest(".nt-act"); if (!b) return;
+    var k = b.getAttribute("data-k"), v = b.getAttribute("data-v");
+    if (k === "copy") {
+      var done = function () { b.textContent = "Copied ✓"; };
+      var fb = function () { var t = document.createElement("textarea"); t.value = v; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); done(); } catch (y) {} t.remove(); };
+      try { navigator.clipboard.writeText(v).then(done, fb); } catch (x) { fb(); }
+    } else if (k === "click") { var t2 = $(v); if (t2) t2.click(); if (isMobile()) setOpen(false, true); }
+    else if (k === "tool" || k === "page") { if (isMobile()) setOpen(false, true); }
   });
 
-  chatForm.addEventListener("submit", event => {
-    event.preventDefault();
-
-    const question = chatInput.value.trim();
-    if (!question) return;
-
-    addMessage(question, "user-message");
-    addMessage(getAnswer(question), "bot-message");
-    chatInput.value = "";
-    chatInput.focus();
-  });
-
-
+  /* ---------- start ---------- */
+  if (S.hist.length) { S.hist.forEach(render); setChips(DEF); } else welcome();
+  try { if (!sessionStorage.getItem("ntTip")) setTimeout(function () { if (!chat.classList.contains("nt-open")) { tip.classList.add("nt-show"); setTimeout(function () { tip.classList.remove("nt-show"); }, 7000); } }, 4000); } catch (e) {}
+})();
 </script>
+
 </body>
 </html>
